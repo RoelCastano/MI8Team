@@ -15,7 +15,7 @@ Redirect = namedtuple('Redirect', ['id', 'redirect_title'])
 
 LINK_PATTERN = re.compile(r'\[\[(.*?)\]\]')
 TITLE_PATTERN = re.compile(r'(.*?:)?([^|#]*)?')
-
+NAMESPACE_MAP = {'ns': ''}
 
 def main(argv):
     """Main function to run the program.
@@ -50,7 +50,9 @@ def parse_dump(dump_file):
     """
     tree = etree.parse(dump_file)
     pages = []
-    for page in tree.findall(".//page"):
+    # set "default" namespace
+    NAMESPACE_MAP['ns'] = tree.getroot().nsmap[None]
+    for page in tree.findall(".//ns:page", namespaces=NAMESPACE_MAP):
         pages.append(parse_page(page))
     return pages
 
@@ -63,10 +65,10 @@ def parse_page(page):
     Return:
         either article or redirect named tuple
     """
-    element_id = page.find("./id")
-    element_title = page.find("./title")
-    element_text = page.find("./revision/text")
-    element_redirect = page.find("./redirect")
+    element_id = page.find("./ns:id", namespaces=NAMESPACE_MAP)
+    element_title = page.find("./ns:title", namespaces=NAMESPACE_MAP)
+    element_text = page.find("./ns:revision/ns:text", namespaces=NAMESPACE_MAP)
+    element_redirect = page.find("./ns:redirect", namespaces=NAMESPACE_MAP)
 
     if element_id is None or (
             (element_title is None or element_text is None) and
