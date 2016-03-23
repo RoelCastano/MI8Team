@@ -1,7 +1,9 @@
-import numpy as np;
+import numpy as np
+import sys
 
-with open(r'C:\Users\phili_000\Desktop\MI8 data\2015_01_clickstream.tsv\2015_01_clickstream.tsv') as f:
+with open(r'/data/2015_01_clickstream.tsv') as f:
     for line in f:
         print(line)
         lineSplit = line.split('\t')
+        sys.exit("swag");
 
