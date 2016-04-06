@@ -1,0 +1,10 @@
+# rank within qid group
+# qid = query ID, gives the starting article
+# feature pairs with <featureID, value>
+# unused comment for referencing the destination article
+
+1	qid:Obama	1:23	2:1.34	3:99	# president
+2 	qid:Obama	1:10	2:2.7	3:120	# USA
+1 	qid:Aalborg	1:12 	2:8.0	3:123	# AAU
+2 	qid:Aalborg	1:8 	2:8.0	3:123	# Denmark
+3 	qid:Aalborg	1:82 	2:2.2	3:80	# Jutland
