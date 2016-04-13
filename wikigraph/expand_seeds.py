@@ -64,7 +64,7 @@ def main(argv):
         seed_file = open(seed_name, 'r')
     # allow write to stdout
     if output_name == '-':
-        output_file = sys.stdout
+        output_file = sys.stdout.buffer
     else:
         output_file = open(output_name, 'wb')
 
@@ -89,8 +89,9 @@ Available options:
 
 def expand_seeds(runs, seed_file, graph_file, output_file):
     seeds = seed_file.read().splitlines()
+    processed = set()
 
-    print("seeds: ", seeds)
+    #print("seeds: ", seeds)
 
     tree = etree.parse(graph_file) 
 
@@ -112,10 +113,13 @@ def expand_seeds(runs, seed_file, graph_file, output_file):
                         break
                     new_seeds = []
                     for element, new_seed in expand(seeds, tree):
-                        print("writing element:", etree.tostring(element))
+                        if new_seed in processed:
+                            continue
+                        #print("writing element:", etree.tostring(element))
                         xml_file.write(element, pretty_print=True)
                         new_seeds.append(new_seed)
-                    print("new seeds: ", new_seeds)
+                        processed.add(new_seed)
+                    #print("new seeds: ", new_seeds)
                     seeds = new_seeds
 
 def expand(new_seeds, tree):
