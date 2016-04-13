@@ -9,6 +9,7 @@ import getopt
 import sys
 from collections import namedtuple
 from lxml import etree
+import json
 
 Article = namedtuple('Article', ['id', 'title', 'neighbours'])
 Redirect = namedtuple('Redirect', ['id', 'redirect_title'])
@@ -24,19 +25,51 @@ def main(argv):
         argv: command line arguments
     """
 
-    inputfile = ''
+    input_name = ''
+    output_name = ''
     try:
-        opts, _ = getopt.getopt(argv, "hi:", ["ifile=", "help"])
+        opts, _ = getopt.getopt(argv, "hi:o:", ["ifile=", "ofile=", "help"])
     except getopt.GetoptError:
-        print('wikigraph.py -i <inputfile>')
-        sys.exit(2)
+        print_help()
+        sys.exit(1)
     for opt, arg in opts:
-        if opt == '-h':
-            print('test.py -i <inputfile>')
+        if opt == '-h' or opt == '--help':
+            print_help()
             sys.exit()
         elif opt in ("-i", "--ifile"):
-            inputfile = arg
-    print(parse_dump(inputfile))
+            input_name = arg
+        elif opt in ("-o", "--ofile"):
+            output_name = arg
+    if input_name == '' or output_name == '':
+        print_help()
+        sys.exit(1)
+    
+    # allow reading form stdin
+    if input_name == '-':
+        input_file = sys.stdin
+    else:
+        input_file = open(input_name, 'r')
+    # allow write to stdout
+    if output_name == '-':
+        output_file = sys.stdout
+    else:
+        output_file = open(output_name, 'w')
+
+    for parsed in parse_dump(input_file):
+            print(parsed, file=output_file)
+
+def print_help():
+    """Prints help text.
+    """
+    print('''Usage: wikigraph.py -i <inputfile> -o <outputfile>
+Processes wikipedia xml dumps into adjecency list of articles.
+
+Available options:
+    -i, --ifile=FILE    path to file with dump data, dash (-) means reading
+                        from standard input
+    -o, --ofile=FILE    path to ouput file, where the adjencency list will be
+                        written, dash (-) means writing to standard output
+    -h, --help          prints this message''')
 
 def parse_dump(dump_file):
     """This function parses all the articles inside the dump file into internal
@@ -45,16 +78,16 @@ def parse_dump(dump_file):
     Args:
         dump_file: xml file with wikipedia dump data
 
-    Returs:
+    Returns:
         list of parsed pages
     """
     tree = etree.parse(dump_file)
     pages = []
     # set "default" namespace
     NAMESPACE_MAP['ns'] = tree.getroot().nsmap[None]
+    #print(len(tree.findall(".//ns:page", namespaces=NAMESPACE_MAP)))
     for page in tree.findall(".//ns:page", namespaces=NAMESPACE_MAP):
-        pages.append(parse_page(page))
-    return pages
+        yield parse_page(page)
 
 def parse_page(page):
     """This function parses article into named tuple.
@@ -62,7 +95,7 @@ def parse_page(page):
     Args:
         page: etree.element holding information about single page
 
-    Return:
+    Returns:
         either article or redirect named tuple
     """
     element_id = page.find("./ns:id", namespaces=NAMESPACE_MAP)
