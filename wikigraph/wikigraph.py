@@ -70,10 +70,10 @@ def main(argv):
             with open(output_name + '.redir', 'r') as redirect_file:
                 resolve_redirects(output_file, link_file, redirect_file)
     # clean up
-    if isfile(output_name + '.tmp'):
-        remove(output_name + '.tmp')
-    if isfile(output_name + '.redir'):
-        remove(output_name + '.redir')
+    # if isfile(output_name + '.tmp'):
+    #     remove(output_name + '.tmp')
+    # if isfile(output_name + '.redir'):
+    #     remove(output_name + '.redir')
 
 
 def print_help():
@@ -188,8 +188,8 @@ def parse_page(page, output_file, redirect_file, max_depth, seeds_dict, seen):
         # every "page" has to be processed only once
         del seeds_dict[title]
 
-    # is redirect
     if element_redirect is not None:
+        # is redirect
         redirect_title = element_redirect.get("title").replace(' ', '_')
         print(title, redirect_title, file=redirect_file)
         if redirect_title not in seen:
