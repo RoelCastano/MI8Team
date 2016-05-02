@@ -1,0 +1,12 @@
+# LaTex Generated Files #
+########################
+*.aux
+*.log
+*.out
+*.gz
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+
