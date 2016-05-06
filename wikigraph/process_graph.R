@@ -21,7 +21,7 @@ edgesdf$same_community_fg <- apply(el, 1, FUN=function(row) {if (fc$membership[r
 edgesdf$same_community_lp <- apply(el, 1, FUN=function(row) {if (fc2$membership[row[1]] == fc2$membership[row[2]]) {1} else {-1}})
 
 # write resulting dataframe to the file 
-write.table(edgesdf, "same_communities", quote=FALSE, sep=' ', col.names=FALSE, row.names=FALSE)
+write.table(edgesdf, "same_communities", quote=FALSE, sep='\t', col.names=FALSE, row.names=FALSE)
 
 # compute hub-authority score
 hs <- hub_score(gi) 
@@ -36,4 +36,4 @@ pg <- page_rank(gi)
 scoredf <- data.frame(name=V(gi)$id, hub=format(hs$vector, scientific=FALSE), authority=format(as$vector, scientific=FALSE), pagerank=format(pg$vector, scientific=FALSE))
 
 # write resulting datafram to the file
-write.table(scoredf, "scores", quote=FALSE, sep=' ', col.names=FALSE, row.names=FALSE)
+write.table(scoredf, "scores", quote=FALSE, sep='\t', col.names=FALSE, row.names=FALSE)

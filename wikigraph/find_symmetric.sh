@@ -19,7 +19,7 @@ then
 fi
 
 while read -r id v1 v2 rest || [ -n "$line" ]; do
-  if grep -e "$v2@$v1" "$1" > /dev/null
+  if grep -m 1 -F -e "$v2@$v1" "$1" > /dev/null
   then
     echo "$v1@$v2 1" >> "$2"
   else

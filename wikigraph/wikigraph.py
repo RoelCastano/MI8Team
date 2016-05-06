@@ -8,13 +8,14 @@ transformed into a graph.
 import re
 import getopt
 import sys
-from os.path import isfile
-from os import remove
+from os.path import isfile, dirname, join, exists
+from os import remove, makedirs
 from collections import namedtuple
 from subprocess import Popen, PIPE
 from lxml import etree
 from tqdm import tqdm
 from bz2 import BZ2File
+import base64
 
 Link = namedtuple('Link', ['title', 'neighbour', 'order', 'position', 'depth'])
 Redirect = namedtuple('Redirect', ['title', 'redirect', 'depth'])
@@ -22,6 +23,7 @@ Redirect = namedtuple('Redirect', ['title', 'redirect', 'depth'])
 LINK_PATTERN = re.compile(r'\[\[(.*?)\]\]')
 TITLE_PATTERN = re.compile(r'(.*?:)?([^|#]*)?')
 NAMESPACE_MAP = {'ns': 'http://www.mediawiki.org/xml/export-0.10/'}
+TEXT_DIR = ""
 
 
 def main(argv):
@@ -31,6 +33,7 @@ def main(argv):
         argv: command line arguments
     """
 
+    global TEXT_DIR
     input_name = ''
     output_name = ''
     seed_name = ''
@@ -58,6 +61,12 @@ def main(argv):
         print_help()
         sys.exit(1)
 
+    # create a directory for article texts if it not exists
+    TEXT_DIR = join(dirname(output_name), "texts")
+    print(TEXT_DIR)
+    if not exists(TEXT_DIR):
+        makedirs(TEXT_DIR)
+
     with open(input_name, 'r') as input_file:
         with open(output_name + '.tmp', 'w') as output_file:
             with open(output_name + '.redir', 'w') as redirect_file:
@@ -79,7 +88,7 @@ def main(argv):
 def print_help():
     """Prints help text.
     """
-    print('''Usage: wikigraph.py -i <inputfile> -o <outputfile>
+    print('''Usage: wikigraph.py -i <inputfile> -s <seedsfile> -o <outputfile> -d <depth>
 Processes wikipedia xml dumps into adjecency list of articles.
 
 Available options:
@@ -220,7 +229,14 @@ def parse_links(element_text, current_title):
         an iterator yielding tuples containing title of referred page and
         position of link in the text
     """
+    global TEXT_DIR
     article_text = element_text.text
+    # save article text
+    title_underscore = current_title.replace(' ', '_')
+    safe_name = base64.urlsafe_b64encode(
+        title_underscore.encode('utf-8')).decode('utf-8')
+    with open(join(TEXT_DIR, safe_name), 'w') as text_file:
+        print(article_text, file=text_file)
     # find all contents of [[ ]] and do not use gready match
     for match in re.finditer(LINK_PATTERN, article_text):
         # find the prefix of link (if theres any) and main link name
@@ -249,7 +265,7 @@ def resolve_redirects(output_file, link_file, redirect_file):
             # resolve redirect, if there is any
             columns[1] = redirect_dict.get(columns[1], columns[1])
             print(columns[0], columns[1], columns[2], columns[3],
-                  file=output_file)
+                  file=output_file, sep='\t')
             pbar.update(1)
 
 

@@ -7,8 +7,8 @@ gi <- read.graph("intersection.graphml", "graphml")
 undirgi = simplify(as.undirected(gi))
 
 # save both graphs
-save(gi, "wikigraph_dir")
-save(undirgi, "wikigraph")
+save(gi, file="wikigraph_dir")
+save(undirgi, file="wikigraph")
 
 # define pallete for community coloring
 mypallete = function(count, n) {rainbow(count)[n]}
@@ -17,7 +17,7 @@ mypallete = function(count, n) {rainbow(count)[n]}
 fc <- cluster_fast_greedy(undirgi)
 
 # save computed communities into a file
-save(fc, "communities_fast_greedy")
+save(fc, file="communities_fast_greedy")
 
 # compute communities the second way
 fc2 <- cluster_label_prop(undirgi)
