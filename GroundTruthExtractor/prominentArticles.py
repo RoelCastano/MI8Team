@@ -73,6 +73,9 @@ for i, val in enumerate(truthHeap):
 truthHeap = sorted(truthHeap, key=lambda truthHeap_entry: truthHeap_entry[0], reverse = True) 
 truthHeap = truthHeap[:numberOfTruth]
 
+# order the remaining article after A-Z
+truthHeap = sorted(truthHeap, key=lambda truthHeap_entry: truthHeap_entry[1], reverse = False) 
+
 # save the most prominent articles to a file: line separated
 seeds = open('prominentArticles.txt', 'w')
 lineCnt = 0
@@ -86,12 +89,5 @@ seeds.close()
 # if we have extracted data for less than 100 articles its safe to print to console        
 if numberOfTruth < 100:
     pprint.pprint(truthHeap)
-
-
-prominentArticles = []
-with open('prominentArticles.txt') as f:
-    for line in f:
-        prominentArticles.append(line.replace("\n", ""))
-
 
 print("prominentArticles.txt has been generated")
