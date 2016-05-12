@@ -1,4 +1,11 @@
 \section{Introduction}
 
-\lettrine[nindent=0em,lines=3]{L} orem ipsum dolor sit amet, consectetur adipiscing elit.
-\lipsum[2-3] % Dummy text
+\lettrine[nindent=0em,lines=3]{W}ikipedia is an information network with more than 5 million articles of semi-structured information (text and multimedia). Seeking the relevant (related) information among all these articles can prove cumbersome.
+Currently, most Wikipedia articles provide a ``See also'' section with some recommendations of related articles. These recommendations are added manually by the contributors. This is, of course, time consuming and error-prone, as the human contributors' recommendations might not be complete nor reflect what readers find relevant. \\
+By utilising the available data, which include Wikipedia Clickstream data sets, specific per second/day page view count, and derived data from article structures, we believe we could improve the ``See Also'' section to provide unbiased, accurate recommendations. \\
+This has been researched multiple times but we have found most of them to be based almost completely on data from Wikispeedia or The Wiki Game, which both supply paths utilised by players to reach certain, unrelated articles. This does affect how the user navigated Wikipedia and doesn't reflect natural user behaviour. \\
+Our method for this investigation is based on real user behaviour and Wikipedia data. Using the Learning to Rank algorithm, it is possible to weight the importance of all of the different indicators and data and recommend the most useful articles for the user. By solving this problem, we would like to get insight into the following questions.
+\begin{itemize}
+\item Is it possible to predict the user hops utilizing generalized information by Wikipedia?
+\item How could we improve wikipedia articles fairness by altering link arrangement?
+\end{itemize}
