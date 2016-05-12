@@ -7,8 +7,8 @@ gi <- read.graph("intersection.graphml", "graphml")
 undirgi = simplify(as.undirected(gi))
 
 # save both graphs
-save(gi, "wikigraph_dir")
-save(undirgi, "wikigraph")
+save(gi, file="wikigraph_dir")
+save(undirgi, file="wikigraph")
 
 # define pallete for community coloring
 mypallete = function(count, n) {rainbow(count)[n]}
@@ -17,13 +17,19 @@ mypallete = function(count, n) {rainbow(count)[n]}
 fc <- cluster_fast_greedy(undirgi)
 
 # save computed communities into a file
-save(fc, "communities_fast_greedy")
+save(fc, file="communities_fast_greedy")
 
 # compute communities the second way
 fc2 <- cluster_label_prop(undirgi)
 
 # save computed communities into a file
 save(fc2, file="communities_label_propagation")
+
+# compute communities the third way
+fc3 <- cluster_infomap(undirgi)
+
+# save computed communities into a file
+save(fc3, file="communities_infomap")
 
 # set plot options
 igraph.options(vertex.size=2, edge.width=0.1, vertex.label=NA)
@@ -39,3 +45,9 @@ V(undirgi)$color <- mapply(mypallete, length(fc2), fc2$membership)
 
 # plot graph with communities visualised
 pdf("wikiplot_label_propagation.pdf", 100, 100); plot(undirgi); dev.off()
+
+# color vertices according to the membership to community (infomap)
+V(undirgi)$color <- mapply(mypallete, length(fc3), fc3$membership)
+
+# plot graph with communities visualised
+pdf("wikiplot_infomap.pdf", 100, 100); plot(undirgi); dev.off()

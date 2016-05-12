@@ -9,3 +9,6 @@ contains data on pairs of articles (A,B) where article A is one of the articles 
 2. prev, ID of one of the prominent articles
 3. curr, ID of an article linked to by prev
 4. clicks, number of visitors clicking the link represented by this row
+
+### groundTruth_032016_1k
+contains the ground truth data ready for having features merged

@@ -1,10 +1,13 @@
-# rank within qid group
+# number of clicks via this link
 # qid = query ID, gives the starting article. The int references the line number of the prominent/seed article file
-# feature pairs with <featureID, value>
+# feature pairs with <featureID, value>. Features with value of zero can be omitted
 # unused comment for referencing the destination article
 
-1	qid:1	1:23	2:1.34	3:99	# Obama -> president
-2 	qid:1	1:10	2:2.7	3:120	# Obama -> USA
-1 	qid:2	1:12 	2:8.0	3:123	# Aalborg -> AAU
-2 	qid:2	1:8 	2:8.0	3:123	# Aalborg -> Denmark
-3 	qid:2	1:82 	2:2.2	3:80	# Aalborg -> Jutland
+# Obama
+800 qid:1 1:23 2:1.34 3:99 # president
+200 qid:1 1:10 2:2.7 3:120 # USA
+# Aalborg
+8231 qid:2 1:12 2:8.0 3:123 # AAU
+3954 qid:2 1:8 3:123 # Denmark
+12 qid:2 1:82 2:2.2 3:80 # Jutland
+0 qid:2 1:233 2:1.0 3:90 # Engineer
