@@ -115,8 +115,8 @@ join -1 2 -2 1 -t $'\t' <(cut -f 1,3 "$PROMINENT_INTERSECTION_OUT_NAMED" | sort 
 # turn communities into a feature
 echo "Preparing communities feature list..." 
 # try both variants for cases where undirected edges are written in opposite direction
-join -t $'\t' "$PROMINENT_INTERSECTION_OUT" <(sed 's/^\(.*\)\t\(.*\)\t\(.*\)\t\(.*\)$/\1@\2\t\3\t\4/' "$COMMUNITIES" | sed 's/&quot;/"/g' | sort -k 1b,1)  > "$COMMUNITIES_FEATURE"
-join -t $'\t' "$PROMINENT_INTERSECTION_OUT" <(sed 's/^\(.*\)\t\(.*\)\t\(.*\)\t\(.*\)$/\2@\1\t\3\t\4/' "$COMMUNITIES" | sed 's/&quot;/"/g' | sort -k 1b,1) >> "$COMMUNITIES_FEATURE"
+join -t $'\t' "$PROMINENT_INTERSECTION_OUT" <(sed 's/^\(.*\)\t\(.*\)\t\(.*\)\t\(.*\)\t\(.*\)$/\1@\2\t\3\t\4\t\5/' "$COMMUNITIES" | sed 's/&quot;/"/g' | sort -k 1b,1)  > "$COMMUNITIES_FEATURE"
+join -t $'\t' "$PROMINENT_INTERSECTION_OUT" <(sed 's/^\(.*\)\t\(.*\)\t\(.*\)\t\(.*\)\t\(.*\)$/\2@\1\t\3\t\4\t\5/' "$COMMUNITIES" | sed 's/&quot;/"/g' | sort -k 1b,1) >> "$COMMUNITIES_FEATURE"
 sort -k 1b,1 "$COMMUNITIES_FEATURE" > "$COMMUNITIES_FEATURE".tmp
 mv "$COMMUNITIES_FEATURE".tmp "$COMMUNITIES_FEATURE"
 
