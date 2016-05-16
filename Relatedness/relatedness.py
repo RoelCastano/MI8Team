@@ -3,7 +3,6 @@ from math import*
 import getopt
 import os, sys
 import re
-import csv
 
 Outgoing_Links = {}
 Incoming_Links = {}
@@ -21,6 +20,8 @@ def dice(x,y):
     return 2*(intersection_cardinality(x,y)/float(len(x)+len(y)))*100
     
 def normalized_google_distance(x,y,w):
+    if intersection_cardinality(x,y) == 0 :
+        return 0
     num = log(max(len(x),len(y)))-log(intersection_cardinality(x,y))
     den = log(w)-log(min(len(x),len(y)))
     return num/float(den)        
