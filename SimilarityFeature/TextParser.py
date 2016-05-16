@@ -9,14 +9,13 @@ def split_braces(text):
     while((first,last)!=(-1,-1)):
    
         res.append(unparsed_text[0:first])
-        res.append(unparsed_text[last+1:len(unparsed_text)+2])
+        res.append(unparsed_text[last+1:len(unparsed_text)])
         
         unparsed_text = res.pop()
 
         (first,last) = find_first_braces(unparsed_text)
         
     res.append(unparsed_text)   
-    
     return res
 
 def find_first_braces(text):
@@ -62,7 +61,9 @@ def clear_text(text) :
         newtext = re.sub(regex,"",newtext) 
     # exclude end of article (from "see also section to the end"        
     index = newtext.find("==See also==")
-    return newtext[0:index]    
+    if index != -1 :
+        newtext = newtext[0:index]
+    return newtext   
     
 def parser(src_files_dir):
 
@@ -93,3 +94,29 @@ def parser(src_files_dir):
             f.close()
     
     return parsed_files_dir
+
+def parse_file(filename,src_files_dir):
+    # creating de parsed files directory
+    parsed_files_dir = os.path.join(src_files_dir,"parsed_files")
+    if not os.path.exists(parsed_files_dir):
+        os.makedirs(parsed_files_dir)
+    os.chmod(parsed_files_dir,stat.S_IRWXO)
+
+    # parsing file
+    output = os.path.join(parsed_files_dir,filename)
+    input = os.path.join(src_files_dir,filename)    
+    if os.path.isfile(input) :
+        if not os.path.exists(output) : # don't parse if the file already exist
+            with open(input,'r',encoding="utf-8") as f:
+                with open(output,'w',encoding="utf-8") as out:
+                    text = f.read()
+                    # clearing the text
+                    print("Reading ",input)
+                    text = remove_braces(text)
+                    text = clear_text(text)
+                    out.write(text)                                       
+                out.close()
+            f.close()
+            
+    return output
+    
