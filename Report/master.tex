@@ -33,9 +33,30 @@
 \usepackage{booktabs} % Horizontal rules in tables
 \usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
 \usepackage{hyperref} % For hyperlinks in the PDF
+\hypersetup{
+    colorlinks=true,
+    citecolor = red,
+    urlcolor = blue
+}
 
 \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
 \usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+
+\usepackage{amsmath} % Defines some usefull math symbols
+\usepackage[
+backend=biber      % if we want unicode
+,style=numeric
+,bibencoding=utf8   % this is necessary only if bibliography file is in different encoding than main document
+,maxnames=3 % maximum of three auhor names
+,minnames=1 % minimum of one author (if there are more than 3 authros, only the first one is printed and "et. al." added.)
+,sorting=none
+,sortcites=true
+,doi=true % print dois
+,url=true % always print urls if present
+,isbn=true % print is[bsr]n numbers
+,urldate=comp % better url date format
+]{biblatex}
+\addbibresource{bibliography.bib}
 
 \usepackage{abstract} % Allows abstract customization
 \renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
@@ -128,7 +149,8 @@
 %	REFERENCE LIST
 %----------------------------------------------------------------------------------------
 
-\input{bibliography.tex}
+%\input{bibliography.tex}
+\printbibliography
 
 %----------------------------------------------------------------------------------------
 
