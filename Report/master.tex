@@ -27,7 +27,7 @@
 \linespread{1.05} % Line spacing - Palatino needs more space between lines
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
 
-\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt, left=15mm]{geometry} % Document margins
 \usepackage{multicol} % Used for the two-column layout of the document
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
 \usepackage{booktabs} % Horizontal rules in tables
@@ -42,8 +42,6 @@
 \renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
 
 \usepackage{titlesec} % Allows customization of titles
-\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
-\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
 \titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
 \titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
 
@@ -95,15 +93,24 @@
 
 \begin{multicols}{2} % Two-column layout throughout the main article text
 
-\input{introduction.tex}
-
 %------------------------------------------------
+% INTRODUCTION SECTION
+
+\input{introduction.tex}
 
 \input{related.tex}
 
 %------------------------------------------------
 
 \input{ltralgorithm.tex}
+
+%------------------------------------------------
+
+\input{datasets.tex}
+
+%------------------------------------------------
+
+\input{groundtruth.tex}
 
 %------------------------------------------------
 
