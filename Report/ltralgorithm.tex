@@ -1,10 +1,32 @@
-\section{Learning to Rank Algorithm}
+\subsection{Learning to Rank Algorithms}
 
-The algorithm used for choosing from the list of links is called Learning to Rank. This machine learning algorithm ranks a set of 'documents' given a query based on a set of features defined previously and provides a label (grade) to these documents. The label, or relevance of a document, can be given in multiple forms:
+In this work, the aim is to look at possibility to rank the links between articles on the Wikipedia by their real click-trough rate. Ranking is an essential part of informational retrieval, but it is not limited to it. Ranking became even more important in recent years when there is much more data than one can process in reasonable amount of time. In order to accomplish this task, we chose to use a family of algorithms called Learning to Rank. These algorithms brings machine learning approach into information retrieval.
 
-\begin{itemize}  
-\item Binary Label 
-\item Multi-Level Judgement 
-\item Pairwise Preferences 
+\subsubsection{Ranking problem formulation}
+Let $q$ be a query and let's denote an associated set of documents to the query $q$ as $\mathbf{x} = \{x_1, x_2, \ldots, x_m\}$. Every document $x_i$ has its label (relevance evaluation) $y_i$ in the set $\mathbf{y} = \{y_i\}^m_{i=1}$. The values of $y_i$ has to be from some totally ordered set $(S, \le)$.  Ranking can be view as a task of finding permutation $\pi$ on indices $\{1,2,\ldots, m\}$ given a query $q$ and its associated set of documents $\mathbf{x}$. Permutation $\pi$ must satisfy that $y_{\pi(j)} \le y_{\pi(i)}$ for all $1\le i < j \le m$. The sequence $x_{\pi(1)},x_{\pi(2)}, \ldots, x_{\pi(m)}$ is then ordering of retrieved documents according to their relevance in respect to the query $q$.
+
+Learning to rank algorithms handles this task as a instance of supervised machine learning problem. Each document is represented by its feature vector. Let $q_i$ where $1 \le i \le n$ be the training queries and $\mathbf{x}^{(i)} = \{x_{j}^{(i)}\}_{j = 1}^{m^{(i)}}$ their associated documents, where $m^{(i)}$ is the number of associated documents for the query $q_i$. Then $\mathbf{y}^{(i)} = \{y_{j}^{(i)}\}_{j = 1}^{m^{(i)}}$ are labels for the associated documents to query $q_i$ (also called ground truth). Test set is $\mathbf{T} = \{(\mathbf{x}^{(i)},\mathbf{y}^{(i)} )\}_{i = 1}^{n}$ for the training queries. The algorithm then automatically learns a model for $\mathbf{T}$ in the form of a function $F(\mathbf{x}^{(i)})$ that approximates the real mapping $\hat{F}(x^{(i)}) = y^{(i)}$ on the training set. Such model can later be used to predict relevance of new query instances outside the training set, where the label is unknown.
+
+The common idea behind creating the model in learning to rank algorithms, or machine learning in general, is optimisation of a loss function $L(F(\mathbf{x}^{(i)}), \mathbf{y}^{(i)})$ for $1 \le i \le n$. The loss function describes the quality of found ranking in terms of errors made compared to ground truth. In \cite{LTR4IR} and \cite{li}, loss function is used to categorise learning to rank algorithms into three groups; pointwise, pairwise, and listwise.
+
+\subsubsection{Pointwise approach}
+The pointwise algorithms treat each document (feature vector to be precise) as an standalone instance. The input for the resulting model is a feature vector and its output is predicted label. Essentially the problem is simplified to regression, classification, or  ordinal regression as each document is treated independently as a point in the feature space. Loss functions corresponding regression, classification, or ordinal loss functions. Limitation pointed out in \cite{LTR4IR} is assumption that relevance is absolute and does not depend on the query.
+
+\subsubsection{Pairwise approach}
+The pairwise algorithms always look at a pair of documents. The input for the model is a pair of feature vectors and the output is their relative preference, i.e. if the first from the pair should be ranked higher that the second one or vice versa. The loss function in this approach measures discrepancy between preference predicted by the model and actual order in the ground truth.
+
+\subsubsection{Listwise approach}
+The listwise algorithms look at whole document list as a whole. The input for the model is list of feature vectors and the output is either list of labels or a permutation. This approach is the only one where the loss function directly measures the final position/rank of documents.
+
+\subsubsection{RankLib}
+In this work a library called RankLib\footnote{RankLib source and binary files are available in Sourceforge repository at \url{https://sourceforge.net/p/lemur/wiki/RankLib/}} (a part of The Lemur project \cite{lemur}) has been used for performing learning to rank. This library implements the following algorithms as stated in \cite{ranklib}.
+\begin{itemize}
+\item MART \cite{MART} (pointwise)
+\item RankNet \cite{RankNet} (pairwise)
+\item RankBoost \cite{RankBoost} (pairwise)
+\item AdaRank \cite{AdaRank} (listwise)
+\item Coordinate Ascent \cite{CoordinateAscent} (listwise)
+\item LambdaMART \cite{LambdaMART} (listwise)
+\item ListNet \cite{ListNet} (listwise)
+\item Random Forests \cite{RandomForests} 
 \end{itemize}
-
