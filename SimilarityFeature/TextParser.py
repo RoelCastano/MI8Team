@@ -1,69 +1,81 @@
 import os, sys,stat
 import re
+import base64
    
-def split_braces(text):
-    unparsed_text = text
-    res = []
-    (first,last) = find_first_braces(text)
-  
-    while((first,last)!=(-1,-1)):
-   
-        res.append(unparsed_text[0:first])
-        res.append(unparsed_text[last+1:len(unparsed_text)])
-        
-        unparsed_text = res.pop()
+def remove_braces(input_file,output_file):
+    with open(input_file,'r',encoding='utf-8') as input:
+        textpart = ""
+        with open(output_file,'w',encoding='utf-8') as out :
+            for line in input :
+                textpart = (textpart+line).replace('\n', '')
+                (first,last) = find_first_braces(textpart)
 
-        (first,last) = find_first_braces(unparsed_text)
-        
-    res.append(unparsed_text)   
-    return res
+                # find {{...}}
+                while first != -1 and last!=-1 :
+                    out.write(textpart[0:first])
+                    if last+1<len(textpart) :
+                        textpart = textpart[last+1:len(textpart)]
+                    else :
+                        textpart = ""
+                    (first,last) = find_first_braces(textpart)
+            out.write(textpart)                    
+        out.close()
+    input.close()
 
 def find_first_braces(text):
 
     opening_brace = text.find("{{")
     closing_brace = text.find("}}")
     first = opening_brace
-    last = closing_brace
+    last = -1
     
-    if opening_brace==-1 or closing_brace==-1 or closing_brace<opening_brace:
-        return(-1,-1)
+    # if opening_brace==-1 or closing_brace==-1:
+        # return(-1,-1)
 
-    else :
-        stack = ["END"]    
-        while(stack):
-            # found opening braces {{ : push
-            if opening_brace<closing_brace :
-                stack.append(opening_brace)
-                opening_brace=text.find("{{",opening_brace+2,len(text)-1)
-            # found closing braces    }} : pop        
-            if closing_brace<opening_brace or opening_brace==-1:            
-                stack.pop()
-                last = closing_brace+1
-                closing_brace = text.find("}}",closing_brace+2,len(text)-1)
+    #else :
+    stack = []
+    while(closing_brace!=-1) :            
+        # found opening braces {{ : push
+        if opening_brace<closing_brace and opening_brace != -1:
+            stack.append(opening_brace)
+            if closing_brace !=-1:
+                opening_brace=text.find("{{",opening_brace+2,len(text))
+            
+        # found closing braces    }} : pop       
+        elif closing_brace<opening_brace or opening_brace==-1:            
+            if stack :
+                stack.pop()                
+                if closing_brace !=-1:
+                    last = closing_brace+1
+                closing_brace = text.find("}}",closing_brace+2,len(text))
+            
+        # check if stack is empty
+        if not stack :
+            return (first,last)
+    
+    # return (-1,-1) if stack is not empty     
+    if stack :
+        last = -1
 
-            # check if stack is empty
-            p = stack.pop()
-            if p != "END" :
-                stack.append(p)
-    return (first,last)            
+    return (first,last)                   
 
-def remove_braces(text):
-    newtext=""
-    paragraphs = split_braces(text)
-    for p in paragraphs:
-        newtext = newtext+p
-    return newtext
-
-def clear_text(text) :
-    newtext = text
-    exclude_regex = [r"<[^>]*>*>[^>]*<\/[^>]*>", r"<[^>]*>",r"\[\[File:.*\]\]",r"\{\{[^\}]*\}\}",r"\{\|\s?class=[^\}]*\|\}",r"\*\s\[http\:\/\/.*",r"\"\[http\:\/\/[^\]]*\]\"",r"\[\[Category[^\]]*\]]"]
-    for regex in exclude_regex:
-        newtext = re.sub(regex,"",newtext) 
+def clear_text(input_file,output_file) :
+    remove_braces(input_file,"tmp_file")
+    with open("tmp_file",'r',encoding='utf-8') as input :
+        newtext = input.read()
+    input.close()
     # exclude end of article (from "see also section to the end"        
     index = newtext.find("==See also==")
     if index != -1 :
         newtext = newtext[0:index]
-    return newtext   
+    exclude_regex = [r"<[^>]*>*>[^>]*<\/[^>]*>", r"<[^>]*>",r"\[\[File:.*\]\]",r"\{\|\s?class=[^\}]*\|\}",r"\*\s\[http\:\/\/.*",r"\"\[http\:\/\/[^\]]*\]\"",r"\[\[Category[^\]]*\]]"]
+    with open(output_file,'w',encoding='utf-8') as out :    
+        for regex in exclude_regex:
+            newtext = re.sub(regex,"",newtext)
+        out.write(newtext)
+    out.close()
+    
+    os.remove("tmp_file")
     
 def parser(src_files_dir):
 
@@ -71,28 +83,12 @@ def parser(src_files_dir):
     parsed_files_dir = os.path.join(src_files_dir,"parsed_files")
     if not os.path.exists(parsed_files_dir):
         os.makedirs(parsed_files_dir)
-    os.chmod(parsed_files_dir,stat.S_IRWXO)
 
     # parsing all files
     print("Parsing text files ...")
-    src_files = os.listdir(src_files_dir)
+    src_files = [f for f in os.listdir(src_files_dir) if os.path.isfile(os.path.join(src_files_dir, f))]
     for filename in src_files:
-    
-        input = os.path.join(src_files_dir,filename)
-        output = os.path.join(parsed_files_dir,filename)
-        
-        if os.path.isfile(input) :
-            with open(input,'r',encoding="utf-8") as f:
-                with open(output,'w',encoding="utf-8") as out:
-                    text = f.read()
-                    # clearing the text
-                    print("Reading ",input)
-                    text = remove_braces(text)
-                    text = clear_text(text)
-                    out.write(text)                                       
-                out.close()
-            f.close()
-    
+        parse_file(filename,src_files_dir)
     return parsed_files_dir
 
 def parse_file(filename,src_files_dir):
@@ -100,23 +96,28 @@ def parse_file(filename,src_files_dir):
     parsed_files_dir = os.path.join(src_files_dir,"parsed_files")
     if not os.path.exists(parsed_files_dir):
         os.makedirs(parsed_files_dir)
-    os.chmod(parsed_files_dir,stat.S_IRWXO)
 
-    # parsing file
-    output = os.path.join(parsed_files_dir,filename)
-    input = os.path.join(src_files_dir,filename)    
-    if os.path.isfile(input) :
-        if not os.path.exists(output) : # don't parse if the file already exist
-            with open(input,'r',encoding="utf-8") as f:
-                with open(output,'w',encoding="utf-8") as out:
-                    text = f.read()
-                    # clearing the text
-                    print("Reading ",input)
-                    text = remove_braces(text)
-                    text = clear_text(text)
-                    out.write(text)                                       
-                out.close()
-            f.close()
-            
-    return output
+    # parsing file            
+    if not os.path.exists(os.path.join(src_files_dir,filename)): # the input file name is encoded (b64)
+        filename = base64.b64encode(filename.encode('utf-8')).decode('utf-8')
     
+    input_file = os.path.join(src_files_dir,filename)  
+    output_file = os.path.join(parsed_files_dir,filename)    
+    
+    if os.path.exists(input_file):
+        if not os.path.exists(output_file) : # don't parse if the file already exist
+            clear_text(input_file,output_file)
+            print(filename)
+    else :
+        print(os.path.join(src_files_dir,filename),"not found")
+        
+    return output_file
+
+def main():
+    file = sys.argv[1]
+    # remove_braces(file,"hello")
+    # print(find_first_braces(file))
+    parser(file)
+    
+if __name__ == "__main__":
+    main()

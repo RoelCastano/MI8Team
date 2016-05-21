@@ -1,5 +1,7 @@
 from sklearn.metrics import jaccard_similarity_score
 from math import*
+import matplotlib.pyplot as plt
+import numpy as np
 import getopt
 import os, sys
 import re
@@ -7,6 +9,8 @@ import re
 Outgoing_Links = {}
 Incoming_Links = {}
 W=0
+Histogram = []
+
 def intersection_cardinality(x,y):
     return len(set.intersection(*[set(x), set(y)]))
     
@@ -21,9 +25,11 @@ def dice(x,y):
     
 def normalized_google_distance(x,y,w):
     if intersection_cardinality(x,y) == 0 :
-        return 0
-    num = log(max(len(x),len(y)))-log(intersection_cardinality(x,y))
-    den = log(w)-log(min(len(x),len(y)))
+        return -1
+    if len(x) == 0 or len(y) == 0 :
+        return 1
+    num = log10(max(len(x),len(y)))-log10(intersection_cardinality(x,y))
+    den = log10(w)-log10(min(len(x),len(y)))
     return num/float(den)        
 
 def build_sets(filename):
@@ -59,16 +65,27 @@ def add_link(article,target):
         Incoming_Links[target].append(article)
     
 def print_feature(opt,output_file):
+    global Histogram
     print("Creating new relatedness feature file ...")
     with open(output_file,"w",encoding="utf-8") as out:
         for title1 in Outgoing_Links:
             for title2 in Outgoing_Links[title1]:
                 link_title = title1+"@"+title2
                 # print(link_title,get_relatedness(opt,title1,title2))
-                out.write(link_title+"\t%f" % (get_relatedness(opt,title1,title2))+"\n")
+                relatedness = get_relatedness(opt,title1,title2)
+                out.write(link_title+"\t%f" % (relatedness)+"\n")
+                Histogram.append(relatedness)
     out.close()
     print("Done : ",output_file)
- 
+
+def print_histogram():
+    global Histogram
+    hist, bins = np.histogram(Histogram, bins=100)
+    width = 0.7 * (bins[1] - bins[0])
+    center = (bins[:-1] + bins[1:]) / 2
+    plt.bar(center, hist, align='center', width=width)
+    plt.show()    
+
 def set_W():
     global W
     W=union_cardinality(Outgoing_Links.keys(),Incoming_Links.keys())
@@ -126,7 +143,8 @@ def main():
             print_feature('g','normalized_google_distance_feature.txt')
         else :
             assert False,"unhandled option"
-    
+            
+    print_histogram()
             
 if __name__ == "__main__":
     main()
