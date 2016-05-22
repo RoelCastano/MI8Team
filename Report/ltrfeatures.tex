@@ -25,3 +25,53 @@ Although HITS and PageRank differ in content their main goal is the same, give e
 Similarly to community extraction, HITS and PageRank are computed from graph representation of Wikipedia. The graph is processed in R using package igraph that implements both scores. \\
 
 The intuition behind this feature comes from the search engine domain. In search, these scores helps identify the most relevant results. When applied to articles, the scores will help categorise linked articles for the learning to rank algorithm.
+
+\subsection{Relatedness obtained from links}
+
+This feature measures how two articles are related in terms of linking. Indeed, it compares the set of links (both incoming and outgoing links) of the current article and the target one. The more links they have in common, the more \"\ related\"\ the two articles are. \
+
+In order to quantify the similarity between links sets, we computed three different metrics  : Jaccard coefficient, Dice\'\ s measure and Normalized Google Distance. \
+These three metrics are shown in Table ~\ref{fig:formulas}. Given two articles a and b, A and B will respectively stand for the set of articles linking (considering both incoming and outgoing links) to article a and the set of articles linking to b. W represents the number of articles in the all set.
+
+\begin{table}[H]
+\caption{Relatedness measure formulas and values range}
+\centering
+\begin{tabular}{llr}
+\toprule
+\cmidrule(r){1-2}
+Formula & Min. & Max.\\
+\midrule
+$Dice(a,b)=2\times\frac{|A \cap B|}{|A| + |B|}$ & 0\% & 100\% \\
+ & & \\
+$Jaccard(a,b)= \frac{|A\cap B|}{|A\cup B|}$ & 0\% & 100\% \\
+ & & \\
+$NGD(a,b)= \frac{log(max(|A|,|B|))-log(|A\cap B|))}{log(|W|)-log(min(|A|,|B|))}$ & 0 & $\infty $ \\
+\bottomrule
+\label{fig:formulas}
+\end{tabular}
+\end{table}
+
+\subsubsection*{Dice's measure}
+Dice's measure is the fraction of the links both article have in common to the sum of links they both have. Then it has a very intuitive meaning. The highest Dice's measure is, the more related articles are.\
+
+\subsubsection*{Jaccard coefficient}
+Jaccard coefficient is quite similar to Dice's measure. It measures the ratio between the number of links both pages have in common and the total number of links they have.\
+
+\subsubsection*{Normalized Google distance}
+This measure was originally based on term occurrences in web pages and is used by Google search engine. As explained by David Milne and Ian H. Witten in their article \textit{"An Effective, Low-Cost Measure of Semantic Relatedness Obtained from Wikipedia Links"}, this measure can also be adapted to measure relatedness between two Wikipedia articles. The smallest the distance is, the more related articles should be.\
+
+\subsubsection*{}
+We chosed to integrate this relatedness feature because we made the assumption that a user who’s reading an article about a specific topic might be interested in reading more articles about the same domain. 
+
+As described for the link position feature, links sets are extracted from the raw articles text from Wikipedia dumps.
+
+\subsection{Textual similarity}
+
+This feature measures the textual content similarity between two Wikipedia articles.  \\
+
+The idea behind this feature is that two articles containing approximately the same words are likely to discuss closely related subjects. This is another way to know how the two articles are related on a more semantic level than the relatedness feature we described before.\\
+
+The text of all articles is extracted from wikipedia dumps. We get rid of all tables and “non-text information” (tables,links etc ...) with regular expressions, and we only keep the different paragraphs of each article. Then, for both articles A and B we create a vector that describe the frequencies of the relevant words (TF-IDF vector).\
+
+Then the method consists in comparing the frequencies of relevant words between article A and article B by using the cosine of these two vectors. The values we obtain are spread from 0 to 1 (completely similar).
+
