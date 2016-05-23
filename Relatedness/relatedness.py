@@ -5,11 +5,12 @@ import numpy as np
 import getopt
 import os, sys
 import re
+import Statistics
 
 Outgoing_Links = {}
 Incoming_Links = {}
 W=0
-Histogram = []
+data = []
 
 def intersection_cardinality(x,y):
     return len(set.intersection(*[set(x), set(y)]))
@@ -65,25 +66,26 @@ def add_link(article,target):
         Incoming_Links[target].append(article)
     
 def print_feature(opt,output_file):
-    global Histogram
+    global data
     print("Creating new relatedness feature file ...")
+    
+    filename = "similarity_feature"
+    
+    if opt == 'j':
+        filename = 'jaccard_similarity_feature'
+    if opt == 'd':
+        filename = 'dice_similarity_feature'
+    if opt == 'j':
+        filename = 'ngd_similarity_feature'
+    
     with open(output_file,"w",encoding="utf-8") as out:
         for title1 in Outgoing_Links:
             for title2 in Outgoing_Links[title1]:
                 link_title = title1+"@"+title2
                 relatedness = get_relatedness(opt,title1,title2)
                 out.write(link_title+"\t%f" % (relatedness)+"\n")
-                Histogram.append(relatedness)
+                data.append(relatedness)
     out.close()
-    print("Done : ",output_file)
-
-def print_histogram():
-    global Histogram
-    hist, bins = np.histogram(Histogram, bins=50)
-    width = 0.7 * (bins[1] - bins[0])
-    center = (bins[:-1] + bins[1:]) / 2
-    plt.bar(center, hist, align='center', width=width)
-    plt.show()    
 
 def set_W():
     global W
@@ -128,22 +130,38 @@ def main():
     except getopt.GetoptError as err:
         #print help information and exit:
         print(err)
-        usage()
         sys.exit(2)
-
+    
+    # make result directory
+    results_dir = "relatedness_results"
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)    
     build_sets(args[0])
-    # print(Incoming_Links)
+    
+    title = ""
+    stat_file = "" 
+    
+    # make feature file
     for o,a in opts:
         if o == "-j":
-            print_feature('j','jaccard_feature.txt')
+            print_feature('j',os.path.join(results_dir,"jaccard_relatedness_feature"))
+            stat_file = os.path.join(results_dir,"jaccard_statistics")  
+            title = "Jaccard coefficient"
         elif o =="-d":
-            print_feature('d','dice_feature.txt')
+            print_feature('d',os.path.join(results_dir,"dice_relatedness_feature"))
+            stat_file = os.path.join(results_dir,"dice_statistics")  
+            title = "Dice measure"
         elif o =="-g":
-            print_feature('g','normalized_google_distance_feature.txt')
+            print_feature('g',os.path.join(results_dir,"ngd_relatedness_feature"))
+            stat_file = os.path.join(results_dir,"ngd_statistics")
+            title = "Normalized Google distance"
         else :
             assert False,"unhandled option"
-            
-    print_histogram()
+
+    # make stats file and display histogram      
+    Statistics.print_stats(data,stat_file,title)
+    
+    print("Done. Results stored in : \"",results_dir,"\".")
             
 if __name__ == "__main__":
     main()

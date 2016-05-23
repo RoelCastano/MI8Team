@@ -25,6 +25,7 @@ ORDERED_CLICK_LIST="$PROCESSED_DATA"/sorted_click_list
 SCORES="$WIKIDUMP"/scores
 SCORES_FEATURE="$WIKIDUMP"/scores_feature
 LINK_FEATURE="$WIKIDUMP"/link_feature
+LINK_COUNT_FEATURE="$WIKIDUMP"/link_count_feature
 SYMMETRIC_FEATURE="$WIKIDUMP"/symmetric_feature
 ALL_LINKS_FROM_PROMINENT="$PROCESSED_DATA"/all_links_from_prominent
 COMMUNITIES="$WIKIDUMP"/same_communities
@@ -80,8 +81,12 @@ echo "Creating list of all links from prominent articles..."
 cut -f 2,3 "$PROMINENT_INTERSECTION_OUT_NAMED" | sort -u > "$ALL_LINKS_FROM_PROMINENT"
 
 # turn information about links into a feature
-echo "Preparing link information feature..."
+echo "Preparing link and link count feature..."
 join -t $'\t' "$PROMINENT_INTERSECTION_OUT" <(cut -f 1,4,5 "$ARTICLES_EXPANDED_SORTED") > "$LINK_FEATURE"
+cut -f 1 "$LINK_FEATURE" | sort -f -k 1b,1 | uniq -ic | sed 's/^ *\([0-9][0-9]*\) \(.*\)$/\2\t\1/' > "$LINK_COUNT_FEATURE"
+sort -k 1fb,1 -k 2bn,2 "$LINK_FEATURE" | sort -k 1fb,1 -u  > "$LINK_FEATURE"_uniq
+mv "$LINK_FEATURE"_uniq "$LINK_FEATURE"
+
 
 # make a graphml representation of links
 echo "Making graphml..."

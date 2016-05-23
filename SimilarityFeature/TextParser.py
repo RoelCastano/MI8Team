@@ -91,21 +91,22 @@ def parser(src_files_dir):
         parse_file(filename,src_files_dir)
     return parsed_files_dir
 
-def parse_file(filename,src_files_dir):
+def parse_file(filename,src_files_dir,parsed_files_dir):
     # creating de parsed files directory
-    parsed_files_dir = os.path.join(src_files_dir,"parsed_files")
     if not os.path.exists(parsed_files_dir):
         os.makedirs(parsed_files_dir)
 
     # parsing file            
-    if not os.path.exists(os.path.join(src_files_dir,filename)): # the input file name is encoded (b64)
+    if not os.path.exists(os.path.join(src_files_dir,filename)): 
+	# the input file name is encoded (b64)
         filename = base64.b64encode(filename.encode('utf-8')).decode('utf-8')
     
     input_file = os.path.join(src_files_dir,filename)  
     output_file = os.path.join(parsed_files_dir,filename)    
     
     if os.path.exists(input_file):
-        if not os.path.exists(output_file) : # don't parse if the file already exist
+        if not os.path.exists(output_file) : 
+		# don't parse if the file already exist
             clear_text(input_file,output_file)
             print(filename)
     else :

@@ -2,29 +2,73 @@
 This section defines each feature used in the implementation of Learn to Rank algorithm.
 
 \subsection{Link Position}
-Our intuition behind the Link Position feature is based on two reasons. The first one is that given the way Wikipedia articles are structured, the most general description of the article is placed in the first few paragraphs before the table of contents. This section of the Wikipedia article is called the lead \cite{lead}. As described in the Wikipedia manual of style, for many people, the lead section is the only section they will read since it summarises the entire article. Later paragraphs only dive deeper into the topics outlined in the description. \\
-The second motivation is the way people read web pages. As explained by Jakob Nielsen  \cite{nielsen}, one of the leaders in human-computer interaction, on average, users have time to read at most 28\% of the words of a website. Additionally, most attention is given to the top portion of a page and later sections are merely skimmed through. People looking for different article that is somewhat related to the one currently being read might be interested in more general concepts as they contain the searched term. As explained above, more general terms happen to be heavily abundant in the first portion of Wikipedia article. \\
-To be able to measure this feature, we count the number of characters preceding the occurrence of the link. The text of the articles is taken from the wikipedia dumps previously described and links to other wikipedia articles are found using regular expressions. As expected, links to images, external sources, etc. are ignored. Due to the way this feature is extracted, there might be slight discrepancies in feature value and the exact number of characters preceding the links. \\
+\subsubsection{Description}
+Position of a link in an article is the number of characters counted from the beginning of the article up to the link appearance. Because the length of different articles may vary quite substantially, this number is normalized per article.
+
+\subsubsection{Motivation}
+Our intuition behind the Link Position feature is based on two observations. The first one is that given the way Wikipedia articles are structured, the most general description of the article is placed in the first few paragraphs before the table of contents. This section of the Wikipedia article is called the lead \cite{lead}. As described in the Wikipedia manual of style, for many people, the lead section is the only section they will read since it summarises the entire article. Later paragraphs only dive deeper into the topics outlined in the description. 
+
+The second observation is the way people read web pages. As explained in \cite{nielsen} by Jakob Nielsen, one of the leaders in human-computer interaction, on average, users have time to read at most 28 \% of the words on a website. Additionally, most attention is given to the top portion of a page and later sections are merely skimmed through. People looking for different article that is somewhat related to the one currently being read might be interested in more general concepts as they contain the searched term. As explained above, more general terms happen to be heavily abundant in the top portion of a Wikipedia article.
+
+\subsubsection{Extraction}
+Raw texts of the articles in Wiki markup are taken from the Wikipedia dumps described above and links to other articles are found using regular expressions. Links to images, external sources, etc. are ignored. Due to the nature of source, from which is this feature extracted, there might be slight discrepancies in position value and the exact number of characters preceding the links in final article as displays in web browser.
 
 \subsection{Link Order}
-Similar to the previous feature, Link Order is based on the fact that a wikipedia article's initially describe the topic in general terms and the hypothesis?? that the probability of clicking a link is higher the closer it is to the first term. While the link position captures more of a distance between links and their spread, link order is a simplified version of it. It conveys less information, but in a much more straightforward manner. \\
-This feature is also extracted from the Wikipedia dumps by counting the number of links in the article. This feature captures the position of link relative to all the other links contained in the same article. The value $n$ means that the link is the $n^{th}$ link in the article. \\
+
+\subsubsection{Description}
+This feature captures the position of link relative to all the other links contained in the same article. The order equal to $n$ means that the link is the $n^{th}$ link in the article. The final value of this feature is again normalised per article.
+
+\subsubsection{Motivation}
+Similar to the previous feature, Link Order is based on the observation that a Wikipedia article's initially describe the topic in general terms. While the link position captures more of a distance between links and their spread, link order is a simplified version of it. It conveys less information, but in a much more straightforward manner.
+
+\subsubsection{Extraction}
+This feature is also extracted from the Wikipedia dumps in a similar manner to the Link Position feature.
+
+\subsection{Link Count}
+
+\subsubsection{Description}
+Link Count is the number of occurrences of the same link throughout the article.
+
+\subsubsection{Motivation}
+Whenever a link is present multiple times in a single article, it means that the topic is repeated several times in the article as well. This may signify strong relatedness of articles content.
+
+\subsubsection{Extraction}
+The feature is extracted from the Wikipedia dump using the raw article texts as in case of the previous two features.
+
 
 \subsection{Community Membership}
-This feature captures notion of two article being in the same community. The communities are computed from the graph representation of Wikipedia $G(V,E)$, where $V$ is a set of articles and $E$ is set of links between them. In this scenario community is $(V', E') = G' \subseteq G$ such that $|E'| \ge |\{ \{u,v\} \in E\setminus E'  \quad | \quad u \in V' \vee v \in V' \}|$. Communities are a implicit way of clustering articles on Wikipedia that capture emerging properties of interconnected articles.  \\
 
-This feature looks promising in cases where someone is interested in a specific topic. This could mean, as mentioned earlier, bands of a music genre, states of a country, fields of study in a certain science, or many others. Related articles from the same community might be a good place to look at and will highly likely contain desired article. Furthermore, users reading an article have shown an interest in specific topic and might want to broaden and deepen his or her knowledge of it.
+\subsubsection{Description}
+Let $G(V,E)$ be a simple graph. Then a community in $G$ is a subgraph $(V', E') = G' \subseteq G$, such that $|E'| \ge |\{ \{u,v\} \in E\setminus E'  \; | \; \{u, v\} \cap V' \neq \emptyset \}|$. In our case the $G$ is a graph of Wikipedia, where $V = \bigcup_{i=1}^{M} B_i \cup A$ is a set of articles and $E$ is set of links between them. After detecting all communities, each edge (link) $\{\alpha_i,\beta_j\}$ is given a value of 1 if both $\alpha_i$ and $\beta_j$ belong to the same community or -1 otherwise.
+
+\subsubsection{Motivation}
+Communities are an implicit clustering of articles on Wikipedia that capture emerging properties of interconnected articles. This feature looks promising in cases where someone is interested in a specific topic, be it music bands of the same genre or fields of study in a certain science. Related articles from the same community might be a good place to look at and will highly likely contain desired article. Furthermore, users reading an article have shown an interest in specific topic and might want to broaden and deepen his or her knowledge of it.
+
+\subsubsection{Extraction}
+Every link extracted from the Wikipedia dump is converted into an edge of a graph. The resulting graph is then loaded and communities are found using igraph package in R. Community detection algorithms used were \cite{fast_greedy}, \cite{label_propagation}, and \cite{infomap}. The graph was transformed into a simple graph and then community detection algorithms were run. Even though links have natural orientation, one can relax them as undirected edges. Sheer number of links by it self is an adequate indicator of community belonging regardless of their orientation.
 
 \subsection{Symmetric Linking}
-This feature captures the notion of two article being interconnected in both directions. Formally, a link $(A,B)$ between article A and B is symmetric if and only if link $(B,A)$ also exists. Symmetric linking indicates, in some cases, that there exists an important relevance between said articles or highly related topics are being discussed. Examples of this article relationship includes competing presidential candidates, sports team rivals, movies and its actors, etc. As expected, it is common for users to demonstrate interest in these kind of relations between articles. By looking and the article relationships, we found in one sample of the most visited articles that 74.9\% of the links were non-symmetric and 25.1\% were symmetric.
+
+\subsubsection{Description}
+A link $(\alpha_i, \beta_j)$ is considered symmetric if, and only if $\beta_j \in B_i$ and link $(\beta_j, \alpha_i)$ also exists. If the link is symmetric, the feature has a value of 1 and -1 otherwise.
+
+\subsubsection{Motivation}
+Symmetric linking indicates, in some cases, that there exists an important relevance between said articles or highly related topics are being discussed. Examples of this article relationship includes competing presidential candidates, sports team rivals, movies and its actors, etc. As expected, it is common for users to demonstrate interest in these kind of relations between articles.
+
+\subsubsection{Extraction}
+This feature is extracted from the Wikipedia dump file. First, all the links between prominent articles in $A$ and articles in all $B_i$ for $1 \le i \le M$ are found. Then for every link $(\alpha_i, \beta_j)$ a link $(\beta_j, \alpha_i)$ is looked up.
 
 \subsection{HITS and PageRanks}
+\subsubsection{Description}
+HITS and PageRank characterise nodes in the graph by score based on number of edges and also the scores of neighbours.
 
-Although HITS and PageRank differ in content their main goal is the same, give estimate of article significance. In case of HITS, high hub score may indicate more general topics while high authority score would be indication of very focused article discussing particular term in great depth. PageRank is similar to the hub and authority score combined. \\
+Although HITS and PageRank differ in content their main goal is the same, give estimate of article significance. In case of HITS, high hub score may indicate more general topics while high authority score would be indication of very focused article discussing particular term in great depth. PageRank is similar to the hub and authority score combined.
 
-Similarly to community extraction, HITS and PageRank are computed from graph representation of Wikipedia. The graph is processed in R using package igraph that implements both scores. \\
+\subsubsection{Motivation}
+The intuition behind this feature comes from the search engine domain. When searching, these scores helps identify the most relevant results. When applied to articles, the scores will help categorise linked articles for the learning to rank algorithm.
 
-The intuition behind this feature comes from the search engine domain. In search, these scores helps identify the most relevant results. When applied to articles, the scores will help categorise linked articles for the learning to rank algorithm.
+\subsubsection{Extraction}
+Similarly to community extraction, HITS and PageRank are computed from graph representation of Wikipedia. The graph is processed in R using package igraph that implements both \cite{pagerank} and \cite{hits}. Link directions are preserved in this case.
 
 \subsection{Relatedness obtained from links}
 
@@ -74,4 +118,3 @@ The idea behind this feature is that two articles containing approximately the s
 The text of all articles is extracted from wikipedia dumps. We get rid of all tables and “non-text information” (tables,links etc ...) with regular expressions, and we only keep the different paragraphs of each article. Then, for both articles A and B we create a vector that describe the frequencies of the relevant words (TF-IDF vector).\
 
 Then the method consists in comparing the frequencies of relevant words between article A and article B by using the cosine of these two vectors. The values we obtain are spread from 0 to 1 (completely similar).
-

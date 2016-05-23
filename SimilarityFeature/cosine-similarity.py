@@ -6,8 +6,9 @@ import base64
 import shutil
 import numpy as np
 import TextParser
+import Statistics
 
-Histogram = []
+data =[]
 
 def square_rooted(x):
     return round(sqrt(sum([a*a for a in x])),3)
@@ -21,10 +22,10 @@ def similarity(filename1,filename2):
     # read text files
     with open(filename1, 'r',encoding='utf-8') as file1:
         article1 = file1.read()
-    # file1.close()
+    file1.close()
     with open(filename2, 'r',encoding='utf-8') as file2:
         article2 = file2.read()
-    # file2.close()
+    file2.close()
     # Tf-Idf transformation
     corpus = [article1,article2]
     vectorizer = TfidfVectorizer(min_df=1)
@@ -35,7 +36,7 @@ def similarity(filename1,filename2):
     return cosine_similarity(article_array_1,article_array_2)
 
 def get_article_titles(line):
-    regex = r"^(?P<article>[^@]*)@(?P<target>[^\s]*)"
+    regex = r"^(?P<article>[^s]*)\t(?P<target>[^\s]*)"
     link = re.search(regex,line)
     if link is not None:
         title1 = link.group('article')
@@ -52,17 +53,17 @@ def get_article_names(files_dir,title1,title2) :
         filename2 = base64.b64encode(filename2.encode('utf-8')).decode('utf-8')
     return (filename1,filename2)    
         
-def print_feature(files_dir):
+def print_feature(files_dir,parsed_files_dir,results_dir):
     print("Computing similarity from \"LINKS\" file.")
     lost = 0
     with open(os.path.join(files_dir,"LINKS"),'r',encoding='utf-8') as links:
-        with open("cosine_similarity_feature","w",encoding='utf-8') as out:
+        with open(os.path.join(results_dir,"cosine_similarity_feature"),"w",encoding='utf-8') as out:
             for line in links:
                 (title1,title2) = get_article_titles(line)
                 (filename1,filename2) = get_article_names(files_dir,title1,title2)
                 # create parsed files
-                parsed_file_1 = TextParser.parse_file(filename1,files_dir)
-                parsed_file_2 = TextParser.parse_file(filename2,files_dir) 
+                parsed_file_1 = TextParser.parse_file(filename1,files_dir,parsed_files_dir)
+                parsed_file_2 = TextParser.parse_file(filename2,files_dir,parsed_files_dir) 
                
                 # compute feature
                 feature = -1
@@ -78,28 +79,27 @@ def print_feature(files_dir):
                 # writing feature in output file
                 link_title = title1+"@"+title2
                 out.write(link_title+"\t%f\n"%(feature))
-                Histogram.append(feature)
+                data.append(feature)
         out.close()
     links.close()
-    print("Lost links :",lost)    
-
-def print_histogram():
-    global Histogram
-    hist, bins = np.histogram(Histogram, bins=50)
-    width = 0.7 * (bins[1] - bins[0])
-    center = (bins[:-1] + bins[1:]) / 2
-    plt.bar(center, hist, align='center', width=width)
-    plt.show()      
+    print("Lost links :",lost)         
     
 def main():
     src_files_dir = sys.argv[1]
+    
     parsed_files_dir = os.path.join(src_files_dir,"parsed_files")
     if os.path.exists(parsed_files_dir):
         shutil.rmtree(parsed_files_dir)
+    
+    results_dir = os.path.join(src_files_dir,"cosine_similarity_results")
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+    
     # TextParser.parser(src_files_dir)    
-    print_feature(src_files_dir)
-    print_histogram()
-    print("Done : results stored in \"cosine_similarity_feature\".")
+    print_feature(src_files_dir,parsed_files_dir,results_dir)
+    stat_file = os.path.join(results_dir,"cosine_similarity_statistics")
+    print("Done : results stored in \"",results_dir,"\".")
+    Statistics.print_stats(data,stat_file,"Cosine similarity")
     
 if __name__ == "__main__":
     main()
