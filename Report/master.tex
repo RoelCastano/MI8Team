@@ -58,6 +58,9 @@ backend=biber      % if we want unicode
 ]{biblatex}
 \addbibresource{bibliography.bib}
 
+% With 'final' over 'draft' triggers error on notes in final report
+\usepackage[footnote,draft,english,silent,nomargin]{fixme}
+
 \usepackage{abstract} % Allows abstract customization
 \renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
 \renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
@@ -123,6 +126,15 @@ backend=biber      % if we want unicode
 %------------------------------------------------
 
 \input{discussion.tex}
+
+
+%----------------------------------------------------------------------------------------
+%	LIST OF ERRORS
+%----------------------------------------------------------------------------------------
+
+\newpage														% Ny side til Fixme-
+\listoffixmes	
+
 
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST
