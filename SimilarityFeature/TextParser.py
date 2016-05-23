@@ -113,11 +113,11 @@ def parse_file(filename,src_files_dir):
         
     return output_file
 
-def main():
-    file = sys.argv[1]
-    # remove_braces(file,"hello")
-    # print(find_first_braces(file))
-    parser(file)
+# def main():
+    # file = sys.argv[1]
+    # # remove_braces(file,"hello")
+    # # print(find_first_braces(file))
+    # parser(file)
     
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+    # main()

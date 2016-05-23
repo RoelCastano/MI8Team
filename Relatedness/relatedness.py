@@ -25,7 +25,7 @@ def dice(x,y):
     
 def normalized_google_distance(x,y,w):
     if intersection_cardinality(x,y) == 0 :
-        return -1
+        return 
     if len(x) == 0 or len(y) == 0 :
         return 1
     num = log10(max(len(x),len(y)))-log10(intersection_cardinality(x,y))
@@ -34,7 +34,7 @@ def normalized_google_distance(x,y,w):
 
 def build_sets(filename):
     print("Reading ",filename," ... ")
-    regex = r"^(?P<article>[^@]*)@(?P<target>[^\s]*)\s"
+    regex = r"^(?P<article>[^\s]*)\t(?P<target>[^\s]*)\s"
     with open(filename,'r', encoding="utf-8") as f:
         lines  = f.readlines()
         for line in lines:
@@ -71,7 +71,6 @@ def print_feature(opt,output_file):
         for title1 in Outgoing_Links:
             for title2 in Outgoing_Links[title1]:
                 link_title = title1+"@"+title2
-                # print(link_title,get_relatedness(opt,title1,title2))
                 relatedness = get_relatedness(opt,title1,title2)
                 out.write(link_title+"\t%f" % (relatedness)+"\n")
                 Histogram.append(relatedness)
@@ -80,7 +79,7 @@ def print_feature(opt,output_file):
 
 def print_histogram():
     global Histogram
-    hist, bins = np.histogram(Histogram, bins=100)
+    hist, bins = np.histogram(Histogram, bins=50)
     width = 0.7 * (bins[1] - bins[0])
     center = (bins[:-1] + bins[1:]) / 2
     plt.bar(center, hist, align='center', width=width)
@@ -91,7 +90,7 @@ def set_W():
     W=union_cardinality(Outgoing_Links.keys(),Incoming_Links.keys())
  
 def get_relatedness(opt,articleA,articleB):
-    
+
     # set of links to and from article A
     if articleA in Outgoing_Links :
         outgoing_links_A = Outgoing_Links[articleA]
