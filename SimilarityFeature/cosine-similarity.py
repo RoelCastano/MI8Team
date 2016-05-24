@@ -36,7 +36,7 @@ def similarity(filename1,filename2):
     return cosine_similarity(article_array_1,article_array_2)
 
 def get_article_titles(line):
-    regex = r"^(?P<article>[^s]*)\t(?P<target>[^\s]*)"
+    regex = r"^(?P<article>[^\s]*)\t(?P<target>[^\s]*)"
     link = re.search(regex,line)
     if link is not None:
         title1 = link.group('article')
