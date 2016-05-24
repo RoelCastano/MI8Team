@@ -1,0 +1,72 @@
+\subsection{Popularity of Resource}
+It seems reasonable to assume that users have a tendency to click on links to articles that are describing trending and popular topics. This is the motivation for constructing the feature described in details below where a numerical measure is estimating a degree of user interest for the resource article $\beta$ in the pair $(\alpha, \beta)$. \\
+
+For our model to be applicable to new articles, we should not, in general, use any information on article $\alpha$ that are caused by user behaviour. If we were to use this information we would not in practice be able to apply our model to new articles before sufficient data has been logged. 
+
+
+\subsubsection{Description}
+From the clickstream data it is possible to derive the number of article views on a an article that are as a result of external traffic i.e. traffic coming from outside the Wikipedia domain. This gives the possibility of extracting the number of searches from known search providers: Google, Bing and Yahoo! or the number of visits from social media sites such as Twitter and Facebook. This is traced using the HTTP header information: `referer'. Note that this information is completely separated from the information used for creating the ground truth -- for that only internal click counts were used.\\
+
+Furthermore we limit ourselves to using traffic data from external and well known sources and not include data from internal Wikipedia searches or when the referrer is missing: This could possibly be due to spoofed referral headers which could introduce a bias to our model.\\
+
+We consider traffic from search and social media individually as \fxnote{insert ref http://research.microsoft.com/pubs/154556/wsdm11-twitter.pdf} states that users might have different intentions depending on which media they choose to search or browse for content. Users on social media, unlike for search engines, tends to look for content that is currently trending.
+
+\subsubsection{Extraction}
+\fxnote{Nothing in this section makes sense right now}
+Virality and derived measures for popularity originating from social networks usually follows a power law distribution as a consequence of the social network forming scale-free graphs. [1]
+
+Assuming both search- and social media traffic are directly influenced by social networks we have an idea of the distribution of traffic to wiki articles from these sources. According to the power law this would mean that low-popularity articles are very common whereas high-popularity articles can be extremely rare.
+
+Characteristic for a power law distribution is that the log-log plot of the probability density function (PDF) is linear. The below figure illustrates this. The articles considered is all distinct 𝛃-articles for all ɑ in A, i.e. all distinct prominent-linked articles.
+
+We see that the popularity originating from search traffic of these mentioned articles follow a power law distribution.
+
+Knowing the distribution of the click data from social medias and search we can preprocess the features including traffic volumes from these sources. An easy and effective way of coping with the non-linearity of the power law distribution is by taking the logarithm twice of the popularity ln( ln( beta ) ) and thereafter normalizing the feature values using the maximum value.
+The final outcome of this processing results in the feature having a correlation coefficient of $r = 0,3879$ and a `coefficient of determination' of $r^2 = 0,15$.  
+
+In the below figures the PDF is shown for the search volumes respectively without taking the log, with the log and with the log twice. The distribution of feature values `flattens out' and signs of any exponential growth or decay disappears.
+
+For the above 3 tests we have a `coefficient of determination' of respectively 0,0045, 0,113 and 0,150, thereby effectively selecting the 3. option as an input feature for the model.
+
+It must be noted for the cases where the popularity are zero, we simply skip preprocessing because of the nature of the logarithm.
+
+
+
+
+
+\subsection{Popularity Percentile Rank}
+
+\fxnote{the following is just raw notes}
+
+Another feature to derive from clickstream data is for an instance pair $( ɑ , beta)$ where beta is in $B$ the probability that an arbitrary article $ɣ in B \ { beta }$ has a lower popularity than beta:
+$f( ( ɑ , beta) ) = pr( pop(beta) > pop(ɣ) )$
+
+Characteristic for this feature is that if $pop(beta)$ is the maximal value for any article in $B$, then the feature value gives:
+$f( ( ɑ , beta_max) ) = 1$
+
+If $pop(beta)$ is the minimum value for any article in $B$, then the feature value gives:
+$f( ( ɑ , beta_min) ) = 0$
+
+And if $pop(beta)$ is equal to the median value of the articles in $B$, where all article popularity values are distinct, then the feature value gives:
+$f( ( ɑ , beta_med) ) = 0.5$
+
+This feature gives an opportunity to extract more knowledge on the distribution of article popularity locally for a prominent article.
+
+The coefficient of determination yields $r^2 = 0,0582$.
+
+\subsubsection{Description}
+x
+\subsubsection{Motivation}
+x
+\subsubsection{Extraction}
+x
+
+
+
+
+\subsection{Title similarity}
+\fxnote{Just raw notes - and it should be together with the other sim features}
+A last feature to extract from the clickstream data is title similarity. This feature is fairly trivial and motivated by e.g. the observation that articles on people often have their family members among the most popular reference links and these often share familyname whereas we would observe a higher title similarity. The feature was implemented using a Jaccard similarity measure and normalized from 0 to 1. We achieved a coefficient of determination on $r^2 = 0,0115$.
+
+
+\fxnote{INCOMPLETE} \\
