@@ -6,9 +6,9 @@ import base64
 import shutil
 import numpy as np
 import TextParser
-import Statistics
+# import Statistics
 
-data =[]
+# data =[]
 
 def square_rooted(x):
     return round(sqrt(sum([a*a for a in x])),3)
@@ -79,7 +79,7 @@ def print_feature(files_dir,parsed_files_dir,results_dir,links_file):
                 # writing feature in output file
                 link_title = title1+"@"+title2
                 out.write(link_title+"\t%f\n"%(feature))
-                data.append(feature)
+                # data.append(feature)
         out.close()
     links.close()
     print("Lost links :",lost)         
@@ -98,9 +98,12 @@ def main():
     
     # TextParser.parser(src_files_dir)    
     print_feature(src_files_dir,parsed_files_dir,results_dir,links_file)
-    stat_file = os.path.join(results_dir,"cosine_similarity_statistics")
+    
     print("Done : results stored in \"",results_dir,"\".")
-    Statistics.print_stats(data,stat_file,"Cosine similarity")
+	
+	## Display and save statistics
+	# stat_file = os.path.join(results_dir,"cosine_similarity_statistics")
+    # Statistics.print_stats(data,stat_file,"Cosine similarity")
     
 if __name__ == "__main__":
     main()
