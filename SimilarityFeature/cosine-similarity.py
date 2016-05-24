@@ -53,10 +53,10 @@ def get_article_names(files_dir,title1,title2) :
         filename2 = base64.b64encode(filename2.encode('utf-8')).decode('utf-8')
     return (filename1,filename2)    
         
-def print_feature(files_dir,parsed_files_dir,results_dir):
+def print_feature(files_dir,parsed_files_dir,results_dir,links_file):
     print("Computing similarity from \"LINKS\" file.")
     lost = 0
-    with open(os.path.join(files_dir,"LINKS"),'r',encoding='utf-8') as links:
+    with open(links_file,'r',encoding='utf-8') as links:
         with open(os.path.join(results_dir,"cosine_similarity_feature"),"w",encoding='utf-8') as out:
             for line in links:
                 (title1,title2) = get_article_titles(line)
@@ -86,6 +86,7 @@ def print_feature(files_dir,parsed_files_dir,results_dir):
     
 def main():
     src_files_dir = sys.argv[1]
+    links_file = sys.argv[2]
     
     parsed_files_dir = os.path.join(src_files_dir,"parsed_files")
     if os.path.exists(parsed_files_dir):
@@ -96,7 +97,7 @@ def main():
         os.makedirs(results_dir)
     
     # TextParser.parser(src_files_dir)    
-    print_feature(src_files_dir,parsed_files_dir,results_dir)
+    print_feature(src_files_dir,parsed_files_dir,results_dir,links_file)
     stat_file = os.path.join(results_dir,"cosine_similarity_statistics")
     print("Done : results stored in \"",results_dir,"\".")
     Statistics.print_stats(data,stat_file,"Cosine similarity")
