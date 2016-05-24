@@ -9,15 +9,24 @@ From the clickstream data it is possible to derive the number of article views o
 
 Furthermore we limit ourselves to using traffic data from external and well known sources and not include data from internal Wikipedia searches or when the referrer is missing: This could possibly be due to spoofed referral headers which could introduce a bias to our model.\\
 
-We consider traffic from search and social media individually as \fxnote{insert ref http://research.microsoft.com/pubs/154556/wsdm11-twitter.pdf} states that users might have different intentions depending on which media they choose to search or browse for content. Users on social media, unlike for search engines, tends to look for content that is currently trending.
+We consider traffic from search and social media individually as \cite{teevan2011twittersearch} states that users might have different intentions depending on which media they choose to search or browse for content. Users on social media, unlike for search engines, tends to look for content that is currently trending.
 
 \subsubsection{Extraction}
-\fxnote{Nothing in this section makes sense right now}
-Virality and derived measures for popularity originating from social networks usually follows a power law distribution as a consequence of the social network forming scale-free graphs. [1]
+Social networks are known for virally spreading topics that in terms of popularity or `shares' will follow a power law distribution \cite{jain2014scalable} -- this is a consequence of the social network forming scale-free graphs. Assuming interest in articles from both search- and social media sites have emerged from social networks we consider that our distribution of article views from these external sources are as such. \\
 
-Assuming both search- and social media traffic are directly influenced by social networks we have an idea of the distribution of traffic to wiki articles from these sources. According to the power law this would mean that low-popularity articles are very common whereas high-popularity articles can be extremely rare.
+The nature of the power law distribution gives that there are very few popular articles among all the articles. And of those few only a small fraction are highly popular.\\
 
-Characteristic for a power law distribution is that the log-log plot of the probability density function (PDF) is linear. The below figure illustrates this. The articles considered is all distinct 𝛃-articles for all ɑ in A, i.e. all distinct prominent-linked articles.
+To illustrate that our above assumptions for both search- and social media traffic holds figure \fxnote{insert figure} shows how the probability density function of article views originating from search are linear in a log-log plotting which is characteristic for power law distributions.\\
+
+\fbox{\includegraphics{figure}} 
+
+\begin{figure}[h]
+  \caption{A picture of a gull.}
+  \centering
+    \includegraphics[width=0.5\textwidth]{images/gull}
+\end{figure}
+
+. The below figure illustrates this. The articles considered is all distinct 𝛃-articles for all ɑ in A, i.e. all distinct prominent-linked articles.
 
 We see that the popularity originating from search traffic of these mentioned articles follow a power law distribution.
 
