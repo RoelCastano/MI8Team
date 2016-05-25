@@ -1,5 +1,0 @@
-[0] Config.pm:343> INFO - This is Biber 2.5
-[0] Config.pm:346> INFO - Logfile is 'popfeatures.blg'
-[48] biber-MSWIN64:290> INFO - === 
-[473] Utils.pm:165> ERROR - Cannot find control file 'popfeatures.bcf'! - did you pass the "backend=biber" option to BibLaTeX?
-[474] Biber.pm:112> INFO - ERRORS: 1
