@@ -1,5 +1,31 @@
 \section{Results}
 
+\subsection{Training dataset}
+
+The training dataset comprises ground truth and all the extracted features. There are 1000 queries each with \fxnote{add exact number} articles. In total, that is \fxnote{add exact number} data points for learning. Sections below provide more descriptive statistics about feature vales.
+
+\subsubsection{Link order and position}
+
+Table \ref{link_order_pos_desc} shows distribution of values for these features. Figure \ref{link_order_pos_rank} shows how well this feature matches the distribution of popularity.
+
+\begin{table}[H]
+\caption{Descriptive statistic for link order}
+\centering
+\label{link_order_pos_desc}
+\begin{tabular}{lrrrr}
+\toprule
+& & \multicolumn{3}{c}{Quartiles} \\
+\cmidrule{3-5}
+Feature & Mean & $Q_1$ & $Q_2$ & $Q_3$ \\
+\midrule
+order & 0.50 & 0.25 & 0.50 & 0.75 \\
+position & 0.47 & 0.20 & 0.46 & 0.75 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\fxnote{add plot and other features}
+
 \begin{table}[H]
 \caption{Example table}
 \centering
