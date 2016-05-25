@@ -1,0 +1,1006 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.7 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \sortlist[entry]{none/global/}
+    \entry{missing_links}{online}{}
+      \name{author}{1}{}{%
+        {{hash=99f5f78b943380ad4480b16e17c6121c}{%
+           family={Dvorak},
+           family_i={D\bibinitperiod},
+           given={John\bibnamedelima C.},
+           given_i={J\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {PCMag}%
+      }
+      \strng{namehash}{99f5f78b943380ad4480b16e17c6121c}
+      \strng{fullhash}{99f5f78b943380ad4480b16e17c6121c}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{16}
+      \field{month}{04}
+      \field{title}{Missing Links}
+      \field{urlday}{23}
+      \field{urlmonth}{05}
+      \field{urlyear}{2016}
+      \field{year}{2002}
+      \verb{url}
+      \verb http://www.pcmag.com/article2/0,2817,33326,00.asp
+      \endverb
+    \endentry
+    \entry{paranjape}{article}{}
+      \name{author}{4}{}{%
+        {{hash=520a181595c460d39601a3c162fb3425}{%
+           family={Paranjape},
+           family_i={P\bibinitperiod},
+           given={Ashwin},
+           given_i={A\bibinitperiod}}}%
+        {{hash=9d2787872d7eadcedce1aeb8e7af9eb0}{%
+           family={West},
+           family_i={W\bibinitperiod},
+           given={Robert},
+           given_i={R\bibinitperiod}}}%
+        {{hash=fb75fc000b726959cd8e597199e25f22}{%
+           family={Zia},
+           family_i={Z\bibinitperiod},
+           given={Leila},
+           given_i={L\bibinitperiod}}}%
+        {{hash=900d107125ff0ca84698cb909e4f6c51}{%
+           family={Leskovec},
+           family_i={L\bibinitperiod},
+           given={Jure},
+           given_i={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{99de9f0376130e85e8a47da845d8a230}
+      \strng{fullhash}{7786304897e1cba7b9006ee0a52aa08c}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{CoRR}
+      \field{title}{Improving Website Hyperlink Structure Using Server Logs}
+      \field{volume}{abs/1512.07258}
+      \field{year}{2015}
+      \verb{url}
+      \verb http://arxiv.org/abs/1512.07258
+      \endverb
+    \endentry
+    \entry{learning_link}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=d9089b4be8a55f01b0bcce107e69f2e6}{%
+           family={Milne},
+           family_i={M\bibinitperiod},
+           given={David},
+           given_i={D\bibinitperiod}}}%
+        {{hash=926252d979eb0dc3c8c27118fa93f219}{%
+           family={Witten},
+           family_i={W\bibinitperiod},
+           given={Ian\bibnamedelima H.},
+           given_i={I\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Napa Valley, California, USA}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{ef90903343e753a5c131c22e8d278b08}
+      \strng{fullhash}{ef90903343e753a5c131c22e8d278b08}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 17th ACM Conference on Information and Knowledge anagement}
+      \field{isbn}{978-1-59593-991-3}
+      \field{series}{CIKM '08}
+      \field{title}{Learning to Link with Wikipedia}
+      \field{year}{2008}
+      \field{pages}{509\bibrangedash 518}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1145/1458082.1458150
+      \endverb
+      \verb{url}
+      \verb http://doi.acm.org/10.1145/1458082.1458150
+      \endverb
+      \keyw{data mining,semantic annotation,wikipedia,word sense disambiguation}
+    \endentry
+    \entry{west}{article}{}
+      \name{author}{3}{}{%
+        {{hash=9d2787872d7eadcedce1aeb8e7af9eb0}{%
+           family={West},
+           family_i={W\bibinitperiod},
+           given={Robert},
+           given_i={R\bibinitperiod}}}%
+        {{hash=520a181595c460d39601a3c162fb3425}{%
+           family={Paranjape},
+           family_i={P\bibinitperiod},
+           given={Ashwin},
+           given_i={A\bibinitperiod}}}%
+        {{hash=900d107125ff0ca84698cb909e4f6c51}{%
+           family={Leskovec},
+           family_i={L\bibinitperiod},
+           given={Jure},
+           given_i={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{295e5b644651822a4fa78d4bcb456687}
+      \strng{fullhash}{295e5b644651822a4fa78d4bcb456687}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{CoRR}
+      \field{title}{Mining Missing Hyperlinks from Human Navigation Traces: {A} Case Study of Wikipedia}
+      \field{volume}{abs/1503.04208}
+      \field{year}{2015}
+      \verb{url}
+      \verb http://arxiv.org/abs/1503.04208
+      \endverb
+    \endentry
+    \entry{LTR4IR}{article}{}
+      \name{author}{1}{}{%
+        {{hash=716b89cbb7332599ebb33cc58a52f648}{%
+           family={Liu},
+           family_i={L\bibinitperiod},
+           given={Tie-Yan},
+           given_i={T\bibinithyphendelim Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{716b89cbb7332599ebb33cc58a52f648}
+      \strng{fullhash}{716b89cbb7332599ebb33cc58a52f648}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1554-0669}
+      \field{journaltitle}{Foundations and Trends{$\textregistered$} in Information Retrieval}
+      \field{number}{3}
+      \field{title}{Learning to Rank for Information Retrieval}
+      \field{volume}{3}
+      \field{year}{2009}
+      \field{pages}{225\bibrangedash 331}
+      \range{pages}{107}
+      \verb{doi}
+      \verb 10.1561/1500000016
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1561/1500000016
+      \endverb
+    \endentry
+    \entry{li}{article}{}
+      \name{author}{1}{}{%
+        {{hash=1161a5311adb3130e6d43df93c8b498f}{%
+           family={Li},
+           family_i={L\bibinitperiod},
+           given={Hang},
+           given_i={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{1161a5311adb3130e6d43df93c8b498f}
+      \strng{fullhash}{1161a5311adb3130e6d43df93c8b498f}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1745-1361}
+      \field{journaltitle}{IEICE Transactions on Information and Systems IEICE Trans. Inf. \& Syst}
+      \field{month}{10}
+      \field{number}{10}
+      \field{title}{A Short Introduction to Learning to Rank}
+      \field{volume}{E94-D}
+      \field{year}{2011}
+      \field{pages}{1854\bibrangedash 1862}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1587/transinf.E94.D.1854
+      \endverb
+      \verb{url}
+      \verb https://search.ieice.org/bin/pdf_link.php?category=D&lang=E&year=2011&fname=e94-d_10_1854&abst=
+      \endverb
+    \endentry
+    \entry{lemur}{online}{}
+      \name{author}{1}{}{%
+        {{hash=7e2d0779870bfa5ea29f92f5cf7dd409}{%
+           family={Project},
+           family_i={P\bibinitperiod},
+           given={The\bibnamedelima Lemur},
+           given_i={T\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \list{organization}{2}{%
+        {Center for Intelligent Information Retrieval (CIIR) at the University of Massachusetts, Amherst,}%
+        {the Language Technologies Institute (LTI) at Carnegie Mellon University}%
+      }
+      \strng{namehash}{7e2d0779870bfa5ea29f92f5cf7dd409}
+      \strng{fullhash}{7e2d0779870bfa5ea29f92f5cf7dd409}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{19}
+      \field{month}{12}
+      \field{title}{The Lemur Project}
+      \field{urlday}{19}
+      \field{urlmonth}{05}
+      \field{urlyear}{2016}
+      \field{year}{2013}
+      \verb{url}
+      \verb http://www.lemurproject.org/
+      \endverb
+    \endentry
+    \entry{ranklib}{online}{}
+      \name{author}{1}{}{%
+        {{hash=218d06f39c74d0417b00b3f294885f4a}{%
+           family={Dang},
+           family_i={D\bibinitperiod},
+           given={Van},
+           given_i={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{218d06f39c74d0417b00b3f294885f4a}
+      \strng{fullhash}{218d06f39c74d0417b00b3f294885f4a}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{05}
+      \field{month}{10}
+      \field{title}{RankLib}
+      \field{urlday}{19}
+      \field{urlmonth}{05}
+      \field{urlyear}{2016}
+      \field{year}{2013}
+      \verb{url}
+      \verb https://sourceforge.net/p/lemur/wiki/RankLib/
+      \endverb
+    \endentry
+    \entry{MART}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6df955e00dece4d624abb0b61029f4e0}{%
+           family={Friedman},
+           family_i={F\bibinitperiod},
+           given={Jerome\bibnamedelima H.},
+           given_i={J\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {The Institute of Mathematical Statistics}%
+      }
+      \strng{namehash}{6df955e00dece4d624abb0b61029f4e0}
+      \strng{fullhash}{6df955e00dece4d624abb0b61029f4e0}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Ann. Statist.}
+      \field{month}{10}
+      \field{number}{5}
+      \field{title}{Greedy function approximation: A gradient boosting machine.}
+      \field{volume}{29}
+      \field{year}{2001}
+      \field{pages}{1189\bibrangedash 1232}
+      \range{pages}{44}
+      \verb{doi}
+      \verb 10.1214/aos/1013203451
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1214/aos/1013203451
+      \endverb
+    \endentry
+    \entry{RankNet}{inproceedings}{}
+      \name{author}{7}{}{%
+        {{hash=ae76624e081d683dca89a3edb7900221}{%
+           family={Burges},
+           family_i={B\bibinitperiod},
+           given={Chris},
+           given_i={C\bibinitperiod}}}%
+        {{hash=8e25f4617a4e96096278a4abcf8e61de}{%
+           family={Shaked},
+           family_i={S\bibinitperiod},
+           given={Tal},
+           given_i={T\bibinitperiod}}}%
+        {{hash=b40f08a8bc1b77508b6e0d225be4e123}{%
+           family={Renshaw},
+           family_i={R\bibinitperiod},
+           given={Erin},
+           given_i={E\bibinitperiod}}}%
+        {{hash=b34aa84749f83deab7aed978756d3cfe}{%
+           family={Lazier},
+           family_i={L\bibinitperiod},
+           given={Ari},
+           given_i={A\bibinitperiod}}}%
+        {{hash=6337df0967be702072841082388a4a70}{%
+           family={Deeds},
+           family_i={D\bibinitperiod},
+           given={Matt},
+           given_i={M\bibinitperiod}}}%
+        {{hash=4e518eed8844f7239e440695f059d309}{%
+           family={Hamilton},
+           family_i={H\bibinitperiod},
+           given={Nicole},
+           given_i={N\bibinitperiod}}}%
+        {{hash=c919979ea46f12656aef3b18a2997314}{%
+           family={Hullender},
+           family_i={H\bibinitperiod},
+           given={Greg},
+           given_i={G\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Bonn, Germany}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{95e4afd63bc2a3bc8f4bf66f3da342c4}
+      \strng{fullhash}{f1c222d96e3a070f8037841386a8cf15}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 22Nd International Conference on Machine Learning}
+      \field{isbn}{1-59593-180-5}
+      \field{series}{ICML '05}
+      \field{title}{Learning to Rank Using Gradient Descent}
+      \field{year}{2005}
+      \field{pages}{89\bibrangedash 96}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1145/1102351.1102363
+      \endverb
+      \verb{url}
+      \verb http://doi.acm.org/10.1145/1102351.1102363
+      \endverb
+    \endentry
+    \entry{RankBoost}{article}{}
+      \name{author}{4}{}{%
+        {{hash=9dae54fc70ef3090ef42046937183be2}{%
+           family={Freund},
+           family_i={F\bibinitperiod},
+           given={Yoav},
+           given_i={Y\bibinitperiod}}}%
+        {{hash=035babcde3dc3813831f505386ab6731}{%
+           family={Iyer},
+           family_i={I\bibinitperiod},
+           given={Raj},
+           given_i={R\bibinitperiod}}}%
+        {{hash=8112f3ade8b9d0f5e71791274d4e05f0}{%
+           family={Schapire},
+           family_i={S\bibinitperiod},
+           given={Robert\bibnamedelima E.},
+           given_i={R\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=300d4990e626d975e0c28630444f63c3}{%
+           family={Singer},
+           family_i={S\bibinitperiod},
+           given={Yoram},
+           given_i={Y\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {JMLR.org}%
+      }
+      \strng{namehash}{1054e83dd8410947dc39057c03f6e214}
+      \strng{fullhash}{c63b7a3fdc3e83c3015aa65325945e16}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1532-4435}
+      \field{journaltitle}{J. Mach. Learn. Res.}
+      \field{month}{12}
+      \field{title}{An Efficient Boosting Algorithm for Combining Preferences}
+      \field{volume}{4}
+      \field{year}{2003}
+      \field{pages}{933\bibrangedash 969}
+      \range{pages}{37}
+      \verb{url}
+      \verb http://dl.acm.org/citation.cfm?id=945365.964285
+      \endverb
+    \endentry
+    \entry{AdaRank}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=05ed36bcb6a44b5b9e4d52219469373d}{%
+           family={Xu},
+           family_i={X\bibinitperiod},
+           given={Jun},
+           given_i={J\bibinitperiod}}}%
+        {{hash=1161a5311adb3130e6d43df93c8b498f}{%
+           family={Li},
+           family_i={L\bibinitperiod},
+           given={Hang},
+           given_i={H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Amsterdam, The Netherlands}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{9a1cca3985e66b64fefeb7d9d636591c}
+      \strng{fullhash}{9a1cca3985e66b64fefeb7d9d636591c}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 30th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval}
+      \field{isbn}{978-1-59593-597-7}
+      \field{series}{SIGIR '07}
+      \field{title}{AdaRank: A Boosting Algorithm for Information Retrieval}
+      \field{year}{2007}
+      \field{pages}{391\bibrangedash 398}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1145/1277741.1277809
+      \endverb
+      \verb{url}
+      \verb http://doi.acm.org/10.1145/1277741.1277809
+      \endverb
+      \keyw{boosting,information retrieval,learning to rank}
+    \endentry
+    \entry{CoordinateAscent}{article}{}
+      \name{author}{2}{}{%
+        {{hash=b8598f6ee8ef27100af553bb38e1ff24}{%
+           family={Metzler},
+           family_i={M\bibinitperiod},
+           given={Donald},
+           given_i={D\bibinitperiod}}}%
+        {{hash=f2f59f415e9bd02ec24ec638cdfcf3dc}{%
+           family={Bruce\bibnamedelima Croft},
+           family_i={B\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={W.},
+           given_i={W\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Hingham, MA, USA}%
+      }
+      \list{publisher}{1}{%
+        {Kluwer Academic Publishers}%
+      }
+      \strng{namehash}{7f4ba5c3f988e4c21179c433d3840fa1}
+      \strng{fullhash}{7f4ba5c3f988e4c21179c433d3840fa1}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1386-4564}
+      \field{journaltitle}{Inf. Retr.}
+      \field{month}{06}
+      \field{number}{3}
+      \field{title}{Linear Feature-based Models for Information Retrieval}
+      \field{volume}{10}
+      \field{year}{2007}
+      \field{pages}{257\bibrangedash 274}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1007/s10791-006-9019-z
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1007/s10791-006-9019-z
+      \endverb
+      \keyw{Direct maximization,Features,Linear models,Retrieval models}
+    \endentry
+    \entry{LambdaMART}{article}{}
+      \name{author}{4}{}{%
+        {{hash=33d49ceda32feca0867fd357debb0b46}{%
+           family={Wu},
+           family_i={W\bibinitperiod},
+           given={Qiang},
+           given_i={Q\bibinitperiod}}}%
+        {{hash=6b5ce974c0337c832bacb16bd8bf3f50}{%
+           family={Burges},
+           family_i={B\bibinitperiod},
+           given={Christopher\bibnamedelima J.},
+           given_i={C\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=a48d5c2a0b78e6ca8d1fcd9641dd9bbf}{%
+           family={Svore},
+           family_i={S\bibinitperiod},
+           given={Krysta\bibnamedelima M.},
+           given_i={K\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=159bca5607e3797666654a2e3022978a}{%
+           family={Gao},
+           family_i={G\bibinitperiod},
+           given={Jianfeng},
+           given_i={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Hingham, MA, USA}%
+      }
+      \list{publisher}{1}{%
+        {Kluwer Academic Publishers}%
+      }
+      \strng{namehash}{9e208206fea70e2c000cab988ba8276a}
+      \strng{fullhash}{35503248074d5b7c11644e5480005142}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1386-4564}
+      \field{journaltitle}{Inf. Retr.}
+      \field{month}{06}
+      \field{number}{3}
+      \field{title}{Adapting Boosting for Information Retrieval Measures}
+      \field{volume}{13}
+      \field{year}{2010}
+      \field{pages}{254\bibrangedash 270}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1007/s10791-009-9112-1
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1007/s10791-009-9112-1
+      \endverb
+      \keyw{Boosting,Learning to rank,Web search}
+    \endentry
+    \entry{ListNet}{inproceedings}{}
+      \name{author}{5}{}{%
+        {{hash=e59a7a0ecac3deea0c72e863b5c17634}{%
+           family={Cao},
+           family_i={C\bibinitperiod},
+           given={Zhe},
+           given_i={Z\bibinitperiod}}}%
+        {{hash=5588f729660dbe4dbf5af3850f858ae3}{%
+           family={Qin},
+           family_i={Q\bibinitperiod},
+           given={Tao},
+           given_i={T\bibinitperiod}}}%
+        {{hash=716b89cbb7332599ebb33cc58a52f648}{%
+           family={Liu},
+           family_i={L\bibinitperiod},
+           given={Tie-Yan},
+           given_i={T\bibinithyphendelim Y\bibinitperiod}}}%
+        {{hash=d87eed1e99f9572900110a92ec5777c2}{%
+           family={Tsai},
+           family_i={T\bibinitperiod},
+           given={Ming-Feng},
+           given_i={M\bibinithyphendelim F\bibinitperiod}}}%
+        {{hash=1161a5311adb3130e6d43df93c8b498f}{%
+           family={Li},
+           family_i={L\bibinitperiod},
+           given={Hang},
+           given_i={H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Corvalis, Oregon, USA}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{8c1603e58c3074e7c4f62d42598b9304}
+      \strng{fullhash}{36cecc668e98f0eb0e54b4e227ad5d97}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 24th International Conference on Machine Learning}
+      \field{isbn}{978-1-59593-793-3}
+      \field{series}{ICML '07}
+      \field{title}{Learning to Rank: From Pairwise Approach to Listwise Approach}
+      \field{year}{2007}
+      \field{pages}{129\bibrangedash 136}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1145/1273496.1273513
+      \endverb
+      \verb{url}
+      \verb http://doi.acm.org/10.1145/1273496.1273513
+      \endverb
+    \endentry
+    \entry{RandomForests}{article}{}
+      \name{author}{1}{}{%
+        {{hash=132b7100417675d55d5d4d8b244f7a34}{%
+           family={Breiman},
+           family_i={B\bibinitperiod},
+           given={Leo},
+           given_i={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{132b7100417675d55d5d4d8b244f7a34}
+      \strng{fullhash}{132b7100417675d55d5d4d8b244f7a34}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1573-0565}
+      \field{journaltitle}{Machine Learning}
+      \field{number}{1}
+      \field{title}{Random Forests}
+      \field{volume}{45}
+      \field{year}{2001}
+      \field{pages}{5\bibrangedash 32}
+      \range{pages}{28}
+      \verb{doi}
+      \verb 10.1023/A:1010933404324
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1023/A:1010933404324
+      \endverb
+    \endentry
+    \entry{wulczyn}{online}{}
+      \name{author}{1}{}{%
+        {{hash=00c88d28e96e816d2f277a5a6004769b}{%
+           family={Wulczyn},
+           family_i={W\bibinitperiod},
+           given={Ellery},
+           given_i={E\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Datahub}%
+      }
+      \strng{namehash}{00c88d28e96e816d2f277a5a6004769b}
+      \strng{fullhash}{00c88d28e96e816d2f277a5a6004769b}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{07}
+      \field{month}{04}
+      \field{title}{Wikipedia Clickstreap}
+      \field{urlday}{19}
+      \field{urlmonth}{05}
+      \field{urlyear}{2016}
+      \field{year}{2016}
+      \verb{url}
+      \verb https://datahub.io/dataset/wikipedia-clickstream
+      \endverb
+    \endentry
+    \entry{kobielus}{online}{}
+      \name{author}{1}{}{%
+        {{hash=90c166a93445c746636d484af0d7f855}{%
+           family={Kobielus},
+           family_i={K\bibinitperiod},
+           given={James},
+           given_i={J\bibinitperiod}}}%
+      }
+      \list{organization}{2}{%
+        {IBM Big Data}%
+        {Analytics Hub}%
+      }
+      \strng{namehash}{90c166a93445c746636d484af0d7f855}
+      \strng{fullhash}{90c166a93445c746636d484af0d7f855}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{13}
+      \field{month}{06}
+      \field{title}{The Ground Truth in Agile Machine Learning}
+      \field{urlday}{19}
+      \field{urlmonth}{05}
+      \field{urlyear}{2016}
+      \field{year}{2014}
+      \verb{url}
+      \verb http://www.ibmbigdatahub.com/blog/ground-truth-agile-machine-learning
+      \endverb
+    \endentry
+    \entry{teevan2011twittersearch}{book}{}
+      \name{author}{3}{}{%
+        {{hash=1bbfc6d3550769a86de1bfe6a3fe890d}{%
+           family={Teevan},
+           family_i={T\bibinitperiod},
+           given={Jaime},
+           given_i={J\bibinitperiod}}}%
+        {{hash=86066638fba5b4dc33bcee0bcba473cf}{%
+           family={Ramage},
+           family_i={R\bibinitperiod},
+           given={Daniel},
+           given_i={D\bibinitperiod}}}%
+        {{hash=de2952cf7345d3fa5933e0629033c04e}{%
+           family={Morris},
+           family_i={M\bibinitperiod},
+           given={Merredith\bibnamedelima Ringel},
+           given_i={M\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{13e886036289f270c358bd2bf0562a13}
+      \strng{fullhash}{13e886036289f270c358bd2bf0562a13}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the fourth ACM international conference on Web search and data mining}
+      \field{title}{\# TwitterSearch: a comparison of microblog search and web search}
+      \field{year}{2011}
+      \field{pages}{35\bibrangedash 44}
+      \range{pages}{10}
+      \verb{url}
+      \verb http://research.microsoft.com/pubs/154556/wsdm11-twitter.pdf
+      \endverb
+    \endentry
+    \entry{jain2014scalable}{article}{}
+      \name{author}{4}{}{%
+        {{hash=31b149b780a66be6bba4e33bbdde613a}{%
+           family={Jain},
+           family_i={J\bibinitperiod},
+           given={Puneet},
+           given_i={P\bibinitperiod}}}%
+        {{hash=c0906ec9a2d555ee7f0f7f0e73bf9de0}{%
+           family={Manweiler},
+           family_i={M\bibinitperiod},
+           given={Justin},
+           given_i={J\bibinitperiod}}}%
+        {{hash=022dddc4fc05c216e2561f234ba6e796}{%
+           family={Acharya},
+           family_i={A\bibinitperiod},
+           given={Arup},
+           given_i={A\bibinitperiod}}}%
+        {{hash=7c097d35733bb169045aeca5936d21b8}{%
+           family={Choudhury},
+           family_i={C\bibinitperiod},
+           given={Romit\bibnamedelima Roy},
+           given_i={R\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{namehash}{2d1744228c85e345bfdce2a7a0c02473}
+      \strng{fullhash}{bdda63348ced41c8ec67f33341f92a0e}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{ICWSM}
+      \field{title}{Scalable Social Analytics for Live Viral Event Prediction.}
+      \field{year}{2014}
+      \verb{url}
+      \verb http://www.aaai.org/ocs/index.php/ICWSM/ICWSM14/paper/viewFile/8035/8123
+      \endverb
+    \endentry
+    \entry{lead}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=9c677286866aad38f8e9b660f5411814}{%
+           family={Wikipedia},
+           family_i={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhash}{9c677286866aad38f8e9b660f5411814}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{17}
+      \field{month}{05}
+      \field{title}{Wikipedia:Manual of Style/Lead section}
+      \field{urlday}{18}
+      \field{urlmonth}{05}
+      \field{urlyear}{2016}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://en.wikipedia.org/w/index.php?title=Plagiarism&oldid=5139350
+      \endverb
+    \endentry
+    \entry{nielsen}{online}{}
+      \name{author}{1}{}{%
+        {{hash=753054f71283d85f82cda8e35daf6bac}{%
+           family={Nielsen},
+           family_i={N\bibinitperiod},
+           given={Jakob},
+           given_i={J\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Nielsen Norman Group}%
+      }
+      \strng{namehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{fullhash}{753054f71283d85f82cda8e35daf6bac}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{How Little Do Users Read?}
+      \field{urlday}{18}
+      \field{urlmonth}{05}
+      \field{urlyear}{2016}
+      \verb{url}
+      \verb https://www.nngroup.com/articles/how-little-do-users-read/
+      \endverb
+      \warn{\item Datamodel: Entry 'nielsen' (bibliography.bib): Invalid format '2008-05-6' of date field 'date' - ignoring}
+    \endentry
+    \entry{fast_greedy}{article}{}
+      \name{author}{3}{}{%
+        {{hash=42b12665bdf3534fb7bb76c73fc17ebe}{%
+           family={Clauset},
+           family_i={C\bibinitperiod},
+           given={Aaron},
+           given_i={A\bibinitperiod}}}%
+        {{hash=e10496a046558ed6c27e3a9373727f7f}{%
+           family={Newman},
+           family_i={N\bibinitperiod},
+           given={M.\bibnamedelimi E.\bibnamedelimi J.},
+           given_i={M\bibinitperiod\bibinitdelim E\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=204e08828e2dc50ada9b8e498f43a1e2}{%
+           family={Moore},
+           family_i={M\bibinitperiod},
+           given={Cristopher},
+           given_i={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {American Physical Society}%
+      }
+      \strng{namehash}{92c32d827319ac529eccf2d3bf4d0a98}
+      \strng{fullhash}{92c32d827319ac529eccf2d3bf4d0a98}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{6}
+      \field{journaltitle}{Phys. Rev. E}
+      \field{month}{12}
+      \field{title}{Finding community structure in very large networks}
+      \field{volume}{70}
+      \field{year}{2004}
+      \field{pages}{066111}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevE.70.066111
+      \endverb
+      \verb{url}
+      \verb http://link.aps.org/doi/10.1103/PhysRevE.70.066111
+      \endverb
+    \endentry
+    \entry{label_propagation}{article}{}
+      \name{author}{3}{}{%
+        {{hash=322bdb1d3f6eba4d9a3b4e65da009935}{%
+           family={Raghavan},
+           family_i={R\bibinitperiod},
+           given={Usha\bibnamedelima Nandini},
+           given_i={U\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=d85e8d2b76e8626b1a45373f4e027914}{%
+           family={Albert},
+           family_i={A\bibinitperiod},
+           given={R\'{e}ka},
+           given_i={R\bibinitperiod}}}%
+        {{hash=da2607ef336deb7d95558880f6588b70}{%
+           family={Kumara},
+           family_i={K\bibinitperiod},
+           given={Soundar},
+           given_i={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {American Physical Society}%
+      }
+      \strng{namehash}{adc6b263b6d3fdbb5ec7339eb5edac8f}
+      \strng{fullhash}{adc6b263b6d3fdbb5ec7339eb5edac8f}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{3}
+      \field{journaltitle}{Phys. Rev. E}
+      \field{month}{09}
+      \field{title}{Near linear time algorithm to detect community structures in large-scale networks}
+      \field{volume}{76}
+      \field{year}{2007}
+      \field{pages}{036106}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevE.76.036106
+      \endverb
+      \verb{url}
+      \verb http://link.aps.org/doi/10.1103/PhysRevE.76.036106
+      \endverb
+    \endentry
+    \entry{infomap}{article}{}
+      \name{author}{3}{}{%
+        {{hash=3d464a7c41ddac122458ab7c727f9f4b}{%
+           family={Rosvall},
+           family_i={R\bibinitperiod},
+           given={M.},
+           given_i={M\bibinitperiod}}}%
+        {{hash=8261b0e686de3a5eadc05d38a965e0e8}{%
+           family={Axelsson},
+           family_i={A\bibinitperiod},
+           given={D.},
+           given_i={D\bibinitperiod}}}%
+        {{hash=8059d7d2c44613f84da1c55b376e4547}{%
+           family={Bergstrom},
+           family_i={B\bibinitperiod},
+           given={T.\bibnamedelimi C.},
+           given_i={T\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{9909357bdae061c37d8aeb3e3f213cf0}
+      \strng{fullhash}{9909357bdae061c37d8aeb3e3f213cf0}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1951-6401}
+      \field{journaltitle}{The European Physical Journal Special Topics}
+      \field{number}{1}
+      \field{title}{The map equation}
+      \field{volume}{178}
+      \field{year}{2009}
+      \field{pages}{13\bibrangedash 23}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1140/epjst/e2010-01179-1
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1140/epjst/e2010-01179-1
+      \endverb
+    \endentry
+    \entry{pagerank}{article}{}
+      \name{author}{2}{}{%
+        {{hash=ade8269d287e9c1531e4a1cbad0b4b82}{%
+           family={Brin},
+           family_i={B\bibinitperiod},
+           given={Sergey},
+           given_i={S\bibinitperiod}}}%
+        {{hash=5ca20489809aaab392f875d6bc785086}{%
+           family={Page},
+           family_i={P\bibinitperiod},
+           given={Lawrence},
+           given_i={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{67f006a7ae882b83a187215c4e9bdf2f}
+      \strng{fullhash}{67f006a7ae882b83a187215c4e9bdf2f}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0169-7552}
+      \field{journaltitle}{Computer Networks and \{ISDN\} Systems}
+      \field{note}{Proceedings of the Seventh International World Wide Web Conference}
+      \field{number}{1--7}
+      \field{title}{The anatomy of a large-scale hypertextual Web search engine}
+      \field{volume}{30}
+      \field{year}{1998}
+      \field{pages}{107\bibrangedash 117}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/S0169-7552(98)00110-X
+      \endverb
+      \verb{url}
+      \verb http://www.sciencedirect.com/science/article/pii/S016975529800110X
+      \endverb
+      \keyw{Google}
+    \endentry
+    \entry{hits}{article}{}
+      \name{author}{1}{}{%
+        {{hash=0a3d8f90ac4cbdfcc948a6cd82810681}{%
+           family={Kleinberg},
+           family_i={K\bibinitperiod},
+           given={Jon\bibnamedelima M.},
+           given_i={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{0a3d8f90ac4cbdfcc948a6cd82810681}
+      \strng{fullhash}{0a3d8f90ac4cbdfcc948a6cd82810681}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0004-5411}
+      \field{journaltitle}{J. ACM}
+      \field{month}{09}
+      \field{number}{5}
+      \field{title}{Authoritative Sources in a Hyperlinked Environment}
+      \field{volume}{46}
+      \field{year}{1999}
+      \field{pages}{604\bibrangedash 632}
+      \range{pages}{29}
+      \verb{doi}
+      \verb 10.1145/324133.324140
+      \endverb
+      \verb{url}
+      \verb http://doi.acm.org/10.1145/324133.324140
+      \endverb
+      \keyw{World Wide Web,graph algorithms,hypertext structure,link analysis}
+    \endentry
+  \endsortlist
+\endrefsection
+\endinput
+
