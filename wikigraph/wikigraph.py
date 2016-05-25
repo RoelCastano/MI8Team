@@ -17,8 +17,7 @@ from tqdm import tqdm
 from bz2 import BZ2File
 import base64
 
-Link = namedtuple('Link', ['title', 'neighbour', 'order', 'position', 'depth'])
-Redirect = namedtuple('Redirect', ['title', 'redirect', 'depth'])
+Seed = namedtuple('Seed', ['depth', 'original'])
 
 LINK_PATTERN = re.compile(r'\[\[(.*?)\]\]')
 TITLE_PATTERN = re.compile(r'(.*?:)?([^|#]*)?')
@@ -112,20 +111,22 @@ def expand(input_file, seed_file, output_file, redirect_file, max_depth):
         max_depth: depth of breath first search performed
     """
     seeds_dict = {}
-    seen = set()
+    processed = {}
     for seed in seed_file:
         # remove new line character
         seed = seed.strip()
+        seed_casefold = seed.casefold()
         # already with _ instead of spaces
-        seeds_dict[seed] = 0
-        seen.add(seed)
+        seeds_dict[seed_casefold] = Seed(depth=0, original=seed)
 
     # kill switch in case some articles cannot be found and expanded
     # maximum passes has to be 2 * max_depth when every link has to be resolved
     passes = 0
-    with tqdm(total=2*max_depth, leave=False, desc='pass') as pbar:
+    with tqdm(total=2*(max_depth+1), leave=False, desc='pass') as pbar:
         # while there are seeds to be expaneded
-        while seeds_dict and passes < 2 * max_depth:
+        while seeds_dict and passes < 2 * (max_depth + 1):
+            print('seeds:', seeds_dict)
+            print('processed:', processed)
             passes += 1
             with tqdm(total=file_len(input_file.name), leave=False, position=1,
                       desc='dump') as pbar2:
@@ -139,13 +140,13 @@ def expand(input_file, seed_file, output_file, redirect_file, max_depth):
                     with BZ2File(file_name.strip(), 'r') as dump_file:
                         # loop through parsed pages
                         parse_dump(dump_file, output_file, redirect_file,
-                                   max_depth, seeds_dict, seen)
+                                   max_depth, seeds_dict, processed)
                     pbar2.update(1)
             pbar.update(1)
 
 
 def parse_dump(dump_file, output_file, redirect_file, max_depth, seeds_dict,
-               seen):
+               processed):
     """This function parses all the articles inside the dump file into internal
     graph representation.
 
@@ -155,17 +156,18 @@ def parse_dump(dump_file, output_file, redirect_file, max_depth, seeds_dict,
         redirect_file: file to which redirects will be written
         max_depth: depth of breath first search performed
         seeds_dict: dictionary of seeds to be expanded
-        seen: set of seen articles
+        processed: dictionary of already processed articles
     """
     context = etree.iterparse(dump_file,
                               events=('end', ),
                               tag='{{{ns}}}page'.format(ns=NAMESPACE_MAP['ns'])
                               )
     mod_fast_iter(context, parse_page, output_file, redirect_file, max_depth,
-                  seeds_dict, seen)
+                  seeds_dict, processed)
 
 
-def parse_page(page, output_file, redirect_file, max_depth, seeds_dict, seen):
+def parse_page(page, output_file, redirect_file, max_depth, seeds_dict,
+               processed):
     """This function parses article/redirect into desired form and writes them
     into files.
 
@@ -175,8 +177,9 @@ def parse_page(page, output_file, redirect_file, max_depth, seeds_dict, seen):
         redirect_file: file to which redirects will be written
         max_depth: depth of breath first search performed
         seeds_dict: dictionary of seeds to be expanded
-        seen: set of seen articles
+        processed: dictionary of already processed articles
     """
+    global TEXT_DIR
     element_title = page.find("./ns:title", namespaces=NAMESPACE_MAP)
     element_text = page.find("./ns:revision/ns:text", namespaces=NAMESPACE_MAP)
     element_redirect = page.find("./ns:redirect", namespaces=NAMESPACE_MAP)
@@ -189,32 +192,84 @@ def parse_page(page, output_file, redirect_file, max_depth, seeds_dict, seen):
     title_orig = element_title.text
     # replace characters once
     title = title_orig.replace(' ', '_')
+    # case insensitive
+    title_casefold = title.casefold()
     # depth of seed (if any)
-    depth = seeds_dict.get(title)
+    depth, original = seeds_dict.get(title_casefold, Seed(depth=None,
+                                                          original=None))
     if depth is None:
+        print(title_casefold, 'is not a seed')
         return
     else:
         # every "page" has to be processed only once
-        del seeds_dict[title]
+        del seeds_dict[title_casefold]
 
     if element_redirect is not None:
         # is redirect
+        if original[1:] != title[1:]:
+            # casefold match is not enough for redirect (can make problems)
+            print('only casefold match with redirect', title, 'is not enough')
+            seeds_dict[title_casefold] = Seed(depth=depth, original=original)
+            return
         redirect_title = element_redirect.get("title").replace(' ', '_')
-        print(title, redirect_title, file=redirect_file)
-        if redirect_title not in seen:
-            seen.add(redirect_title)
-            seeds_dict[redirect_title] = depth
+        redirect_title_casefold = redirect_title.casefold()
+        if title_casefold != redirect_title_casefold:
+            # if the redirect is not only because of letter case
+            print(title_casefold, redirect_title_casefold, file=redirect_file)
+
+        if redirect_title_casefold not in processed:
+            seed_depth, _ = seeds_dict.get(redirect_title_casefold,
+                                           Seed(depth=depth, original=''))
+            new_seed = Seed(depth=min(depth, seed_depth),
+                            original=redirect_title)
+            seeds_dict[redirect_title_casefold] = new_seed
+        else:
+            if processed[redirect_title_casefold] > depth:
+                # it is not properly processed (less deep than expected)
+                del processed[redirect_title_casefold]
+                new_seed = Seed(depth=depth, original=redirect_title)
+                seeds_dict[redirect_title_casefold] = new_seed
+
     else:
         # is article
+        # renaming from casefold to correct name
+        if title_casefold != title:
+            print(title_casefold, title, file=redirect_file)
+
+        if original[1:] != title[1:]:
+            print('WARNING! only casefold match for', original, 'and', title)
+        # processing the seed
+        processed[title_casefold] = depth
+
+        if depth <= 1:
+            # save article text
+            article_text = element_text.text
+            safe_name = base64.urlsafe_b64encode(
+                title.encode('utf-8')).decode('utf-8')
+            with open(join(TEXT_DIR, safe_name), 'w') as text_file:
+                print(article_text, file=text_file)
+
         order = 0
         for neighbour, position in parse_links(element_text, title_orig):
             order += 1
             neighbour = neighbour.replace(' ', '_')
-            print(title, neighbour, order, position, file=output_file)
-            if neighbour not in seen:
-                seen.add(neighbour)
+            neighbour_casefold = neighbour.casefold()
+            print(title, neighbour_casefold, order, position, file=output_file)
+
+            if neighbour_casefold not in processed:
                 if depth < max_depth:
-                    seeds_dict[neighbour] = depth+1
+                    seed_depth, _ = seeds_dict.get(neighbour_casefold,
+                                                   Seed(depth=depth+1,
+                                                        original=''))
+                    new_seed = Seed(depth=min(depth+1, seed_depth),
+                                    original=neighbour)
+                    seeds_dict[neighbour_casefold] = new_seed
+            else:
+                if processed[neighbour_casefold] > (depth+1):
+                    # it is not properly processed (less deep than expected)
+                    del processed[neighbour_casefold]
+                    new_seed = Seed(depth=depth+1, original=neighbour)
+                    seeds_dict[neighbour_casefold] = new_seed
 
 
 def parse_links(element_text, current_title):
@@ -229,19 +284,12 @@ def parse_links(element_text, current_title):
         an iterator yielding tuples containing title of referred page and
         position of link in the text
     """
-    global TEXT_DIR
     article_text = element_text.text
-    # save article text
-    title_underscore = current_title.replace(' ', '_')
-    safe_name = base64.urlsafe_b64encode(
-        title_underscore.encode('utf-8')).decode('utf-8')
-    with open(join(TEXT_DIR, safe_name), 'w') as text_file:
-        print(article_text, file=text_file)
     # find all contents of [[ ]] and do not use gready match
     for match in re.finditer(LINK_PATTERN, article_text):
         # find the prefix of link (if theres any) and main link name
         (prefix, title) = re.match(TITLE_PATTERN, match.group(1)).groups()
-        if (not prefix) and title != current_title:
+        if (not prefix) and title.casefold() != current_title.casefold():
             yield (title, match.start())
 
 
@@ -257,6 +305,17 @@ def resolve_redirects(output_file, link_file, redirect_file):
     for line in redirect_file:
         columns = line.strip().split(' ')
         redirect_dict[columns[0]] = columns[1]
+
+    # resolve multiple redirects/rewrites (like transitive closure)
+    for key in redirect_dict.keys():
+        value = redirect_dict[key]
+        timeout = 0
+        while value in redirect_dict and timeout < 1000:
+            value = redirect_dict[value]
+            timeout += 1
+        if timeout >= 1000:
+            print('terminating infinite loop, could not resolve', value)
+        redirect_dict[key] = value
 
     with tqdm(total=file_len(link_file.name), leave=False,
               desc='link') as pbar:
