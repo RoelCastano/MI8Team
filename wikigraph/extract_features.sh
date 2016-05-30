@@ -25,7 +25,6 @@ ORDERED_CLICK_LIST="$PROCESSED_DATA"/sorted_click_list
 SCORES="$WIKIDUMP"/scores
 SCORES_FEATURE="$WIKIDUMP"/scores_feature
 LINK_FEATURE="$WIKIDUMP"/link_feature
-LINK_COUNT_FEATURE="$WIKIDUMP"/link_count_feature
 SYMMETRIC_FEATURE="$WIKIDUMP"/symmetric_feature
 ALL_LINKS_FROM_PROMINENT="$PROCESSED_DATA"/all_links_from_prominent
 COMMUNITIES="$WIKIDUMP"/same_communities
@@ -38,20 +37,12 @@ PROCESS_GRAPH="$WIKIGRAPH"/process_graph.R
 FIND_SYMMETRIC="$WIKIGRAPH"/find_symmetric.sh
 
 # expand prominent articles (takes A LOT of time)
-#echo "Expanding prominent articles..."
-#nice -n 19 python3 "$WIKIGRAPH_PY" -i "$LIST_OF_DUMPS" -s "$PROMINENT_ARTICLES" -o "$ARTICLES_EXPANDED" -d 1
-
-# number prominent articles (queries) by integer numbers > 0 (tab separated)
-echo "Numbering prominent articles..."
-awk '{printf "%d\t%s\n", NR, $0}' < "$PROMINENT_ARTICLES" > "$PROMINENT_ARTICLES_NUMBERED"
+echo "Expanding prominent articles..."
+nice -n 19 python3 "$WIKIGRAPH_PY" -i "$LIST_OF_DUMPS" -s "$PROMINENT_ARTICLES" -o "$ARTICLES_EXPANDED" -d 2
 
 # sort prominent articles
 echo "Sorting prominent articles..."
 sort "$PROMINENT_ARTICLES" > "$PROMINENT_ARTICLES_SORTED"
-
-# sort clikstream data on the name of the refering article
-#echo "Sorting clickstream data..."
-#tail -n +2 "$CLICK_LIST" | cut -f 2,3,4 | sed 's/\(.*\)\t\(.*\)\t\(.*\)/\1@\2\t\1\t\2\t\3/' | sort -k 1b,1 > "$ORDERED_CLICK_LIST"
 
 # sort expanded article data
 echo "Sorting expanded articles..."
@@ -74,19 +65,15 @@ join -t $'\t' "$PROMINENT_INTERSECTION" <(cut -f 1,2,3 "$ARTICLES_EXPANDED_SORTE
 echo "Finding article names to intersection..."
 #<---------------------id article1 article2--------------------------------->
 join -t $'\t' "$PROMINENT_INTERSECTION_OUT" "$ARTICLES_EXPANDED_SORTED" | cut -f 1,2,3 | sort -k 1b,1 -u > "$PROMINENT_INTERSECTION_OUT_NAMED"
-#join -t $'\t' "$PROMINENT_INTERSECTION" "$ARTICLES_EXPANDED_SORTED" | cut -f 1,2,3 > "$PROMINENT_INTERSECTION_NAMED"
+join -t $'\t' "$PROMINENT_INTERSECTION" "$ARTICLES_EXPANDED_SORTED" | cut -f 1,2,3 > "$PROMINENT_INTERSECTION_NAMED"
 
 # make list of all links from prominent articles
 echo "Creating list of all links from prominent articles..."
 cut -f 2,3 "$PROMINENT_INTERSECTION_OUT_NAMED" | sort -u > "$ALL_LINKS_FROM_PROMINENT"
 
 # turn information about links into a feature
-echo "Preparing link and link count feature..."
+echo "Preparing link information feature..."
 join -t $'\t' "$PROMINENT_INTERSECTION_OUT" <(cut -f 1,4,5 "$ARTICLES_EXPANDED_SORTED") > "$LINK_FEATURE"
-cut -f 1 "$LINK_FEATURE" | sort -f -k 1b,1 | uniq -ic | sed 's/^ *\([0-9][0-9]*\) \(.*\)$/\2\t\1/' > "$LINK_COUNT_FEATURE"
-sort -k 1fb,1 -k 2bn,2 "$LINK_FEATURE" | sort -k 1fb,1 -u  > "$LINK_FEATURE"_uniq
-mv "$LINK_FEATURE"_uniq "$LINK_FEATURE"
-
 
 # make a graphml representation of links
 echo "Making graphml..."
@@ -98,7 +85,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
   <graph id="G" edgedefault="directed">' > "$INTERSECTION_GRAPH"
 # main body with edges
-cut -f 2,3 "$PROMINENT_INTERSECTION_ALL" | sed 's/"/\&quot;/g' | sed 's/&/\&amp;/g' | sed 's/</\&lt;/g' | sed 's/>/\&gt;/g' | sed 's/^\(.*\)\t\(.*\)$/<edge source="\1" target="\2"\/>/' >> "$INTERSECTION_GRAPH"
+cut -f 2,3 "$PROMINENT_INTERSECTION"_both | sed 's/"/\&quot;/g' | sed 's/&/\&amp;/g' | sed 's/</\&lt;/g' | sed 's/>/\&gt;/g' | sed 's/^\(.*\)\t\(.*\)$/<edge source="\1" target="\2"\/>/' >> "$INTERSECTION_GRAPH"
 # closing tags
 echo '  </graph>
 </graphml>' >> "$INTERSECTION_GRAPH"
