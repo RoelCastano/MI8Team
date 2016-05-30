@@ -60,11 +60,11 @@ def find_first_braces(text):
     return (first,last)                   
 
 def clear_text(input_file,output_file) :
-    remove_braces(input_file,"tmp_file")
-    with open("tmp_file",'r',encoding='utf-8') as input :
+    # remove_braces(input_file,"tmp_file")
+    with open(input_file,'r',encoding='utf-8') as input :
         newtext = input.read()
     input.close()
-    # exclude end of article (from "see also section to the end"        
+    # exclude end of article (from "see also section to the end" )       
     index = newtext.find("==See also==")
     if index != -1 :
         newtext = newtext[0:index]
@@ -75,7 +75,7 @@ def clear_text(input_file,output_file) :
         out.write(newtext)
     out.close()
     
-    os.remove("tmp_file")
+    # os.remove("tmp_file")
     
 def parser(src_files_dir):
 
@@ -88,25 +88,40 @@ def parser(src_files_dir):
     print("Parsing text files ...")
     src_files = [f for f in os.listdir(src_files_dir) if os.path.isfile(os.path.join(src_files_dir, f))]
     for filename in src_files:
-        parse_file(filename,src_files_dir)
+        parse_file(filename,src_files_dir,parsed_files_dir)
     return parsed_files_dir
 
+def sub_dir(filename,parsed_files_dir) :
+    first_letter = ''
+    sub_dir = parsed_files_dir
+    i=0
+    while i<3 :
+        first_letter = filename[i]
+        sub_dir = os.path.join(sub_dir,first_letter)
+        if not os.path.exists(sub_dir):
+            os.makedirs(sub_dir)     
+        i = i+1
+    return sub_dir
+    
 def parse_file(filename,src_files_dir,parsed_files_dir):
-    # creating de parsed files directory
-    if not os.path.exists(parsed_files_dir):
-        os.makedirs(parsed_files_dir)
-
-    # parsing file            
+        
+    # converting file name           
     if not os.path.exists(os.path.join(src_files_dir,filename)): 
-	# the input file name is encoded (b64)
+        # the input file name is encoded (b64)
         filename = base64.b64encode(filename.encode('utf-8')).decode('utf-8')
     
+    # creating the parsed files directory if doesn't exist
+    if not os.path.exists(parsed_files_dir):
+        os.makedirs(parsed_files_dir)
+        
+    # out_dir = sub_dir(filename,parsed_files_dir)
+    # parsing file        
     input_file = os.path.join(src_files_dir,filename)  
     output_file = os.path.join(parsed_files_dir,filename)    
     
     if os.path.exists(input_file):
         if not os.path.exists(output_file) : 
-		# don't parse if the file already exist
+        # don't parse if the file already exist
             clear_text(input_file,output_file)
             print(filename)
     else :
@@ -114,11 +129,9 @@ def parse_file(filename,src_files_dir,parsed_files_dir):
         
     return output_file
 
-# def main():
-    # file = sys.argv[1]
-    # # remove_braces(file,"hello")
-    # # print(find_first_braces(file))
-    # parser(file)
+def main():
+    src_files_dir = sys.argv[1]
+    parser(src_files_dir)  
     
-# if __name__ == "__main__":
-    # main()
+if __name__ == "__main__":
+    main()

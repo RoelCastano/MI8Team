@@ -38,6 +38,7 @@ def similarity(filename1,filename2):
 def get_article_titles(line):
     regex = r"^(?P<article>[^\s]*)\t(?P<target>[^\s]*)"
     link = re.search(regex,line)
+    (title1,title2)=("","")
     if link is not None:
         title1 = link.group('article')
         title2 = link.group('target')                           
@@ -56,27 +57,40 @@ def get_article_names(files_dir,title1,title2) :
 def print_feature(files_dir,parsed_files_dir,results_dir,links_file):
     print("Computing similarity from \"LINKS\" file.")
     lost = 0
+    
+    # Reading the links file (all outgoing and incoming links from prominent articles)  
     with open(links_file,'r',encoding='utf-8') as links:
         with open(os.path.join(results_dir,"cosine_similarity_feature"),"w",encoding='utf-8') as out:
-            for line in links:
+            
+            # nb_lines = 0
+            
+            for line in links:  
+                # get the files names (and encode in base64 if necessary)
                 (title1,title2) = get_article_titles(line)
                 (filename1,filename2) = get_article_names(files_dir,title1,title2)
-                # create parsed files
+                
+                # create parsed files 
                 parsed_file_1 = TextParser.parse_file(filename1,files_dir,parsed_files_dir)
-                parsed_file_2 = TextParser.parse_file(filename2,files_dir,parsed_files_dir) 
-               
+                parsed_file_2 = TextParser.parse_file(filename2,files_dir,parsed_files_dir)
+                
                 # compute feature
                 feature = -1
-                if os.path.exists(parsed_file_1) and os.path.exists(parsed_file_2):                            
+                if os.path.isfile(parsed_file_1) and os.path.isfile(parsed_file_2):                            
                     try :
                         feature = similarity(parsed_file_1,parsed_file_2)
                     except ValueError :
                         # compute similarity on unparsed files
-                        feature = similarity(os.path.join(files_dir,filename1),os.path.join(files_dir,filename2))
+                        src_file1 = os.path.join(files_dir,filename1)
+                        src_file2 = os.path.join(files_dir,filename2)
+                        if os.path.isfile(src_file1) and os.path.isfile(src_file2) :
+                            feature = similarity(src_file1,src_file2)
+                        else :
+                            feature =-1
+                            lost = lost+1
                 else :
                     lost = lost+1  # count number of lost links
                     
-                # writing feature in output file
+                # write feature in output file
                 link_title = title1+"@"+title2
                 out.write(link_title+"\t%f\n"%(feature))
                 # data.append(feature)
@@ -100,9 +114,9 @@ def main():
     print_feature(src_files_dir,parsed_files_dir,results_dir,links_file)
     
     print("Done : results stored in \"",results_dir,"\".")
-	
-	## Display and save statistics
-	# stat_file = os.path.join(results_dir,"cosine_similarity_statistics")
+    
+    ## Display and save statistics
+    # stat_file = os.path.join(results_dir,"cosine_similarity_statistics")
     # Statistics.print_stats(data,stat_file,"Cosine similarity")
     
 if __name__ == "__main__":
