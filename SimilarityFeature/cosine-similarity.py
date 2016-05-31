@@ -1,3 +1,8 @@
+""" This script computes the textual similarity feature from all the texts files 
+extracted from wiki dumps. It also uses the list of all links from prominents. 
+The text files are first parsed to keep only the article text. Results and parsed
+files are stored in two new directories.
+"""
 from sklearn.feature_extraction.text import TfidfVectorizer
 from math import*
 import os, sys,stat
@@ -6,9 +11,6 @@ import base64
 import shutil
 import numpy as np
 import TextParser
-# import Statistics
-
-# data =[]
 
 def square_rooted(x):
     return round(sqrt(sum([a*a for a in x])),3)
@@ -19,6 +21,11 @@ def cosine_similarity(x,y):
     return round(num/float(den),3)
 
 def similarity(filename1,filename2):
+    """Return the similarity of two text files
+    Args:
+	    filename1 : text file
+		filename2 : text file
+    """
     # read text files
     with open(filename1, 'r',encoding='utf-8') as file1:
         article1 = file1.read()
@@ -36,6 +43,10 @@ def similarity(filename1,filename2):
     return cosine_similarity(article_array_1,article_array_2)
 
 def get_article_titles(line):
+    """ Return the articles titles from a line of the file of links
+    Args:
+	    line : current line
+    """
     regex = r"^(?P<article>[^\s]*)\t(?P<target>[^\s]*)"
     link = re.search(regex,line)
     (title1,title2)=("","")
@@ -45,6 +56,13 @@ def get_article_titles(line):
     return (title1,title2)         
 
 def get_article_names(files_dir,title1,title2) :
+    """ Return the encoded articles titles corresponding to articles title1 and
+	title2 if the file names have been encoded during the dump extraction
+    Args:
+	    files_dir : directory containing all non-parsed text files
+		title1 : article title read in links file
+		title2 : article title read in links file
+		"""
     filename1 = title1
     filename2 = title2
     if not os.path.exists(os.path.join(files_dir,filename1)): # the input file name is encoded (b64)
@@ -55,6 +73,13 @@ def get_article_names(files_dir,title1,title2) :
     return (filename1,filename2)    
         
 def print_feature(files_dir,parsed_files_dir,results_dir,links_file):
+    """ Write the feature values of every links from prominents in a new file.
+	Args:
+	    files_dir : directory containing all non-parsed text files
+		parsed_files_dir : directory containing all parsed text files
+		results_dir : directory containing results
+		links_file : file listing all links from prominents
+	"""
     print("Computing similarity from \"LINKS\" file.")
     lost = 0
     
@@ -110,14 +135,9 @@ def main():
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
     
-    # TextParser.parser(src_files_dir)    
     print_feature(src_files_dir,parsed_files_dir,results_dir,links_file)
     
     print("Done : results stored in \"",results_dir,"\".")
-    
-    ## Display and save statistics
-    # stat_file = os.path.join(results_dir,"cosine_similarity_statistics")
-    # Statistics.print_stats(data,stat_file,"Cosine similarity")
     
 if __name__ == "__main__":
     main()

@@ -1,7 +1,7 @@
 """This script computes the relatedness feature for all links in "all_from_prominent" file. 
 It's using "prominent_intersection_all" file, which contains all the links from and to prominents 
 to create for each of them the corresponding set of links.
-The results (links sets and feature file) are stored in a new directory "relatedness_results".
+Results (links sets and feature file) are stored in a new directory "relatedness_results".
 """
 
 from math import*
@@ -66,33 +66,33 @@ def normalized_google_distance(x,y,w):
         den = log10(w)-log10(min(len(x),len(y)))   
         return num/float(den)
 
-def build_sets(set_file, links_file,prominent_links_file):
-    """Build the links sets for each prominent
+def build_sets(set_file, all_links_file,prominent_links_file):
+    """Build the links set for each prominent
     Args:
 	    set_file : output file where to store sets
-		links file : file listing all links (both outgoing and incoming) from prominents
+		all_links_file : file listing all links (both outgoing and incoming) from prominents
 		prominent_links_file : file listing the links from prominents
     """
-    # if the links file exist
+    # extract sets if the file listing all sets already exists
     if os.path.isfile(set_file) :
         extract_sets_from_file(set_file)
-    # else build the sets
+    # else build the sets from the file listing all links
     else :
-        print("Building links sets from file : ",links_file," ... ")        
-        build_sets_from_file(links_file,prominent_links_file)
+        print("Building links sets from file : ",all_links_file," ... ")        
+        build_sets_from_file(all_links_file,prominent_links_file)
         print_sets(set_file)
     set_W()
     print("File read. Found %d articles." %(W))
 
 
-def build_sets_from_file(links_file,prominent_links_file):
-    """Build the links sets from the link list files
+def build_sets_from_file(all_links_file,prominent_links_file):
+    """Build a set of links for each prominent article from the file listing all links
     Args:
-		links file : file listing all links (both outgoing and incoming) from prominents
+		all_links_file : file listing all links (both outgoing and incoming) from prominents
 		prominent_links_file : file listing the links from prominents
     """
     global Non_Prominents_nb
-    # add all the articles from "all_from_prominent" file to the dictionary
+    # add all the prominent articles to the dictionary
     with open(prominent_links_file,'r',encoding='utf-8') as pf:
         for line in pf:
             (title1,title2) = get_article_titles(line)
@@ -100,9 +100,9 @@ def build_sets_from_file(links_file,prominent_links_file):
             add_prominent(title2)
     pf.close()
     
-    # add all the links to each article 
+    # add links to the article sets 
     regex = r"^(?P<article>[^@]*)@(?P<target>[^\s]*)\s"
-    with open(links_file,'r', encoding="utf-8") as f:
+    with open(all_links_file,'r', encoding="utf-8") as f:
         for line in f.readlines():
             link = re.search(regex,line)
             if link is not None:
@@ -145,6 +145,7 @@ def print_sets(set_file):
     """
     with open(set_file,'w', encoding="utf-8") as out:
         print("Writing links sets file : ",set_file," ... ") 
+		# write nb of non-prominents articles on first line
         out.write("%d\n"%(Non_Prominents_nb))        
         for article in Links :
             out.write(article+"\t"+string_set(article)+"\n")
@@ -162,10 +163,10 @@ def string_set(article) :
     return str+"]"
     
 def extract_links(article,str) :
-    """Extract all links from a set in links sets file
+    """Extract all links from a line of the file of sets
     Args:
 	    article : the prominent article
-		str : prominent link set (string as found in link sets file)
+		str : the set (string as found in file)
     """
     links = str.split(';')
     add_prominent(article)
@@ -204,7 +205,7 @@ def add_prominent(article):
         Links[article] = []
         
 def get_article_titles(line):
-    """ Return the articles titles from a line of the links file
+    """ Return the articles titles from a line of the file of links
     Args:
 	    line : current line
     """
@@ -217,7 +218,8 @@ def get_article_titles(line):
     return (title1,title2)       
         
 def print_all_features(title1,title2):
-    """ Return a string of the 3 measures (jaccard,dice,ngd)
+    """ Return a string of the 3 measures (jaccard,dice,ngd) 
+	applied on articles title1 and title2
     Args:
 	    title1 : first article
 		title2 : second article
@@ -230,6 +232,7 @@ def print_all_features(title1,title2):
     
 def print_one_feature(opt,title1,title2):
     """ Return a string of one measure (jaccard,dice or ngd)
+	applied on articles title1 and title2
     Args:
 	    opt : the wanted measure (j:jaccard, d:dice, g:ngd)
 	    title1 : first article
@@ -242,7 +245,7 @@ def print_one_feature(opt,title1,title2):
 def print_feature(opt,prominent_links_file,output_file):
     """ Print the feature file
     Args:
-	    opt : the wanted measure (j:jaccard, d:dice, g:ngd, a:all)
+	    opt : specified which measure to compute (j:jaccard, d:dice, g:ngd, a:all)
         prominent_links_file : file listing all links from prominents	
         output_file : new feature file		
     """
@@ -266,7 +269,7 @@ def set_W():
     W= len(Links.keys()) + Non_Prominents_nb
     
 def get_relatedness(opt,articleA,articleB): 
-    """ Return the relatedness of two articles
+    """ Return the relatedness of two articles.
     Args:
 	    opt : the wanted measure (j:jaccard, d:dice, g:ngd)
 		articleA : first article
@@ -300,11 +303,11 @@ def main():
     if not os.path.exists(results_dir):
         os.makedirs(results_dir) 
     
-    # build the links sets
+    # build the sets of links
     set_file = os.path.join(results_dir,"Links_Sets")
     prominent_links_file = args[1]
-    all_links = args[0]
-    build_sets(set_file,all_links,prominent_links_file)
+    all_links_file_file = args[0]
+    build_sets(set_file,all_links_file_file,prominent_links_file)
     
     title = ""
     stat_file = "" 
@@ -327,9 +330,6 @@ def main():
             print_feature('a',prominent_links_file,os.path.join(results_dir,"all_relatedness_features"))
         else :
             assert False,"unhandled option"
-
-    # make stats file and display histogram      
-    # Statistics.print_stats(data,stat_file,title)
     
     print("Done. Results stored in : \"",results_dir,"\".")
             
