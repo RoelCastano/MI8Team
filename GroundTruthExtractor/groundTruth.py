@@ -10,7 +10,7 @@ with open('prominentArticles.txt') as f:
         prominentArticles.append(line.replace("\n", ""))
 
 # sort prominent articles A-Z
-prominentArticles = sorted(prominentArticles) 
+prominentArticles = sorted(prominentArticles, key=str.lower) 
 
 # create file for results
 groundTruthList = open('groundTruth.txt', 'w')
@@ -23,8 +23,8 @@ ocl.readline() # skip first row
 line = ocl.readline() # read first line
 line = line.split('\t')
 clicks = int(line[0])
-prevLine = line[2].replace("\n", "")
-currLine = line[3].replace("\n", "")
+prevLine = line[1].replace("\n", "")
+currLine = line[2].replace("\n", "")
 
 ap = open("articlePairs.txt", "r")
 apline = ap.readline() # read first line
@@ -46,15 +46,19 @@ for promArticle in prominentArticles:
         linkedArticleList.append([currLine, clicks])
         line = ocl.readline()
         if not line:
+            prevLine = "NO_MORE_PROMINENT"
             break
         line = line.split('\t')
         clicks = int(line[0])
-        prevLine = line[2].replace("\n", "")
-        currLine = line[3].replace("\n", "")
+        prevLine = line[1].replace("\n", "")
+        currLine = line[2].replace("\n", "")
 
+    linkedArticleSet = {}
+    for lal in linkedArticleList:
+        linkedArticleSet[lal[0].lower()] = True
 
-    while apprevLine == promArticle:
-        if not apcurrLine.lower() in (row[0].lower() for row in linkedArticleList):
+    while apprevLine.lower() < prevLine.lower() or prevLine == "NO_MORE_PROMINENT":
+        if apprevLine == promArticle and not linkedArticleSet.has_key(apcurrLine.lower()):
             linkedArticleList.append([apcurrLine, 0])
         line = ap.readline()
         if not line:
@@ -65,12 +69,18 @@ for promArticle in prominentArticles:
 
 
     # print the prom article comment
-    groundTruthList.write("# " + promArticle + "\n")
+    #groundTruthList.write("# " + promArticle + "\n")
+
+        
+    mm = 1
 
     # loop through the 2 lists (ordered clicks first) and print lines
     # if an instance exist in both lists do not print the 2. time
+    #for oclArticle in linkedArticleList:
+    #    groundTruthList.write(str(oclArticle[1]) + " qid:" + str(lineCnt) + " # " + oclArticle[0] + "\n")
+
     for oclArticle in linkedArticleList:
-        groundTruthList.write(str(oclArticle[1]) + " qid:" + str(lineCnt) + " # " + oclArticle[0] + "\n")
+        groundTruthList.write(str(oclArticle[1]) + "\t" + promArticle + "@" + str(oclArticle[0]) + "\t" + " qid:" + str(lineCnt) + "\n")
 
     
 print("groundTruth.txt has been generated")

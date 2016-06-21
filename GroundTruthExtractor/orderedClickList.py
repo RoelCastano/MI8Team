@@ -25,7 +25,7 @@ with open('prominentArticles.txt') as f:
         prominentArticles.append(line.replace("\n", ""))
 
 # sort prominent articles A-Z
-prominentArticles = sorted(prominentArticles) 
+prominentArticles = sorted(prominentArticles, key=str.lower) 
 
 # set line counter
 lineCnt = 0

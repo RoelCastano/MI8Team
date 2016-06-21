@@ -46,6 +46,10 @@ with open(clickstreamFile) as f:
         if not lineSplit[PREV_COL] or 'other-' in lineSplit[PREV_COL] or lineSplit[PREV_COL] == 'Main_Page':
             continue
 
+        # if the article contains an @ we ignore. We use it as a separator later on
+        if '@' in lineSplit[PREV_COL]:
+            continue
+
         # if the row represents a link to a non-existing article OR the main page then ignore tuple
         if not lineSplit[CURR_COL] or 'other-' in lineSplit[CURR_COL] or lineSplit[CURR_COL] == 'Main_Page':
             continue
