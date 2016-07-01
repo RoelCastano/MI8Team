@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 2.6 $
+% $ biblatex bbl format version 2.7 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -18,7 +18,54 @@
 
 
 \refsection{0}
-  \sortlist[entry]{none/global}
+  \sortlist[entry]{none/global/}
+    \entry{wikistats}{online}{}
+      \name{author}{1}{}{%
+        {{hash=9c677286866aad38f8e9b660f5411814}{%
+           family={Wikipedia},
+           family_i={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhash}{9c677286866aad38f8e9b660f5411814}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{List of Wikipedias --- Meta{,} discussion about Wikimedia projects}
+      \field{urlday}{01}
+      \field{urlmonth}{06}
+      \field{urlyear}{2016}
+      \field{year}{2016}
+      \verb{url}
+      \verb https://meta.wikimedia.org/w/index.php?title=List_of_Wikipedias&oldid=15640769
+      \endverb
+    \endentry
+    \entry{alexa}{online}{}
+      \name{author}{1}{}{%
+        {{hash=c1b7f54c8a870b38282964a04c8ccfe9}{%
+           family={Alexa},
+           family_i={A\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Alexa}%
+      }
+      \strng{namehash}{c1b7f54c8a870b38282964a04c8ccfe9}
+      \strng{fullhash}{c1b7f54c8a870b38282964a04c8ccfe9}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{02}
+      \field{month}{06}
+      \field{title}{Alexa Top 500 Global Sites}
+      \field{urlday}{02}
+      \field{urlmonth}{06}
+      \field{urlyear}{2016}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://www.alexa.com/topsites
+      \endverb
+    \endentry
     \entry{paranjape}{article}{}
       \name{author}{4}{}{%
         {{hash=520a181595c460d39601a3c162fb3425}{%
@@ -54,6 +101,83 @@
       \field{year}{2015}
       \verb{url}
       \verb http://arxiv.org/abs/1512.07258
+      \endverb
+    \endentry
+    \entry{lead}{online}{}
+      \name{author}{1}{}{%
+        {{hash=9c677286866aad38f8e9b660f5411814}{%
+           family={Wikipedia},
+           family_i={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhash}{9c677286866aad38f8e9b660f5411814}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{17}
+      \field{month}{05}
+      \field{title}{Wikipedia:Manual of Style/Lead section}
+      \field{urlday}{18}
+      \field{urlmonth}{05}
+      \field{urlyear}{2016}
+      \field{year}{2016}
+      \verb{url}
+      \verb http://en.wikipedia.org/w/index.php?title=Plagiarism&oldid=5139350
+      \endverb
+    \endentry
+    \entry{l2rtwitter}{inproceedings}{}
+      \name{author}{5}{}{%
+        {{hash=e9fbfceed8a3bc76a7fd905b091c40c4}{%
+           family={Duan},
+           family_i={D\bibinitperiod},
+           given={Yajuan},
+           given_i={Y\bibinitperiod}}}%
+        {{hash=98383dd99dff37b7469c739e257f07d7}{%
+           family={Jiang},
+           family_i={J\bibinitperiod},
+           given={Long},
+           given_i={L\bibinitperiod}}}%
+        {{hash=5588f729660dbe4dbf5af3850f858ae3}{%
+           family={Qin},
+           family_i={Q\bibinitperiod},
+           given={Tao},
+           given_i={T\bibinitperiod}}}%
+        {{hash=2a72f304d2bc33c9c92301f2dc3063b2}{%
+           family={Zhou},
+           family_i={Z\bibinitperiod},
+           given={Ming},
+           given_i={M\bibinitperiod}}}%
+        {{hash=6717ac430ded5443ac6184d0e521cd1f}{%
+           family={Shum},
+           family_i={S\bibinitperiod},
+           given={Heung-Yeung},
+           given_i={H\bibinithyphendelim Y\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Stroudsburg, PA, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computational Linguistics}%
+      }
+      \strng{namehash}{353994be0337577f81d68a7caf32f671}
+      \strng{fullhash}{4e350d00b893968ea596b62b33fdf058}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the 23rd International Conference on Computational Linguistics}
+      \field{month}{10}
+      \field{series}{COLING '10}
+      \field{title}{An Empirical Study on to Rank of Tweets}
+      \field{year}{2010}
+      \field{pages}{295\bibrangedash 303}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1587/transinf.E94.D.1854
+      \endverb
+      \verb{url}
+      \verb http://dl.acm.org/citation.cfm?id=1873781.1873815
       \endverb
     \endentry
     \entry{learning_link}{inproceedings}{}
@@ -187,35 +311,6 @@
       \verb https://search.ieice.org/bin/pdf_link.php?category=D&lang=E&year=2011&fname=e94-d_10_1854&abst=
       \endverb
     \endentry
-    \entry{lemur}{online}{}
-      \name{author}{1}{}{%
-        {{hash=7e2d0779870bfa5ea29f92f5cf7dd409}{%
-           family={Project},
-           family_i={P\bibinitperiod},
-           given={The\bibnamedelima Lemur},
-           given_i={T\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
-      }
-      \list{organization}{2}{%
-        {Center for Intelligent Information Retrieval (CIIR) at the University of Massachusetts, Amherst,}%
-        {the Language Technologies Institute (LTI) at Carnegie Mellon University}%
-      }
-      \strng{namehash}{7e2d0779870bfa5ea29f92f5cf7dd409}
-      \strng{fullhash}{7e2d0779870bfa5ea29f92f5cf7dd409}
-      \field{sortinit}{0}
-      \field{sortinithash}{990108227b3316c02842d895999a0165}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{day}{19}
-      \field{month}{12}
-      \field{title}{The Lemur Project}
-      \field{urlday}{19}
-      \field{urlmonth}{05}
-      \field{urlyear}{2016}
-      \field{year}{2013}
-      \verb{url}
-      \verb http://www.lemurproject.org/
-      \endverb
-    \endentry
     \entry{ranklib}{online}{}
       \name{author}{1}{}{%
         {{hash=218d06f39c74d0417b00b3f294885f4a}{%
@@ -223,6 +318,9 @@
            family_i={D\bibinitperiod},
            given={Van},
            given_i={V\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Lemur Project}%
       }
       \strng{namehash}{218d06f39c74d0417b00b3f294885f4a}
       \strng{fullhash}{218d06f39c74d0417b00b3f294885f4a}
@@ -232,7 +330,7 @@
       \field{labeltitlesource}{title}
       \field{day}{05}
       \field{month}{10}
-      \field{title}{RankLib}
+      \field{title}{The Lemur Project-Wiki-RankLib}
       \field{urlday}{19}
       \field{urlmonth}{05}
       \field{urlyear}{2016}
@@ -655,6 +753,34 @@
       \verb http://www.ibmbigdatahub.com/blog/ground-truth-agile-machine-learning
       \endverb
     \endentry
+    \entry{nielsen}{online}{}
+      \name{author}{1}{}{%
+        {{hash=753054f71283d85f82cda8e35daf6bac}{%
+           family={Nielsen},
+           family_i={N\bibinitperiod},
+           given={Jakob},
+           given_i={J\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Nielsen Norman Group}%
+      }
+      \strng{namehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{fullhash}{753054f71283d85f82cda8e35daf6bac}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{06}
+      \field{month}{05}
+      \field{title}{How Little Do Users Read?}
+      \field{urlday}{18}
+      \field{urlmonth}{05}
+      \field{urlyear}{2016}
+      \field{year}{2008}
+      \verb{url}
+      \verb https://www.nngroup.com/articles/how-little-do-users-read/
+      \endverb
+    \endentry
     \entry{teevan2011twittersearch}{book}{}
       \name{author}{3}{}{%
         {{hash=1bbfc6d3550769a86de1bfe6a3fe890d}{%
@@ -727,56 +853,34 @@
       \verb http://www.aaai.org/ocs/index.php/ICWSM/ICWSM14/paper/viewFile/8035/8123
       \endverb
     \endentry
-    \entry{lead}{misc}{}
-      \name{author}{1}{}{%
-        {{hash=9c677286866aad38f8e9b660f5411814}{%
-           family={Wikipedia},
-           family_i={W\bibinitperiod}}}%
+    \entry{guyon2003introduction}{article}{}
+      \name{author}{2}{}{%
+        {{hash=284a778b6c8e17f1aae38e288dc06036}{%
+           family={Guyon},
+           family_i={G\bibinitperiod},
+           given={Isabelle},
+           given_i={I\bibinitperiod}}}%
+        {{hash=af1237fe610213b60eefaf767e506435}{%
+           family={Elisseeff},
+           family_i={E\bibinitperiod},
+           given={Andr\'{e}},
+           given_i={A\bibinitperiod}}}%
       }
-      \strng{namehash}{9c677286866aad38f8e9b660f5411814}
-      \strng{fullhash}{9c677286866aad38f8e9b660f5411814}
+      \list{publisher}{1}{%
+        {JMLR. org}%
+      }
+      \strng{namehash}{975fa6513949a08fe98fc5ebc01f3ed8}
+      \strng{fullhash}{975fa6513949a08fe98fc5ebc01f3ed8}
       \field{sortinit}{0}
       \field{sortinithash}{990108227b3316c02842d895999a0165}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{day}{17}
-      \field{month}{05}
-      \field{title}{Wikipedia:Manual of Style/Lead section}
-      \field{urlday}{18}
-      \field{urlmonth}{05}
-      \field{urlyear}{2016}
-      \field{year}{2016}
-      \verb{url}
-      \verb http://en.wikipedia.org/w/index.php?title=Plagiarism&oldid=5139350
-      \endverb
-    \endentry
-    \entry{nielsen}{online}{}
-      \name{author}{1}{}{%
-        {{hash=753054f71283d85f82cda8e35daf6bac}{%
-           family={Nielsen},
-           family_i={N\bibinitperiod},
-           given={Jakob},
-           given_i={J\bibinitperiod}}}%
-      }
-      \list{organization}{1}{%
-        {Nielsen Norman Group}%
-      }
-      \strng{namehash}{753054f71283d85f82cda8e35daf6bac}
-      \strng{fullhash}{753054f71283d85f82cda8e35daf6bac}
-      \field{sortinit}{0}
-      \field{sortinithash}{990108227b3316c02842d895999a0165}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{day}{06}
-      \field{month}{05}
-      \field{title}{How Little Do Users Read?}
-      \field{urlday}{18}
-      \field{urlmonth}{05}
-      \field{urlyear}{2016}
-      \field{year}{2008}
-      \verb{url}
-      \verb https://www.nngroup.com/articles/how-little-do-users-read/
-      \endverb
+      \field{journaltitle}{The Journal of Machine Learning Research}
+      \field{title}{An introduction to variable and feature selection}
+      \field{volume}{3}
+      \field{year}{2003}
+      \field{pages}{1157\bibrangedash 1182}
+      \range{pages}{26}
     \endentry
     \entry{fast_greedy}{article}{}
       \name{author}{3}{}{%
@@ -973,6 +1077,67 @@
       \verb http://doi.acm.org/10.1145/324133.324140
       \endverb
       \keyw{World Wide Web,graph algorithms,hypertext structure,link analysis}
+    \endentry
+    \entry{weka}{article}{}
+      \name{author}{6}{}{%
+        {{hash=8afb2c93d55a5a48ea1845b23eb996d5}{%
+           family={Hall},
+           family_i={H\bibinitperiod},
+           given={Mark},
+           given_i={M\bibinitperiod}}}%
+        {{hash=14376659b7c222795bf43d1158efbaef}{%
+           family={Frank},
+           family_i={F\bibinitperiod},
+           given={Eibe},
+           given_i={E\bibinitperiod}}}%
+        {{hash=a8cf4cd7abdf3cb3b82ac01950b95778}{%
+           family={Holmes},
+           family_i={H\bibinitperiod},
+           given={Geoffrey},
+           given_i={G\bibinitperiod}}}%
+        {{hash=8d3031672ff9944d1bd83979cee191bb}{%
+           family={Pfahringer},
+           family_i={P\bibinitperiod},
+           given={Bernhard},
+           given_i={B\bibinitperiod}}}%
+        {{hash=1515682a5415208296ec827a5a2f8940}{%
+           family={Reutemann},
+           family_i={R\bibinitperiod},
+           given={Peter},
+           given_i={P\bibinitperiod}}}%
+        {{hash=926252d979eb0dc3c8c27118fa93f219}{%
+           family={Witten},
+           family_i={W\bibinitperiod},
+           given={Ian\bibnamedelima H.},
+           given_i={I\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{54381202ca50a480c52cd70b442b2213}
+      \strng{fullhash}{4ed6d3c2f9f0c93b6103294c871d778f}
+      \field{sortinit}{0}
+      \field{sortinithash}{990108227b3316c02842d895999a0165}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1931-0145}
+      \field{journaltitle}{SIGKDD Explor. Newsl.}
+      \field{month}{11}
+      \field{number}{1}
+      \field{title}{The WEKA Data Mining Software: An Update}
+      \field{volume}{11}
+      \field{year}{2009}
+      \field{pages}{10\bibrangedash 18}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1145/1656274.1656278
+      \endverb
+      \verb{url}
+      \verb http://doi.acm.org/10.1145/1656274.1656278
+      \endverb
     \endentry
   \endsortlist
 \endrefsection

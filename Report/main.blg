@@ -1,0 +1,16 @@
+[0] Config.pm:343> INFO - This is Biber 2.5
+[0] Config.pm:346> INFO - Logfile is 'main.blg'
+[75] biber:290> INFO - === Pá čec  1, 2016, 23:18:54
+[228] Biber.pm:352> INFO - Reading 'main.bcf'
+[466] Biber.pm:777> INFO - Found 30 citekeys in bib section 0
+[486] Biber.pm:3494> INFO - Processing section 0
+[508] Biber.pm:3658> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[611] bibtex.pm:1176> INFO - Decoding LaTeX character macros into UTF-8
+[721] bibtex.pm:1037> INFO - Found BibTeX data source 'bibliography.bib'
+[917] UCollate.pm:66> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[917] UCollate.pm:66> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[918] Biber.pm:3307> INFO - Sorting list 'none/global/' of type 'entry' with scheme 'none' and locale 'en-US'
+[918] Biber.pm:3311> INFO - No sort tailoring available for locale 'en-US'
+[946] bbl.pm:526> INFO - Writing 'main.bbl' with encoding 'ascii'
+[947] bbl.pm:527> INFO - Converting UTF-8 to TeX macros on output to .bbl
+[1191] bbl.pm:619> INFO - Output to main.bbl
