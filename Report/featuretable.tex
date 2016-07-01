@@ -1,0 +1,35 @@
+\newcolumntype{M}[1]{>{\raggedright}m{#1}}
+\begin{table*}[t!]
+\caption{Summary of all features used for L2R algorithm}
+\centering
+\label{features_tab}
+\begin{tabular}{lM{0.5\textwidth}l}
+
+\centering
+\textbf{Feature name} & \textbf{Description} & \textbf{Section} \\
+\toprule
+Popularity of resource & Processed measure on article views coming from external search engines and social media. & \ref{popularity of resource}\\
+\midrule
+Popularity percentile rank & Measure extracted from local distributions of article views coming from external search engines and social media. & \ref{popularity percentile rank}\\
+\midrule
+Link position & Position of the link deduced from its distance to the beginning of the article. & \ref{link position}\\
+\midrule
+Link order & Relative position in the article according to the order of appearances of all links. & \ref{link order}\\
+\midrule
+Link count & Number of occurrences of the link in the article. & \ref{link count}\\
+\midrule
+Community membership & Binary value detecting if two articles belong to the same "community" (i.e. to the same cluster of articles). & \ref{community membership}\\
+\midrule
+Symmetric linking & Binary value detecting if two articles both link one to each other. & \ref{symmetric linking}\\
+\midrule
+Hits and PageRank & Score based on the number of edges in the graph representation and on the neighbours score. Give an idea of how general the article topic is. & 
+\ref{hits and pagerank}\\ 
+\midrule
+Relatedness & Relatedness of two articles computed on the number of links (both outgoing and incoming links) they have in common. & \ref{relatedness obtained from links}\\
+\midrule
+Textual similarity & Semantic comparison between two article text content implemented using cosine similarity on TF-IDF vectors. & \ref{textual similarity}\\
+\midrule
+Title similarity & Similarity between two article titles implemented using Jaccard coefficient on the title words. & \ref{title similarity} \\
+\bottomrule
+\end{tabular}
+\end{table*}

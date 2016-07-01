@@ -1,0 +1,58 @@
+\begin{table*}[b!]
+\centering
+\caption{Descriptive statistics for all (non binary) features}
+\label{features_stat}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l
+	S[table-format=1.4,
+      table-figures-exponent=1,
+      table-sign-mantissa,
+      table-sign-exponent]
+    S[table-format=1.4,
+      table-figures-exponent=2,
+      table-sign-mantissa,
+      table-sign-exponent]
+    S[table-format=1.4,
+      table-figures-exponent=1,
+      table-sign-mantissa,
+      table-sign-exponent]
+    S[table-format=1.4,
+      table-figures-exponent=1,
+      table-sign-mantissa,
+      table-sign-exponent]
+    S[table-format=1.4,
+      table-figures-exponent=1,
+      table-sign-mantissa,
+      table-sign-exponent]
+    S[table-format=1.4,
+      table-figures-exponent=1,
+      table-sign-mantissa,
+      table-sign-exponent]
+    }
+\toprule
+&  &  & \multicolumn{3}{c}{Quartiles} & \\
+\cmidrule{4-6}
+\multicolumn{1}{c}{Feature} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{Min.} & \multicolumn{1}{c}{$Q_1$} & \multicolumn{1}{c}{$Q_2$} & \multicolumn{1}{c}{$Q_3$} &  \multicolumn{1}{c}{Max.} \\
+\midrule
+Link order & 0.4651 &  0.0002 & 0.2066 & 0.4505 & 0.7126 & 1.0000\\
+Link position & 0.4358 & 0.0001 & 0.1558 & 0.4034 & 0.7009 & 1.0000\\
+Link order log & 0.8185 & 0.0000 & 0.7466 & 0.8720 & 0.9459 & 1.0000\\
+Link position log & 0.8858 & 0.2300 & 0.8382 & 0.9209 & 0.9690 & 1.0000 \\  
+Link count & 1.4796 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 255.0000 \\
+Hubs score & 3.4345e-5 & 8.3122e-19 & 1.1513e-8 & 7.7927e-8 & 5.0804e-7 & 1.0000\\ 
+Authority score & 9.9120e-5 & 1.7678e-15 & 1.0063e-09 & 4.1116e-9 & 2.0688e-8 & 1.0000\\
+Page rank & 9.0000e-5 & 1.0000e-6 & 2.0000e-6 & 4.0000e-6 & 1.1000e-5 & 1.9789e-2\\
+Title similarity & 0.0225 & 0.0000 & 0.0000 & 0.0000 & 0.0000 & 0.8750\\
+Search interest & 0.6130 & 0.0000 & 0.5038 & 0.6301 & 0.7381 & 1.0000\\
+Social interest & 0.2194 & 0.0000 & 0.0000 & 0.0000 & 0.4165 & 1.0000\\ 
+Social interest 2 & 0.1879 & 0.0000 & 0.0000 & 0.0000 & 0.3084 & 1.0000\\ 
+Search interest 2 & 0.4872 & 0.0000 & 0.2306 & 0.4870 & 0.7405 & 1.0000\\ 
+Jaccard coeff. & 0.0050 & 0.0000 & 0.0000 & 0.0000 & 0.0048 & 0.4545 \\
+Dice coeff. & 0.0095 & 0.0000 & 0.0000 & 0.0000 & 0.0094 & 0.6200 \\
+Google distance & 547.6310 & 0.0823 & 0.5444 & 1000.0 & 1000.0 & 1000.0\\
+Text similarity & 0.6261 & 0.0000 & 0.5170 & 0.6840 & 0.7890 & 0.9900\\
+
+\bottomrule
+\end{tabular}
+}
+\end{table*}

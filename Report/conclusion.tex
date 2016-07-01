@@ -1,0 +1,22 @@
+\section{Conclusion}
+In this paper, we explored a potential solution to the overlinking problem in Wikipedia articles by applying multiple Learning to Rank algorithms to links in the top 1000 most prominent articles. Two training scenarios were described, one using the 21 extracted features, and one with the top 6 based on Info gain, PCA, and CFS Subset metrics. The chosen features were link order, number of links, symmetric linking, social media interest, search engine interest (2), and Jaccard coefficient relatedness. There was a significant improvement in time spent when generating the model with only 6 features and only a slight loss of accuracy. It would be interesting to study in a bigger dataset to see how applicable it is to a database as big as Wikipedia.
+
+It is impossible to be 100~\% accurate when deciding which links to remove from the articles because of a lack of objective linking-rules. Furthermore, the use of these links might change over time.
+
+With respect to our ground truth, we achieved a 87.8~\% accuracy in the top 191 links on average with all the features and 86.2~\% with the 6 selected features. We consider these results to be good enough to be applied on Wikipedia articles in practice, with the intention of improving readability. Further work and more resources are needed for applying our work onto a full scale version of Wikipedia. 
+% * <philip@thruesen.dk> 2016-06-01T20:12:04.564Z:
+%
+% > Further work and more resources are needed for applying our work onto a full scale version of Wikipedia. 
+%
+% this seems trivial
+%
+% ^ <roelcastanomoreno@gmail.com> 2016-06-02T09:20:47.219Z.
+%It is also possible to keep adding features, add or change articles in the training set, and improve or add other implementations of L2R.
+% * <philip@thruesen.dk> 2016-06-01T20:13:38.126Z:
+%
+% > It is also possible to keep adding features, add or change articles in the training set, and improve or add other implementations of L2R.
+%
+% I think this also goes without saying :)
+%
+% ^ <roelcastanomoreno@gmail.com> 2016-06-02T09:20:45.832Z.
+

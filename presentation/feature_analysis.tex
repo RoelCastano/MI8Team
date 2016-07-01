@@ -1,0 +1,25 @@
+% slide 24: introduce 3 methods and formula for finding importance of feature and how some were filtered because of redundance.
+
+\begin{frame}
+\frametitle{Feature Analysis}
+Importance of a feature: 3 metrics
+\begin{itemize}
+\item \textbf{Info Gain}:
+{\small $ InfoGain(Rank,Feature) = H(Rank) - H(Rank | Feature) $}
+\item \textbf{PCA} (Principal Component Analysis): projection onto a single dimension
+\item \textbf{CFS} (Correlation Feature Selection): subsets with low inter-correlation and high correlation with rank
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Feature Selection}
+\begin{itemize}
+\item \textbf{"Top 6"} (using Usefulness metric):
+$$u_{f_i} = \frac{infogain_{f_i}}{\max(infogain_{f_j})} + \frac{|pca_{f_i}|}{\max(|pca_{f_j}|)} + \frac{cfs_{f_i}}{\max(cfs_{f_j})}$$
+
+\item \textbf{"Non zero Info Gain"}
+\end{itemize}
+
+
+
+\end{frame}

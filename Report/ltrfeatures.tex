@@ -1,122 +1,137 @@
 \section{Features}
-This section defines each feature used in the implementation of Learn to Rank algorithm.
-
-\input{popfeatures}
+\label{sec:features}
+This section defines the features used in the implementation of Learn to Rank algorithm. All features are summarized in table \ref{features_tab} and described in the following sections.
 
 \subsection{Link Position}
-\subsubsection{Description}
-Position of a link in an article is the number of characters counted from the beginning of the article up to the link appearance. Because the length of different articles may vary quite substantially, this number is normalized per article.
+\label{link position}
+\paragraph{Description.}
+Position of a link in an article is the number of characters counted from the beginning of the article up to the link appearance. Because the length of different articles may vary quite substantially, this number is normalized per article. Second variant takes logarithm of link position and normalizes it per article.
 
-\subsubsection{Motivation}
-Our intuition behind the Link Position feature is based on two observations. The first one is that given the way Wikipedia articles are structured, the most general description of the article is placed in the first few paragraphs before the table of contents. This section of the Wikipedia article is called the lead \cite{lead}. As described in the Wikipedia manual of style, for many people, the lead section is the only section they will read since it summarises the entire article. Later paragraphs only dive deeper into the topics outlined in the description. 
+\paragraph{Motivation.}
+Our intuition behind the Link Position feature is based on two observations. The first one is that given the way Wikipedia articles are structured, the most general description of the article is placed in the first few paragraphs before the table of contents. This section of the Wikipedia article is called the lead section \cite{lead}. As described in the Wikipedia manual of style, for many people, the lead section is the only section they will read since it summarizes the entire article. Later paragraphs only dive deeper into the topics outlined in the description. 
 
-The second observation is the way people read web pages. As explained in \cite{nielsen} by Jakob Nielsen, one of the leaders in human-computer interaction, on average, users have time to read at most 28 \% of the words on a website. Additionally, most attention is given to the top portion of a page and later sections are merely skimmed through. People looking for different article that is somewhat related to the one currently being read might be interested in more general concepts as they contain the searched term. As explained above, more general terms happen to be heavily abundant in the top portion of a Wikipedia article.
+The second observation is the way people read web pages. As explained in \cite{nielsen} by Jakob Nielsen, one of the leaders in human-computer interaction, on average, users have time to read at most 28 \% of the words on a website. Additionally, most attention is given to the top portion of a page and later sections are merely skimmed through. People looking for different article that is somewhat related to the one currently being read might be interested in more general concepts as they contain the searched term. %As explained above, more general terms happen to be heavily abundant in the top portion of a Wikipedia article.
 
-\subsubsection{Extraction}
-Raw texts of the articles in Wiki markup are taken from the Wikipedia dumps described above and links to other articles are found using regular expressions. Links to images, external sources, etc. are ignored. Due to the nature of source, from which is this feature extracted, there might be slight discrepancies in position value and the exact number of characters preceding the links in final article as displays in web browser.
+\paragraph{Extraction.}
+Raw texts of the articles in Wiki markup are taken from the Wikipedia dumps described above and links to other articles are found using regular expressions. Links to images, external sources, etc. are ignored. Due to the nature of source from which is this feature extracted, there might be slight discrepancies in position value and the exact number of characters preceding the links in final article as displays in web browser.
 
 \subsection{Link Order}
+\label{link order}
+\paragraph{Description.}
+This feature captures the position of a link relative to all the other links contained in the same article. The order equal to $n$ means that the link is the $n^{th}$ link in the article. The final value of this feature is again normalized per article. Second variant takes logarithm of link order and normalizes it per article.
 
-\subsubsection{Description}
-This feature captures the position of link relative to all the other links contained in the same article. The order equal to $n$ means that the link is the $n^{th}$ link in the article. The final value of this feature is again normalised per article.
-
-\subsubsection{Motivation}
+\paragraph{Motivation.}
 Similar to the previous feature, Link Order is based on the observation that a Wikipedia article's initially describe the topic in general terms. While the link position captures more of a distance between links and their spread, link order is a simplified version of it. It conveys less information, but in a much more straightforward manner.
 
-\subsubsection{Extraction}
+\paragraph{Extraction.}
 This feature is also extracted from the Wikipedia dumps in a similar manner to the Link Position feature.
 
 \subsection{Link Count}
-
-\subsubsection{Description}
+\label{link count}
+\paragraph{Description.}
 Link Count is the number of occurrences of the same link throughout the article.
 
-\subsubsection{Motivation}
-Whenever a link is present multiple times in a single article, it means that the topic is repeated several times in the article as well. This may signify strong relatedness of articles content.
+\paragraph{Motivation.}
+Whenever a link is present multiple times in a single article, it means that the topic is repeated several times in the article as well. This may signify strong relatedness of the article's content.
 
-\subsubsection{Extraction}
+\paragraph{Extraction.}
 The feature is extracted from the Wikipedia dump using the raw article texts as in case of the previous two features.
 
+\input{popfeatures}
 
 \subsection{Community Membership}
+\label{community membership}
+\paragraph{Description.}
+Let $G(V,E)$ be a simple graph. Then a community in $G$ is a subgraph $(V', E') = G' \subseteq G$, such that $|E'| \ge |\{ \{u,v\} \in E\setminus E'  \; | \; \{u, v\} \cap V' \neq \emptyset \}|$. In our case the $G$ is a graph of Wikipedia, where $V = \bigcup_{i=1}^{M} B_i \cup P$ is a set of articles and $E$ is set of links between them. After detecting all communities, each edge (link) $\{p_i,\beta_j\}$ is given a value of 1 if both $p_i$ and $\beta_j$ belong to the same community or 0 otherwise.
 
-\subsubsection{Description}
-Let $G(V,E)$ be a simple graph. Then a community in $G$ is a subgraph $(V', E') = G' \subseteq G$, such that $|E'| \ge |\{ \{u,v\} \in E\setminus E'  \; | \; \{u, v\} \cap V' \neq \emptyset \}|$. In our case the $G$ is a graph of Wikipedia, where $V = \bigcup_{i=1}^{M} B_i \cup A$ is a set of articles and $E$ is set of links between them. After detecting all communities, each edge (link) $\{\alpha_i,\beta_j\}$ is given a value of 1 if both $\alpha_i$ and $\beta_j$ belong to the same community or -1 otherwise.
-
-\subsubsection{Motivation}
+\paragraph{Motivation.}
 Communities are an implicit clustering of articles on Wikipedia that capture emerging properties of interconnected articles. This feature looks promising in cases where someone is interested in a specific topic, be it music bands of the same genre or fields of study in a certain science. Related articles from the same community might be a good place to look at and will highly likely contain desired article. Furthermore, users reading an article have shown an interest in specific topic and might want to broaden and deepen his or her knowledge of it.
 
-\subsubsection{Extraction}
-Every link extracted from the Wikipedia dump is converted into an edge of a graph. The resulting graph is then loaded and communities are found using igraph package in R. Community detection algorithms used were \cite{fast_greedy}, \cite{label_propagation}, and \cite{infomap}. The graph was transformed into a simple graph and then community detection algorithms were run. Even though links have natural orientation, one can relax them as undirected edges. Sheer number of links by it self is an adequate indicator of community belonging regardless of their orientation.
+\paragraph{Extraction.}
+Every link extracted from the Wikipedia dump is converted into an edge of a graph. The resulting graph is then loaded and communities are found using igraph package in R. Community detection algorithms used were Fast greedy \cite{fast_greedy}, Label propagation \cite{label_propagation}, and InfoMAP\cite{infomap}. The graph was transformed into a simple graph and then community detection algorithms were run. Even though links have natural orientation, one can relax them as undirected edges. Sheer number of links by it self is an adequate indicator of community belonging regardless of their orientation.
 
 \subsection{Symmetric Linking}
+\label{symmetric linking}
+\paragraph{Description.}
+A link $(p_i, \beta_j)$ is considered symmetric if, and only if $\beta_j \in B_i$ and link $(\beta_j, p_i)$ also exists. If the link is symmetric, the feature has a value of 1 and 0 otherwise.
 
-\subsubsection{Description}
-A link $(\alpha_i, \beta_j)$ is considered symmetric if, and only if $\beta_j \in B_i$ and link $(\beta_j, \alpha_i)$ also exists. If the link is symmetric, the feature has a value of 1 and -1 otherwise.
-
-\subsubsection{Motivation}
+\paragraph{Motivation.}
 Symmetric linking indicates, in some cases, that there exists an important relevance between said articles or highly related topics are being discussed. Examples of this article relationship includes competing presidential candidates, sports team rivals, movies and its actors, etc. As expected, it is common for users to demonstrate interest in these kind of relations between articles.
 
-\subsubsection{Extraction}
-This feature is extracted from the Wikipedia dump file. First, all the links between prominent articles in $A$ and articles in all $B_i$ for $1 \le i \le M$ are found. Then for every link $(\alpha_i, \beta_j)$ a link $(\beta_j, \alpha_i)$ is looked up.
+\paragraph{Extraction.}
+This feature is extracted from the Wikipedia dump file. First, all the links between prominent articles in $P$ and articles in all $B_i$ for $1 \le i \le M$ are found. Then for every link $(p_i, \beta_j)$ a link $(\beta_j, p_i)$ is looked up.
 
 \subsection{HITS and PageRanks}
-\subsubsection{Description}
-HITS and PageRank characterise nodes in the graph by score based on number of edges and also the scores of neighbours.
+\label{hits and pagerank}
+\paragraph{Description.}
+HITS and PageRank characterize nodes in the graph by score based on number of edges and also the scores of neighbours.
 
 Although HITS and PageRank differ in content their main goal is the same, give estimate of article significance. In case of HITS, high hub score may indicate more general topics while high authority score would be indication of very focused article discussing particular term in great depth. PageRank is similar to the hub and authority score combined.
 
-\subsubsection{Motivation}
-The intuition behind this feature comes from the search engine domain. When searching, these scores helps identify the most relevant results. When applied to articles, the scores will help categorise linked articles for the learning to rank algorithm.
+\paragraph{Motivation.}
+The intuition behind this feature comes from the search engine domain. When searching, these scores help identify the most relevant results. When applied to articles, the scores will help categorize linked articles for the learning to rank algorithm.
 
-\subsubsection{Extraction}
+\paragraph{Extraction.}
 Similarly to community extraction, HITS and PageRank are computed from graph representation of Wikipedia. The graph is processed in R using package igraph that implements both \cite{pagerank} and \cite{hits}. Link directions are preserved in this case.
 
 \subsection{Relatedness obtained from links}
+\label{relatedness obtained from links}
+This feature measures how two articles are related in terms of linking. Indeed, it compares the set of links (both incoming and outgoing links) of the prominent article and the linked one. The more links they have in common, the more ``related'' the two articles are. Figure~\ref{fig:relatedness_example} take the example of two articles (\textit{Automobile} and \textit{Global Warming}) to illustrate this notion.
 
-This feature measures how two articles are related in terms of linking. Indeed, it compares the set of links (both incoming and outgoing links) of the current article and the target one. The more links they have in common, the more \"\ related\"\ the two articles are. \
-
+\begin{figure*}[t]
+\centering
+    \includegraphics[width=0.7\textwidth]{images/relatedness}
+ \caption{Example of relatedness between the articles \textit{Automobile} end \textit{Global Warming} (extracted from \cite{learning_link})}
+ \label{fig:relatedness_example}
+\end{figure*}
+\paragraph{Description.}
 In order to quantify the similarity between links sets, we computed three different metrics  : Jaccard coefficient, Dice\'\ s measure and Normalized Google Distance. \
-These three metrics are shown in Table ~\ref{fig:formulas}. Given two articles a and b, A and B will respectively stand for the set of articles linking (considering both incoming and outgoing links) to article a and the set of articles linking to b. W represents the number of articles in the all set.
-
+These three metrics are shown in Table \ref{fig:formulas}. Given two articles $p$ and $\beta$, A and B will respectively stand for the set of articles linking (considering both incoming and outgoing links) to article $p$ and the set of articles linking to $\beta$ while W will represent the entire dataset.
 \begin{table}[H]
 \caption{Relatedness measure formulas and values range}
 \centering
-\begin{tabular}{llr}
+\begin{tabular}{lcc}
 \toprule
-\cmidrule(r){1-2}
 Formula & Min. & Max.\\
 \midrule
-$Dice(a,b)=2\times\frac{|A \cap B|}{|A| + |B|}$ & 0\% & 100\% \\
+$Dice(p ,\beta)=2\times\frac{|A \cap B|}{|A| + |B|}$ & 0 & 1 \\
  & & \\
-$Jaccard(a,b)= \frac{|A\cap B|}{|A\cup B|}$ & 0\% & 100\% \\
+$Jaccard(p ,\beta)= \frac{|A\cap B|}{|A\cup B|}$ & 0 & 1 \\
  & & \\
-$NGD(a,b)= \frac{log(max(|A|,|B|))-log(|A\cap B|))}{log(|W|)-log(min(|A|,|B|))}$ & 0 & $\infty $ \\
+$NGD(p ,\beta)= \frac{log(max(|A|,|B|))-log(|A\cap B|))}{log(|W|)-log(min(|A|,|B|))}$ & 0 & $\infty $ \\
 \bottomrule
 \label{fig:formulas}
 \end{tabular}
 \end{table}
+Jacccard and Dice's measures are quite similar. They measure a rate of links both pages have in common.  Then they have a very intuitive meaning. The higher the measure is, the closer the topics of these articles are.
 
-\subsubsection*{Dice's measure}
-Dice's measure is the fraction of the links both article have in common to the sum of links they both have. Then it has a very intuitive meaning. The highest Dice's measure is, the more related articles are.\
-
-\subsubsection*{Jaccard coefficient}
-Jaccard coefficient is quite similar to Dice's measure. It measures the ratio between the number of links both pages have in common and the total number of links they have.\
-
-\subsubsection*{Normalized Google distance}
-This measure was originally based on term occurrences in web pages and is used by Google search engine. As explained by David Milne and Ian H. Witten in their article \textit{"An Effective, Low-Cost Measure of Semantic Relatedness Obtained from Wikipedia Links"}, this measure can also be adapted to measure relatedness between two Wikipedia articles. The smallest the distance is, the more related articles should be.\
-
-\subsubsection*{}
-We chosed to integrate this relatedness feature because we made the assumption that a user who’s reading an article about a specific topic might be interested in reading more articles about the same domain. 
-
-As described for the link position feature, links sets are extracted from the raw articles text from Wikipedia dumps.
+Normalized Google distance was originally based on term occurrences in web pages and it was first used by Google search engine. As explained by David Milne and Ian H. Written in their article \textit{"An Effective, Low-Cost Measure of Semantic Relatedness Obtained from Wikipedia Links"}\cite{learning_link}, this measure can also be adapted to measure relatedness between two Wikipedia articles. The smaller the distance is, the more related the articles should be. An infinite distance indicates that the two articles don't share any link. We chose to implement this possibility by replacing the infinite value by a threshold of 1000 which, compared to the highest values of the feature, seemed high enough not to distort the results.
+\paragraph{Motivation.}
+We chose to integrate this relatedness feature because we made the assumption that a user who is reading an article about a specific topic might be interested in reading more articles about the same domain. 
+\paragraph{Extraction.}
+As described before for the link position feature, links sets are extracted from the raw articles text from Wikipedia dumps. Each prominent article was attributed its own set of links. Then we computed the three metrics shown before. 
 
 \subsection{Textual similarity}
+\label{textual similarity}
+\paragraph{Description.}
+This feature measures the textual content similarity between two Wikipedia articles. It makes a semantic comparison between two texts and attributes a value between 0 and 1. The higher this value gets, the more similar the two articles are supposed to be.
 
-This feature measures the textual content similarity between two Wikipedia articles.  \\
+% table has to be mentioned hear to appear in the next page
+\input{featurestatstable.tex}
 
-The idea behind this feature is that two articles containing approximately the same words are likely to discuss closely related subjects. This is another way to know how the two articles are related on a more semantic level than the relatedness feature we described before.\\
+\paragraph{Motivation.}
+The idea behind this feature is that two articles containing approximately the same words are likely to discuss closely related subjects. This is another way to know how the two articles are related on a more semantic level than the relatedness feature we described before.
 
-The text of all articles is extracted from wikipedia dumps. We get rid of all tables and “non-text information” (tables,links etc ...) with regular expressions, and we only keep the different paragraphs of each article. Then, for both articles A and B we create a vector that describe the frequencies of the relevant words (TF-IDF vector).\
+\paragraph{Extraction.}
+The text of all articles is extracted from wikipedia dumps. We get rid of all non-text information (tables, url links, etc ...) with regular expressions.
 
-Then the method consists in comparing the frequencies of relevant words between article A and article B by using the cosine of these two vectors. The values we obtain are spread from 0 to 1 (completely similar).
+Then, for both articles $p$ and $\beta$ we create a vector that describe the frequencies of the relevant words (TF-IDF vector).
+
+Finally the method compares the frequencies of relevant words between article $p$ and article $\beta$ by using the cosine of these two vectors.
+
+\subsection{Title similarity}
+\label{title similarity}
+Using similarity between titles as a feature is motivated by e.g. the observation that articles on people often have their family members among the most popular reference links and these often share family name whereas we would observe a higher title similarity. Similarly, a movie in a series often has e.g. its prequels/sequels highly ranked.
+
+The feature was implemented using Jaccard similarity of the title words. %We achieved a correlation coefficient of $r = 0,0115$.
+

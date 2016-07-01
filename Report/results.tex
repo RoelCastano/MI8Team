@@ -1,51 +1,350 @@
 \section{Results}
 
 \subsection{Training dataset}
-
-The training dataset comprises ground truth and all the extracted features. There are 1000 queries each with \fxnote{add exact number} articles. In total, that is \fxnote{add exact number} data points for learning. Sections below provide more descriptive statistics about feature vales.
-
-\subsubsection{Link order and position}
-
-Table \ref{link_order_pos_desc} shows distribution of values for these features. Figure \ref{link_order_pos_rank} shows how well this feature matches the distribution of popularity.
+In this section we describe the training dataset we obtained from the features extraction. All statistical values are stored in tables \ref{features_stat}
+and \ref{binary_stat}. 
+The training dataset comprises the ground truth and all the extracted features. There are 1000 articles each with 259 links on average. In total, that is 259,009 datapoints used for learning. 
 
 \begin{table}[H]
-\caption{Descriptive statistic for link order}
+\caption{Descriptive statistics for binary features}
 \centering
-\label{link_order_pos_desc}
-\begin{tabular}{lrrrr}
+\label{binary_stat}
+\begin{tabular}{lrr}
 \toprule
-& & \multicolumn{3}{c}{Quartiles} \\
-\cmidrule{3-5}
-Feature & Mean & $Q_1$ & $Q_2$ & $Q_3$ \\
+& \multicolumn{2}{c}{Values frequencies} \\
+\cmidrule{2-3}
+\multicolumn{1}{c}{Feature} & \multicolumn{1}{c}{0} & \multicolumn{1}{c}{1} \\
 \midrule
-order & 0.50 & 0.25 & 0.50 & 0.75 \\
-position & 0.47 & 0.20 & 0.46 & 0.75 \\
+Symmetric link & 54.5 \% & 45.5 \% \\
+Community 1 & 21.0 \% & 79.0 \% \\
+Community 2 & 1.4 \% & 98.6 \% \\
+Community 3 & 41.4 \% & 58.6 \% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\fxnote{add plot and other features}
+\begin{table*}[t]
+\centering
+\caption{Complementary descriptive statistics for communities size}
+\label{com_stat}
+\begin{tabular}{c
+	S[table-format=3.0]
+    S[table-format=4.0]
+    S[table-format=3.0]
+    S[table-format=4.0]
+    S[table-format=4.0]
+    S[table-format=5.0]
+    S[table-format=6.0]
+    }
+\toprule
+&  &  &  &\multicolumn{3}{c}{Quartiles} & \\
+\cmidrule{5-7}
+Feature & \multicolumn{1}{c}{Count} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{Min.} & \multicolumn{1}{c}{$Q_1$} & \multicolumn{1}{c}{$Q_2$} & \multicolumn{1}{c}{$Q_3$} &  \multicolumn{1}{c}{Max.} \\
+\midrule
+Communities sizes 1 & 13 & 11204 & 284 & 1020 & 4532 & 10096 & 46650\\
+Communities sizes 2 & 17 & 8567 & 19 &57 & 143 & 228 & 141891\\
+Communities sizes 3 & 433 & 336 & 14 & 68 & 124 & 259 & 28538\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Community feature}
+The community feature values presented in table \ref{binary_stat} highly depend on the communities number and sizes. Indeed, if the sizes of communities are really huge then two articles belonging to the same community do not have the same meaning as if communities were smaller. That is why we have to take into account statistics shown in table \ref{com_stat} in order to interpret the community feature.
+
+Community 3 algorithm found a large number of different relatively small communities and so the amount of article pairs belonging to the same community is lower, as we could expect, while the communities found by the Community 1 algorithm are bigger on average, which explains that the majority of articles pairs (79 \%) were classified in the same community.
+
+In the Community 2 algorithm we observe a relatively small number of communities. Moreover, the biggest community is significantly bigger than the rest (it actually represents more than a half of the articles). That may explain why most pairs of articles (98.6 \% of them) were classified as belonging to the same community.
+
+
+\paragraph{Link order and link position.}
+Table \ref{features_stat} shows the distribution of values for these features. Naturally, 25 \% of the links will be located in the first quarter of the links. In the case of the link position, we can see that the links in the prominent articles are slightly weighted to the first part of the articles. 25 \% of the links reside in the first fifth of the articles. Link order log and link position log were used to improve the correlation of values their respective features.
+
+\paragraph{Link count.}
+For our set of prominent articles, around 76~\% of the links are only mentioned once. It is, however, a strong indicator of relevance for the 24~\% of links that are mentioned more than once. Table \ref{tab:feature_relevance} shows the value of this feature as explained in the next section.
+
+\paragraph{Social and search interest.}
+Table \ref{features_stat} lists the 4 features regarding search and social interest described in detail in section \ref{popularity of resource} and \ref{popularity percentile rank} (the latter is appended with a `2' in the first column). 
+
+We see that `Search interest 2' (or $f'_{search}$) is distributed somewhat as predicted in eq. \ref{eq:fsearch2_m} but not exactly -- neither is `Social interest 2'. This is mainly because of sparse data especially for social media traffic. Note that we have a zero-median ($2^{nd}$ quartile) of the social interest features indicating that at least half of referenced articles does not have referral data from social sites (many may be due to limitation in the clickstream dataset, see \ref{sec:groundtruth}). Though, this characteristic was expected during construction and were appropriately handled for both methods of constructing the interest features. 
+
+\paragraph{Links relatedness}
+The three relatedness features (referred as ``Jaccard coeff'',``Dice coeff'' and ``Google distance'' in the table) show at most of the articles we can reach from prominent articles don't share many links with it. Indeed the average of relatedness is close to 0 for Jaccard an Dice's measures. Moreover, according to Normalized google distance 50 \% of links reach a value of 1000 which means that they don't share any link at all with the prominent article. 
+
+
+\subsection{Learning to Rank}
+Multiple learning to rank algorithms have been tried on the training dataset. The results can be seen in table \ref{tab:eval_ndcg@10}. The experiment setup in all cases was 5-fold cross validation. Table \ref{data_partitioning}  shows how the training dataset has been partitioned for each fold.
 
 \begin{table}[H]
-\caption{Example table}
+\caption{Dataset partitioning}
 \centering
-\begin{tabular}{llr}
+\label{data_partitioning}
+\begin{tabular}{l
+	S[table-format=2.0]
+	S[table-format=3.0]
+	S[table-format=6.0]
+    }
 \toprule
-\multicolumn{2}{c}{Name} \\
-\cmidrule(r){1-2}
-First name & Last Name & Grade \\
+Purpose & \multicolumn{1}{c}{Percentage} & \multicolumn{1}{c}{Queries} & \multicolumn{1}{c}{Instances on avg.}\\
 \midrule
-John & Doe & $7.5$ \\
-Richard & Miles & $2$ \\
+training & 64~\% & 640 & 165766 \\
+validation & 16~\% & 160 & 41441 \\
+testing & 20~\% & 200 & 51802 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\lipsum[5] % Dummy text
+\begin{table*}[t]
+\caption{Evaluation of different L2R algorithms trained on all features using NDCG@10}
+\centering
+\label{tab:eval_ndcg@10}
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{6}{c}{NDCG@10} \\
+\cmidrule{2-7}
+Algorithm & Fold 1 & Fold 2 & Fold 3 & Fold 4 & Fold 5 & Average \\
+\midrule
+Coordinate Ascent & 0.4915 & 0.4866 & 0.3974 & 0.4956 & 0.4487 & 0.4640 \\
+MART & 0.4868 & 0.4923 & 0.3713 & 0.4707 & 0.4363 & 0.4515 \\
+LambdaMART & 0.4757 & 0.4749 & 0.3969 & 0.4580 & 0.4425 & 0.4496 \\
+Random Forests & 0.4648 & 0.4969 & 0.3778 & 0.4388 & 0.3900 & 0.4316 \\
+ListNet & 0.4380 & 0.4170 & 0.3369 & 0.3988 & 0.3895 & 0.3960 \\
+RankBoost & 0.2922 & 0.3336 & 0.2710 & 0.3784 & 0.3324 & 0.3215 \\
+AdaRank & \multicolumn{1}{c}{---} & 0.3847 & 0.2290 & 0.3080 & 0.2814 & 0.3008 \\
+RankNet & 0.0018 & 0.0045 & 0.0070 & 0.0030 & 0.0030 & 0.0038\\
+\bottomrule
+\end{tabular}
+\end{table*}
 
-\begin{equation}
-\label{eq:emc}
-e = mc^2
-\end{equation}
+The metric used for testing different models is the Normalized Discounted Cumulative Gain (NDCG), which is a standard measure in benchmarking L2R algorithms. The suffix $@k$ denotes that we are interested only in the first $k$ positions. First, let's define Discounted Cumulative Gain (DCG) and then $NDCG$.
+\begin{align}
+DCG@k &= \sum_{i = 1}^{k} \frac{2^{y_{\sigma(i)}}-1}{\log_{2}(i+2)}
+\label{eq:dcg} \\
+IdealDCG@k &= \sum_{i = 1}^{k} \frac{2^{y_{\pi(m+1-i)}}-1}{\log_{2}(i+2)} 
+\label{eq:idealdcg} \\
+NDCG@k &= \frac{DCG@k}{IdealDCG@k}
+\label{eq:ndcg}
+\end{align}
+Where $\sigma$ is the permutation of articles given by ranking model and $\pi$ is the permutation for perfect ranking by ground truth label. One can easily see that $NDCG$ metric can yield values between 0, meaning the worst ranking, and 1, for the perfect ranking.
 
-\lipsum[6] % Dummy text
+Another metric used later is precision (P). Similarly to precision in informational retrieval, we define it as
+\begin{align}
+P@k &= \frac{1}{k} \sum_{i = 1}^{k} \mathbb{1}( \pi(m+1-k) \le \pi(m+1-i))
+\label{eq:p}
+\end{align}
+where $\mathbb{1}(\varphi)$ is 1 if $\varphi$ is true and 0 otherwise. Again, suffix $@k$ means we are interested in first $k$ documents. This definition, in effect, treats documents with label at least as good as the label of $k^{th}$ best document as if only they were relevant.
+
+The table \ref{tab:eval_ndcg@10} shows results for ranking algorithms implemented in RankLib. Rows are sorted from the best at top to worst performing one in the bottom. One can clearly see that list-wise type of algorithms has clearly outperforms pair-wise type by a wide margin. Quite a surprise is the MART algorithm that not only scored very well but also beat LambdaMART.
+% * <roelcastanomoreno@gmail.com> 2016-06-01T14:13:29.651Z:
+%
+% > One can clearly see that list-wise type of algorithms has clearly outperforms pair-wise type by a wide margin. Quite a surprise is the MART algorithm that not only scored very well but also beat LambdaMART.
+%
+% Potential discussion.
+%
+% ^ <jarekcechak@gmail.com> 2016-06-02T09:02:21.575Z.
+AdaRank in Fold 1 produced a faulty model due to one of its weight exceeding limits of floating number representation. RankNet produced models that were assigning same score to every link resulting in very poor performance.
+
+\subsection{Feature selection}
+All together 21 features were extracted and used for comparison in table \ref{tab:eval_ndcg@10}. Features differ in their importance and, for practical purposes, it is better to use the least amount of features possible that still provide good ranking performance. Less features lead to more simple models and shorter training times. 
+
+\newcolumntype{d}{D{.}{.}{2,4}}
+
+\begin{table*}[t]
+\caption{Feature relevance for ranking}
+\centering
+\label{tab:feature_relevance}
+\begin{subtable}{.33\linewidth}
+\caption{Infogain for each feature}
+\centering
+\label{tab:feature_relevance_infogain}
+\begin{tabular}{ld}
+\toprule
+Feature name & \multicolumn{1}{c}{Info gain} \\
+\midrule
+Symmetric link  & 0.0856 \\
+Order  & 0.0852 \\
+Number of links  & 0.0786 \\
+Position  & 0.0712 \\
+Log of position  & 0.0675 \\
+Log of order  & 0.0665 \\
+Text similarity  & 0.0253 \\
+Community 3  & 0.0240 \\
+PageRank  & 0.0186 \\
+Authority score  & 0.0180 \\
+Search interest 2  & 0.0175 \\
+Title similarity  & 0.0175 \\
+Search interest  & 0.0146 \\
+Social interest  & 0 \\
+Social interest 2  & 0 \\
+Jaccard coefficient  & 0 \\
+Dice coefficient  & 0 \\
+Community 1  & 0 \\
+Hub score  & 0 \\
+Community 2  & 0 \\
+NGD  & 0 \\
+\bottomrule
+\end{tabular}
+\end{subtable}%
+\begin{subtable}{.33\linewidth}
+\caption{Coefficients of best PCA projection}
+\centering
+\label{tab:feature_relevance_pca}
+\begin{tabular}{ld}
+\toprule
+Feature name & \multicolumn{1}{c}{PCA} \\
+\midrule
+Search interest 2  & 0.3357 \\
+Search interest  & 0.3327 \\
+Social interest  & 0.3178 \\
+Social interest 2  & 0.3074 \\
+Log of position  & -0.2888 \\
+Log of order  & -0.2854 \\
+Order  & -0.2765 \\
+Position  & -0.2759 \\
+Dice coefficient  & 0.2720 \\
+Jaccard coefficient  & 0.2644 \\
+NGD  & -0.2406 \\
+Text similarity  & 0.1416 \\
+Number of links  & 0.1357 \\
+PageRank  & 0.1242 \\
+Community 3  & -0.0854 \\
+Community 1  & -0.0186 \\
+Authority score  & 0.0154 \\
+Symmetric link  & 0.0129 \\
+Community 2  & -0.0028 \\
+Hub score  & -0.0019 \\
+Title similarity  & 0.0007 \\
+\bottomrule
+\end{tabular}
+\end{subtable}%
+\begin{subtable}{.33\linewidth}
+\caption{Merit of feature using CFS}
+\centering
+\label{tab:feature_relevance_cfs}
+\begin{tabular}{ld}
+\toprule
+Feature name & \multicolumn{1}{c}{CFS Subset} \\
+\midrule
+Log of position  & 0.335 \\
+Hub score  & 0.335 \\
+PageRank  & 0.334 \\
+Authority score  & 0.334 \\
+Community 3  & 0.325 \\
+Search interest  & 0.323 \\
+Social interest  & 0.323 \\
+Search interest 2  & 0.321 \\
+Community 1  & 0.320 \\
+Position  & 0.319 \\
+Jaccard coefficient  & 0.319 \\
+Social interest 2  & 0.317 \\
+Community 2  & 0.317 \\
+Order  & 0.313 \\
+Number of links  & 0.313 \\
+Title similarity  & 0.313 \\
+Text similarity  & 0.312 \\
+Symmetric link  & 0.308 \\
+Log of order  & 0.299 \\
+Dice coefficient  & 0.275 \\
+NGD  & 0.022 \\
+\bottomrule
+\end{tabular}
+\end{subtable}
+\end{table*}
+
+The table \ref{tab:feature_relevance} shows results from three feature analysis. The values are obtained using the Weka toolbox \cite{weka}. Features in the sub-tables are sorted by the feature relevance in descending order. The table \ref{tab:feature_relevance_infogain} shows gain of information with respect to relative rank given the value of each feature. Relative rank of $n$ means that it is the link was the $n^{th}$ least clicked one in that query. In our case, information gain can be defined formally as
+$$ InfoGain(Rank,Feature) = H(Rank) - H(Rank | Feature) $$
+where $H$ is the information entropy. The table \ref{tab:feature_relevance_pca} shows the coefficients for the best transformation using principal component analysis (PCA). These coefficients give projection into the single dimension with best rank value separation capability. The table \ref{tab:feature_relevance_cfs} shows merits of features when analyzed by correlation feature selection (CFS). Subsets of features are analyzed using correlation with rank and also between features themselves, those that are highly correlated with the rank while having low inter-correlation are preferred.
+
+
+% * <roelcastanomoreno@gmail.com> 2016-06-01T14:23:10.070Z:
+%
+% >  The last column shows merits of features when analyzed by correlation feature selection. Subsets of features are analysed using correlation with rank and also between features themselves. Subsets of features that are highly correlated with the rank while having low inter-correlation are preferred
+%
+% Should be rewritten
+%
+% ^ <roelcastanomoreno@gmail.com> 2016-06-02T09:06:03.033Z.
+
+We took into account all three methods and defined a usefulness metric as $$u_{f_i} = \frac{infogain_{f_i}}{\max(infogain_{f_j})} + \frac{|pca_{f_i}|}{\max(|pca_{f_j}|)} + \frac{cfs_{f_i}}{\max(cfs_{f_j})}$$ where $infogain_{f_i}$ is the Infogain value of feature $f_i$, $pca_{f_i}$ is coefficient for feature $f_i$ found using PCA and $cfs_{f_i}$ is the merit of feature $f_i$. We took the first half of the most usefull features. Then we discarded those features that were highly correlated with any other more usefull feature leaving a subset of 6 features in total -- link order, number of links, symmetric link, social interest, search interest 2, and Jaccard coefficient. Features discarded due to high correlation are for example link order and logarithms of link order and position. The models was trained again using only this subset of features and the results can be found in table \ref{tab:eval_ndcg@10_feature}.
+
+\begin{table*}[p]
+\caption{Evaluation of different L2R algorithms trained on the subset of features (top 6) using NDCG@10 }
+\centering
+\label{tab:eval_ndcg@10_feature}
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{6}{c}{NDCG@10} \\
+\cmidrule{2-7}
+Algorithm & Fold 1 & Fold 2 & Fold 3 & Fold 4 & Fold 5 & Average \\
+\midrule
+Random Forests & 0.4395 & 0.4396 & 0.3488 & 0.4173 & 0.3749 & 0.4040 \\
+LambdaMART & 0.4285 & 0.4269 & 0.3456 & 0.4122 & 0.3670 & 0.3960 \\
+MART & 0.4049 & 0.4283 & 0.3454 & 0.4078 & 0.3721 & 0.3917 \\
+Coordinate Ascent & 0.3948 & 0.4049 & 0.3355 & 0.3791 & 0.3690 & 0.3766 \\
+ListNet & 0.3611 & 0.3697 & 0.2839 & 0.3510 & 0.3319 & 0.3395 \\
+RankBoost & 0.3047 & 0.3123 & 0.2651 & 0.3082 & 0.2889 & 0.2959 \\
+AdaRank & 0.3029 & 0.3660 & 0.2168 & \multicolumn{1}{c}{---} & 0.2413 & 0.2818 \\
+RankNet & 0.0050 & 0.0062 & 0.0105 & 0.0246 & 0.0105 & 0.0114 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+% * <roelcastanomoreno@gmail.com> 2016-06-01T14:38:31.961Z:
+%
+% > Another reasons for feature selection is to reduce overfitting and possibly conflicting features. In this work we focused mainly on performance benefits, but the results from table \ref{tab:feature_relevance} can also be useful for identifying feature subsets with potential to outperform full set. For example taking only features with non-zero Infogain is one possible approach.
+%
+% Can be moved to discussion
+%
+% ^ <roelcastanomoreno@gmail.com> 2016-06-01T15:52:33.958Z.
+
+\subsection{Tackling the overlinking problem}
+The problem of overlinking on Wikipedia is hard to solve completely. Our proposal to relieve this problem consists of two parts.
+\begin{enumerate}
+\item Training a ranker model using L2R algorithm(s).
+\item Giving suggestions to Wikipedia editors on links that are rank below some threshold.
+\end{enumerate}
+The specific threshold applicable across whole Wikipedia is hard to define, but for our purposes we define threshold $\theta$ to satisfy the following requirements. Let's define a random variable $\beta$ with uniform distribution over all $\beta_j \in B_i$ for $1 \le i \le M$. Now let $$ P(\pi^{-1}(j) < N_i-\theta) \approx P(\pi^{-1}(j) \ge N_i-\theta) \text{ for } \beta = \beta_j \in B_i$$ where $\pi$ is permutation for the perfect ranking. In the case of our training dataset, $\theta = 191$. We trained ranking models and evaluated them using $P@191$ metric. The natural baseline to beat is $0.5$ that results from the definition of $\theta$ and can be achieved by randomly choosing between link being relevant or not. Results are shown in table \ref{tab:eval_p@191}. We also looked at how this metric is affected by our previous feature selection and results are in table \ref{tab:eval_p@191_feature}.
+
+\begin{table*}[p]
+\caption{Evaluation of different L2R algorithms trained on all features using P@191}
+\centering
+\label{tab:eval_p@191}
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{6}{c}{P@191} \\
+\cmidrule{2-7}
+Algorithm & Fold 1 & Fold 2 & Fold 3 & Fold 4 & Fold 5 & Average \\
+\midrule
+LambdaMART & 0.8765 & 0.8763 & 0.8668 & 0.8951 & 0.8851 & 0.8778 \\
+AdaRank & 0.9304 & 0.8663 & 0.8710 & 0.8638 & 0.8577 & 0.8778 \\
+Coordinate Ascent & 0.8720 & 0.8613 & 0.8400 & 0.8871 & 0.8798 & 0.8680 \\
+Random Forests & 0.8647 & 0.8639 & 0.8460 & 0.8879 & 0.8747 & 0.8674 \\
+MART & 0.8627 & 0.8591 & 0.8413 & 0.8843 & 0.8733 & 0.8641 \\
+ListNet & 0.8625 & 0.8538 & 0.8323 & 0.8792 & 0.8488 & 0.8553 \\
+RankBoost & 0.8945 & 0.7989 & 0.7968 & 0.8097 & 0.7866 & 0.8173 \\
+RankNet & 0.7933 & 0.7219 & 0.6243 & 0.6561 & 0.6175 & 0.6826 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[p]
+\caption{Evaluation of different L2R algorithms trained on the subset of features (top 6) using P@191 }
+\centering
+\label{tab:eval_p@191_feature}
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{6}{c}{P@191} \\
+\cmidrule{2-7}
+Algorithm & Fold 1 & Fold 2 & Fold 3 & Fold 4 & Fold 5 & Average \\
+\midrule
+AdaRank & 0.9304 & 0.8663 & 0.8710 & 0.8638 & 0.7800 & 0.8623 \\
+LambdaMART & 0.8968 & 0.8036 & 0.8027 & 0.8155 & 0.7904 & 0.8218 \\
+Coordinate Ascent & 0.8939 & 0.7993 & 0.7973 & 0.8099 & 0.7887 & 0.8178 \\
+Random Forests & 0.8943 & 0.7987 & 0.7981 & 0.8113 & 0.7855 & 0.8176 \\
+MART & 0.8915 & 0.7899 & 0.7938 & 0.8070 & 0.7776 & 0.8120 \\
+ListNet & 0.8878 & 0.7882 & 0.7849 & 0.7998 & 0.7843 & 0.8090 \\
+RankNet & 0.8883 & 0.7895 & 0.7864 & 0.8039 & 0.7751 & 0.8086 \\
+RankBoost & 0.8881 & 0.7864 & 0.7865 & 0.7950 & 0.7715 & 0.8055 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+In both cases almost all algorithms significantly outperformed the baseline given by random chance. These results show that we can predict which links belongs to first $\theta = 191$ most clicked with average accuracy of up to $87~\%$. We believe this result is good enough to battle the overlinking problem on Wikipedia.

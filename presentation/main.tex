@@ -1,0 +1,196 @@
+\documentclass[xcolor=dvipsnames, 14pt]{beamer}
+%\documentclass[xcolor=dvipsnames, bigger, aspectratio=169]{beamer}
+
+\definecolor{AalborgBlue}{HTML}{211A52}
+\usecolortheme[named=AalborgBlue]{structure}
+
+\mode<presentation> {
+	\usetheme[height=1.5em]{Rochester}
+    %\usetheme{Frankfurt}
+	\setbeamercovered{transparent}
+}
+
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+\setbeamertemplate{footline}[frame number]{}
+
+\setbeamercolor{frametitle}{fg=white}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{navigation symbols dimmed}{fg=black!10}
+\setbeamercolor{navigation symbols}{fg=black!30}
+\setbeamercolor{section number projected}{fg=white}
+\setbeamercolor{item projected}{fg=white}
+\setbeamercolor{footlinecolor}{bg=AalborgBlue,fg=white} 
+
+
+\usepackage[utf8x]{inputenc}
+\usepackage[resetfonts]{cmap}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{etoolbox}
+\usepackage{multicol}
+\usepackage{hyperref} % For hyperlinks in the PDF
+\hypersetup{
+    colorlinks=false,
+    citecolor = red,
+    urlcolor = blue
+}
+
+%\newcommand{\insertsectionandsubsection}[2]{%
+%  \ifdefempty{#1}{}{
+%    \ifdefempty{#2}{
+%      #1
+%    }{
+%      #1: #2
+%    }
+%  }
+%}
+
+%\makeatother
+%\setbeamertemplate{footline} %bottom frame
+%{
+%  \leavevmode%
+%  \hbox{\begin{beamercolorbox}%[wd=\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{footlinecolor}%
+%  \insertsectionandsubsection{\insertsection}{\insertsubsection}\hfill
+%    \insertpagenumber/\inserttotalframenumber
+%  \end{beamercolorbox}}%
+%  \vskip0pt%
+%}
+
+\makeatletter
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Next up}
+    \small \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\newenvironment<>{blockyellow}[1]{%
+  \setbeamercolor{block title}{fg=white,bg=yellow}%
+  \begin{block}#2{#1}}{\end{block}}
+
+
+\title[L2R Wikipedia Links]{Learning to Rank on Article Hyperlinks in Wikipedia}
+\author{Blandine~Seznec \and Philip~Thruesen \and Jaroslav~Cechak \and Roel~Castano}
+\institute{Aalborg University}
+\date{\small June 28, 2016}
+
+\begin{document}
+
+\begin{frame}[noframenumbering, plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Table of Contents}
+  %\begin{columns}[t]
+  %      \begin{column}{.5\textwidth}
+  %          \footnotesize
+  %          \tableofcontents[sections={1-5}]
+  %      \end{column}
+  %      \begin{column}{.5\textwidth}
+  %          \footnotesize
+  %          \tableofcontents[sections={6-10}]
+  %      \end{column}
+  %\end{columns}
+  %\footnotesize
+  %\begin{multicols}{2}    
+  %  \tableofcontents[hideallsubsections]
+  %\end{multicols}
+  \small
+  \tableofcontents
+\end{frame}
+
+
+% Roel - 1, 2, 3, 10
+% Jaroslav - 8, 9
+% Blandine - 6, 7
+% Philip - 4, 5
+
+% TITLE page: introduce people (and patrick thingy). Introduce title
+% TOC page: Introduce what the presentation will be about
+
+\section{Introduction and motivation}
+\input{introduction.tex}
+% slide 1: wiki and overlinking
+% slide 2: the figure 1 - converting to ranking problem
+% slide 3: the 3 questions
+
+\section{Steps of overall process}
+\input{overall_process.tex}
+% slide 4: procedure of how we worked. Visualized in a graph of some sort illustrating the work flow.
+% steps to include: research datasets, define ranking problem, extract ground truth, construct features, feature selection and analysis, experimenting with L2R, evaluating results  
+
+\section{Ranking}
+\input{ranking.tex}
+% slide 5: explaining L2R method 
+% slide 6: L2R approaches
+% slide 7: RankLib
+
+\section{Datasets}
+\input{datasets.tex}
+% slide 8: overview listing datasets we used
+% slide 9: Wiki dumps
+% slide 10: wiki clickstream
+
+\section{Ground truth and training data}
+\input{groundtruth.tex}
+% slide 11: introducing ground truth
+% slide 12: selection and extraction of prominent articles
+% slide 13: constructing ground truth file w. figure 3
+% slide 14: constructing rankLib file
+% slide 14.5: table 6, experimental setup for supervised learning
+% slide 14.7: difficulties and solutions for working with the wikipedia data
+
+\section{Features}
+\input{features.tex}
+% slide 15: overview of features. Include list of feature names and highlight ones to describe in detail next.
+
+% slide 16: simple link feature introduction: link order
+% slide 17: link symmetry
+
+% slide 18: Motivaltion for similarity features
+% slide 19: "Text similarity" feature
+
+% slide 20: Motivation for community features
+% slide 21: "Community 3" feature
+
+% slide 22: Motivation for Interest features
+% slide 23: "Search Interest" feature
+
+\section{Feature analysis}
+\input{feature_analysis.tex}
+% slide 24: introduce 3 methods and formula for finding importance of feature and how some were filtered because of redundance.
+
+\section{Evaluation methods}
+\input{evaluation.tex}
+% slide 25: introduction and overview of 3 methods
+% slide 26: NDCG method ("industry standard") 
+% slide 27: The 191 method
+% slide 28: Improved method
+
+\section{Results}
+\input{results.tex}
+% slide 29: visualize results in bar chart. Select important algos and have 4 bars (each of eval. methods)
+% slide xx: some more slides with e.g. zeros..
+% slide xx: examples of ranking
+
+\section{Discussion and conclusion}
+\input{discussion.tex}
+% slide 30: tell about usecases / applications for our model
+
+% slide 31 - .. : Inspired by the study regulation, explain what we have done in this project 
+
+
+\begin{frame}
+  \begin{center}
+	Thank you for your attention.
+  \end{center}
+\end{frame}
+
+\end{document}
+
+

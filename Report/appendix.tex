@@ -1,0 +1,38 @@
+\appendix
+
+\chapter{Feature selection}
+Table \ref{tab:rank_corr} shows the correlation coefficient for all features. The rank column represents the number of clicks for a given link. Because ranking is not necessary about predicting exact values, but more about relative ordering, relative rank is also considered. Relative rank $n$ means that it is the rank value of $n^{th}$ lowest in that query.
+
+\newcolumntype{d}{D{.}{.}{2,4}}
+\begin{table*}[h]
+\caption{Feature correlations with ranks}
+\centering
+\label{tab:rank_corr}
+\begin{tabular}{ldddd}
+\toprule
+Feature name & \multicolumn{1}{c}{Rank} & \multicolumn{1}{c}{Normalised rank} & \multicolumn{1}{c}{Relative rank} & \multicolumn{1}{c}{Normalised relative rank} \\
+\midrule
+Order & -0.1176 & -0.2706 & -0.3222 & -0.2013 \\
+Position & -0.1139 & -0.2439 & -0.3056 & -0.1818 \\
+Log of order & -0.1822 & -0.3028 & -0.4074 & -0.2991 \\
+Log of position & -0.1841 & -0.3059 & -0.4107 & -0.2879 \\
+Number of links & 0.1231 & 0.1886 & 0.2389 & 0.2103 \\
+Hub score & 0.0006 & -0.0018 & 0.0003 & -0.0003 \\
+Authority score & 0.0004 & -0.0006 & 0.0048 & -0.0012 \\
+PageRank & -0.0047 & 0.0067 & -0.0075 & -0.0037 \\
+Symmetric link & 0.0988 & 0.2855 & 0.3336 & 0.1756 \\
+Community 1 & 0.0235 & 0.0680 & 0.0666 & 0.0487 \\
+Community 2 & 0.0048 & 0.0032 & 0.0046 & 0.0009 \\
+Community 3 & 0.0252 & 0.1297 & 0.1386 & 0.0753 \\
+Title similarity & 0.0915 & 0.1401 & 0.1598 & 0.1144 \\
+Search interest & 0.1118 & 0.1485 & 0.1832 & 0.1633 \\
+Social interest & 0.0860 & 0.0892 & 0.1001 & 0.1047 \\
+Social interest 2 & 0.0866 & 0.0813 & 0.0960 & 0.0959 \\
+Search interest 2 & 0.1069 & 0.1674 & 0.1773 & 0.1677 \\
+Jaccard coefficient & 0.1803 & 0.0816 & 0.1495 & 0.1632 \\
+Dice coefficient & 0.1753 & 0.0810 & 0.1494 & 0.1590 \\
+NGD & -0.0442 & -0.0466 & -0.0277 & -0.0195 \\
+Text similarity & 0.0223 & 0.0475 & 0.0615 & 0.0048 \\
+\bottomrule
+\end{tabular}
+\end{table*}

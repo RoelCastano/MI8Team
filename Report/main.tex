@@ -1,0 +1,173 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal Article
+% LaTeX Template
+% Version 1.3 (9/9/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[twoside]{article}
+
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{array}
+\DeclareMathOperator*{\med}{med}
+
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt, left=15mm]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+\hypersetup{
+    colorlinks=true,
+    citecolor = red,
+    urlcolor = blue
+}
+
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+\usepackage{dcolumn} % some custom table aligning
+\usepackage{siunitx} % special column types for exponents
+\usepackage{dblfloatfix} % place float* and table* to the bottom of a page
+\usepackage{subcaption} %subtables and more
+
+\usepackage{amsmath} % Defines some usefull math symbols
+\usepackage[
+backend=biber      % if we want unicode
+,style=numeric
+,bibencoding=utf8   % this is necessary only if bibliography file is in different encoding than main document
+,maxnames=3 % maximum of three auhor names
+,minnames=1 % minimum of one author (if there are more than 3 authros, only the first one is printed and "et. al." added.)
+,sorting=none
+,sortcites=true
+,doi=true % print dois
+,url=true % always print urls if present
+,isbn=true % print is[bsr]n numbers
+,urldate=comp % better url date format
+]{biblatex}
+\addbibresource{bibliography.bib}
+
+% With 'final' over 'draft' triggers error on notes in final report
+%\usepackage[footnote,final,english,silent,nomargin]{fixme}
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\itshape} % Set the abstract itself to small italic text
+
+\usepackage{titlesec} % Allows customization of titles
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\fancyfoot[RO,LE]{\thepage} % Custom footer text
+
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{20pt}{10pt}\selectfont\textbf{Learning to Rank on Article Hyperlinks in Wikipedia}} % Article title
+\author{
+\large
+\textsc{Blandine Seznec, Philip Thruesen, Jaroslav Cechak, and Roel Castano}\\[2mm] % Your name
+\normalsize {\{bsezne16, pthrue15, jcheca16, rcasta15\}@student.aau.dk} % Your email address;
+}
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\input{frontpage.tex}
+
+%\maketitle % Insert title
+
+\thispagestyle{fancy} % All pages have headers and footers
+
+\begin{multicols}{2} % Two-column layout throughout the main article text
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+% Abstract
+\input{abstract.tex}
+
+%------------------------------------------------
+% INTRODUCTION SECTION
+
+\input{introduction.tex}
+
+\input{related.tex}
+
+%------------------------------------------------
+% METHOD SECTION
+\input{method.tex}
+%------------------------------------------------\\
+
+
+\input{ltrfeatures.tex}
+
+%------------------------------------------------
+
+\input{results.tex}
+
+%------------------------------------------------
+
+\input{discussion.tex}
+
+%------------------------------------------------
+
+\input{conclusion.tex}
+
+
+%----------------------------------------------------------------------------------------
+%	LIST OF ERRORS
+%----------------------------------------------------------------------------------------
+
+%\newpage														% Ny side til Fixme-
+%\listoffixmes	
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+
+%\input{bibliography.tex}
+\printbibliography
+
+%----------------------------------------------------------------------------------------
+\end{multicols}
+%-------------
+%	Appendices
+%-------------
+%\newpage
+%\input{appendix.tex}
+
+
+
+\end{document}

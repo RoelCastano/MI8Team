@@ -1,29 +1,21 @@
 \subsection{Notation}
+We denote our set of prominent articles $P = \{ p_1, ..., p_M \}$ where $p_i$ is one of $M$ prominent articles. Belonging to the $i^{\text{th}}$ prominent article is a set $B_i$ of linked articles: $B_i = \{ \beta_1, ..., \beta_{N_i} \}$ where $N_i$ is the number of referenced articles for the $i^{\text{th}}$ prominent article.
 
-We denote our set of prominent articles\fxnote{A doenst show in pdf} $A = \{ \alpha_1, ..., \alpha_M \}$ where $\alpha_i$ is one of $M$ prominent articles. Belonging to the $i^{\text{th}}$ prominent article is a set $B_i$ of linked articles: $B_i = \{ \beta_1, ..., \beta_{N_i} \}$ where $N_i$ is the number of referenced articles for the $i^{\text{th}}$ prominant article. \\
-
-Click counts (popularity) for an article pair $(\alpha, \beta)$ is denoted $pop(\alpha, \beta)$. Eq. \ref{eq:pop_prom} defines the overall popularity of an arbitrary prominent article $\alpha_k$.
-
+Click counts (popularity) for an article pair $(p, \beta)$ is denoted $click(p, \beta)$. Eq. \ref{eq:pop_prom} defines the overall popularity of an arbitrary prominent article $p_k$.
 \begin{align}
-pop(\alpha_k) = \sum\limits_{j=1}^{|B_k|} pop(\alpha_k, \beta_j)
+click(p_k) = \sum\limits_{j=1}^{|B_k|} click(p_k, \beta_j)
 \label{eq:pop_prom}
 \end{align}
 
 Eq. \ref{eq:pop_prom_link} defines the overall popularity of a prominent-linked article.
-
 \begin{align}
-pop(\beta) = \sum\limits_{i=1}^{|A|} pop(\alpha_i, \beta)
+click(\beta) = \sum\limits_{i=1}^{|P|} click(p_i, \beta)
 \label{eq:pop_prom_link}
 \end{align}
 
 In our set of ground truth we have that:
-
 \begin{align}
-rank(\alpha, \beta) = pop(\alpha, \beta)
+rank(p, \beta) = click(p, \beta)
 \label{eq:pop_rank_relation_for_gt}
 \end{align}
-where a higher rank equals the level of popularity and a high rank therefore represents an important article pair.\\
-
-This notation will be used throughout the rest of this article.
-
-\fxnote{INCOMPLETE} \\
+where a higher rank equals the level of popularity and a high rank therefore represents an important article pair.
