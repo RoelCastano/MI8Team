@@ -4,6 +4,10 @@
 *.log
 *.out
 *.gz
+*.toc
+*.nav
+*.pdf
+*.snm
 
 # OS generated files #
 ######################
